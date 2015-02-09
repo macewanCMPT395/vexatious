@@ -1,0 +1,191 @@
+body {
+    font-family: Helvetica;
+    font-size: 100%;
+    background-color: #ffffff; #white
+    width: 800px;
+    height 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a {
+    text-decoration:none;
+}
+
+a:active {
+    color: #E3C8FF; #blissful
+}
+
+.header-fixed {
+    width:100%;
+    position:fixed;
+    top:0px;
+    text-align: center;
+    background: #ffffff; #white
+}
+
+.bar {
+    height: 15px;
+    background: #D1A3FF; #laurel
+}
+
+.title {
+    color: #685280; #aubergine
+    height: 100%;
+    width: 100%;
+    font-size: 500%;
+    text-align: centre:
+    background: #ffffff; #white
+    font-color: #685280; #aubergine
+    text-decoration: none;
+}
+
+.header-menu {
+    width:100%;
+    position:fixed;
+    margin-top: 0px;
+    text-align: right;
+}
+
+.header-menu ul {
+    list-style: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    padding-right: 15px;
+    
+}
+
+.header-menu ul li {
+    float: left;
+    padding-right: 5px;
+    background: #ffffff; #white
+    
+}
+
+.header-menu ul li a {
+    font-size: 150%;
+    color: #E3C8FF; #blissful
+    border: 3px solid #E3C8FF; #blissful
+}
+
+.header-menu ul li a:link {
+    font-size: 150%;
+    border: 3px solid #E3C8FF; #blissful
+    
+}
+
+.header-menu ul li a:hover {
+    font-size: 150%;
+    color: #D1A3FF; #laurel
+    border: 3px solid #D1A3FF; #laurel
+    background: #E3C8FF; #blissful
+}
+
+.header-menu ul li a:active {
+    font-size: 150%;
+    color: #DAB4FF;  #laurentian
+    border: 3px solid #DAB4FF; #laurentian
+    background: #E3C8FF; #blissful
+}
+
+.content {
+    margin: 9% auto;
+}
+
+.user-name {
+    font-size: 500%;
+    color: #685280; #aubergine
+}
+
+.profile {
+    width:100%;
+    margin-top: 0px;
+    text-align: left;
+}
+
+.profile ul {
+    width:100%;
+    list-style: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: left;
+}
+
+.profile ul li {
+    float: left;
+    padding-right: 5px;
+    text-align: left;
+    display: inline-block;
+    background: #ffffff; #white
+}
+
+rect.pic {
+    /*style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" */
+    fill: blue;
+    stroke: pink;
+    stroke-width: 5;
+    fill-opacity: 0.1;
+    stroke-opacity:0.9;
+}
+
+.pic {
+    width: 160px;
+    height: 160px;
+    border:5px solid #E3C8FF;
+}
+
+.user-info {
+    margin-top: 0px;
+    text-align: left;
+}
+
+.user-info ul {
+    list-style: none;
+    text-decoration: none;
+    text-align: left;
+}
+
+.user-info ul li {
+    max-width: 100%;
+    float: left;
+    padding-right: 20px;
+    background: #ffffff; #white
+}
+
+.edit-info {
+    width:200%;
+    margin-top: 0px;
+    text-align: left;
+}
+
+.edit-info ul {
+    
+    list-style: none;
+    text-decoration: none;
+    text-align: right;
+}
+
+.edit-info ul li {
+    float: left;
+    width: auto;
+    padding-right: 20px;
+    background: #ffffff; #white
+    text-align: right;
+}
+
+#textareasOut {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: table;
+    
+}
+
+#textareasIn {
+    margin-top: 0%;
+    position: relative;
+    display: block;
+    vertical-align: centre;
+    text-align: right;
+}

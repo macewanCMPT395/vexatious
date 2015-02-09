@@ -1,0 +1,134 @@
+body {
+    font-family: Helvetica;
+    font-size: 100%;
+    background-color: #ffffff; #white
+    width: 800px;
+    height 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.outer {
+    margin-top: 20%;
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    text-align: center;
+}
+
+.bar {
+    height: 15px;
+    background: #C1C1C1; #lightgrey
+}
+
+a {
+    text-decoration:none;
+}
+
+a:active {
+    color: #C1C1C1; #blissful
+}
+
+#title {
+    color: #C1C1C1; #aubergine
+    height: 100%;
+    font-size: 500%;
+    text-align: centre:
+    background: #C1C1C1; #white
+    font-color: #C1C1C1; #aubergine
+    text-decoration: none;
+}
+
+#link {
+    font-size: 100%;
+}
+
+#item {
+    font-size: 500%;
+}
+
+#textareasOut {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: table;
+    
+}
+
+#textareasIn {
+    margin-top: 5%;
+    position: relative;
+    display: block;
+    vertical-align: centre;
+    text-align: right;
+}
+
+#form {
+    height: inherit;
+    width: inherit;
+    font-size: 100%;
+    color: #C1C1C1; #blissful
+}
+
+#form ul {
+    border: 5px solid #C1C1C1; #laurel
+}
+
+#form ul li{
+    height: 100%;
+}
+
+#nav {
+    background: #ffffff; #white
+    font-color: #660066; #aubergine
+    text-decoration: none;
+    display: inline-block;
+}
+
+#nav ul {
+    list-style: none;
+    font-color: #685280; #aubergine
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+#nav ul li {
+    float: left;
+    padding: 5px;
+    text-decoration: none;
+    display: table;
+    color: #685280; #aubergine
+}
+
+#nav ul li a {
+    color: #685280; #aubergine
+    font-size: 500%;
+    text-decoration: none;
+    border: 5px solid #E3C8FF; #blissful
+}
+
+#nav ul li a:link {
+    font-size: 500%;
+    color: #685280; #aubergine
+    text-decoration: none;
+    border: 5px solid #E3C8FF; #blissful
+}
+
+#nav ul li a:hover {
+    font-size: 500%;
+    color: #685280; #aubergine
+    text-decoration: none;
+    border: 5px solid #D1A3FF; #laurel
+}
+
+#nav ul li a:active {
+    font-size: 500%;
+    color: #E3C8FF; #blissful
+    border: 5px solid #D1A3FF; #laurel
+}
