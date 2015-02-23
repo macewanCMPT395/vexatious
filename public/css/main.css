@@ -1,6 +1,10 @@
+@import url(//fonts.googleapis.com/css?family=Lato:700);
+
 body {
-    font-family: Helvetica;
+    margin:0;
+    font-family:'Helvetica', sans-serif;
     font-size: 100%;
+    text-align:center;
     background-color: #ffffff; #white
     width: 800px;
     height 100%;
@@ -9,7 +13,7 @@ body {
 }
 
 .outer {
-    margin-top: 20%;
+    margin-top: 16%;
     display: table;
     position: absolute;
     height: 100%;
@@ -26,12 +30,24 @@ body {
     background: #C1C1C1; #lightgrey
 }
 
+.cal {
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -100px;
+}
+
 a {
     text-decoration:none;
+    color: #414141; #darkgrey
 }
 
 a:active {
-    color: #C1C1C1; #blissful
+    text-decoration:none;
+    color: #C1C1C1; #lightgrey
 }
 
 #title {
@@ -39,8 +55,8 @@ a:active {
     height: 100%;
     font-size: 500%;
     text-align: centre:
-    background: #C1C1C1; #white
-    font-color: #C1C1C1; #aubergine
+    background: #ffffff; #white
+    font-color: #414141; #aubergine
     text-decoration: none;
 }
 
@@ -72,11 +88,11 @@ a:active {
     height: inherit;
     width: inherit;
     font-size: 100%;
-    color: #C1C1C1; #blissful
+    color: #C1C1C1; #lightgrey
 }
 
 #form ul {
-    border: 5px solid #C1C1C1; #laurel
+    border: 5px solid #C1C1C1; #lightgrey
 }
 
 #form ul li{
@@ -85,14 +101,14 @@ a:active {
 
 #nav {
     background: #ffffff; #white
-    font-color: #660066; #aubergine
+    font-color: #414141; #aubergine
     text-decoration: none;
     display: inline-block;
 }
 
 #nav ul {
     list-style: none;
-    font-color: #685280; #aubergine
+    font-color: #414141; #aubergine
     text-decoration: none;
     display: inline-block;
     text-align: center;
@@ -103,32 +119,32 @@ a:active {
     padding: 5px;
     text-decoration: none;
     display: table;
-    color: #685280; #aubergine
+    color: #414141; #aubergine
 }
 
 #nav ul li a {
-    color: #685280; #aubergine
+    color: #414141; #aubergine
     font-size: 500%;
     text-decoration: none;
-    border: 5px solid #E3C8FF; #blissful
+    border: 5px solid #C1C1C1; #lightgrey
 }
 
 #nav ul li a:link {
     font-size: 500%;
-    color: #685280; #aubergine
+    color: #414141; #aubergine
     text-decoration: none;
-    border: 5px solid #E3C8FF; #blissful
+    border: 5px solid #C1C1C1; #lightgrey
 }
 
 #nav ul li a:hover {
     font-size: 500%;
-    color: #685280; #aubergine
+    color: #414141; #aubergine
     text-decoration: none;
-    border: 5px solid #D1A3FF; #laurel
+    border: 5px solid #C1C1C1; #lightgrey
 }
 
 #nav ul li a:active {
     font-size: 500%;
-    color: #E3C8FF; #blissful
-    border: 5px solid #D1A3FF; #laurel
+    color: #C1C1C1; #lightgrey
+    border: 5px solid #C1C1C1; #lightgrey
 }

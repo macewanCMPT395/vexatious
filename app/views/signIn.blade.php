@@ -7,7 +7,7 @@
         <div id="form">
             <ul>
                 <li>
-                    <div id="item">Returning</div>
+                    <div id="item">Login</div>
                 </li>
                 <li>
                     <div id="textareasOut">

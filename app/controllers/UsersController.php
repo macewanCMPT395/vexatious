@@ -38,14 +38,17 @@ class UsersController extends BaseController {
 	}  
     
     public function validate()
-    {
-        $username = Input::get('Username');
-        $password = Input::get('Password');
-        if (Auth::attempt(array('username' => $username, 'password' => $password) ))
-	{
-        return Redirect::to("/users/{$username}");
-	}
-	return Redirect::to("/");
+        {
+        //TEMP Redirect to Calendar
+        return Redirect::to("/calendar");
+        //TEMP
+            $username = Input::get('Username');
+            $password = Input::get('Password');
+            if (Auth::attempt(array('username' => $username, 'password' => $password) ))
+        {
+            return Redirect::to("/users/{$username}");
+        }
+        return Redirect::to("/");
     }
     
     public function show($username)

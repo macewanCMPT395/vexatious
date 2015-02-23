@@ -14,15 +14,9 @@ class PagesController extends BaseController {
 		return View::make('signIn');
 	}
     
-    public function validate()
+    public function calendar()
     {
-        //$user = new User;
-        //$user->UserName = Input::get('Username');
-        //$user->Password = Hash::make(Input::get('Password'));
-        
-        //$username = $user->UserName;
-        
-        Return 1;
+        Return View::make('calendar');
     }
     
     
