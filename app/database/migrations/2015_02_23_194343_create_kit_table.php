@@ -14,11 +14,17 @@ class CreateKitTable extends Migration {
 	{
 		Schema::create('kit', function(Blueprint $table) {
 			$table->increments('id');
-			$table->bigInteger('barcode');
-			$table->string('name');
-			$table->string('type');
-			$table->string('description');
-			$table->string('currentBranch');
+			
+			$table->bigInteger('hardwareID');
+			$table->foreign('hardwareID')->references('id')->on('hardware');
+			
+			$table->bigInteger('type');
+			$table->foreign('type')->references('id')->on('hardwareType');
+			
+			$table->bigInteger('currentBranchID');
+			$table->foreign('currentBranchID')->references('id')->on('branch');
+			
+			$table->string("description");
 		});
 	}
 

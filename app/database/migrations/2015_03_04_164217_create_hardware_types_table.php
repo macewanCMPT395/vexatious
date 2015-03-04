@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKitPartStatusTable extends Migration {
+class CreateHardwareTypesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,10 @@ class CreateKitPartStatusTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('partStatus', function(Blueprint $table) {
+		Schema::create('hardwareType', function(Blueprint $table){
 			$table->increments('id');
-			$table->string('status');
+			$table->string('name');
+			$table->string('description');
 		});
 	}
 
@@ -25,7 +26,7 @@ class CreateKitPartStatusTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('partStatus');
+		Schema::drop('hardwareType');
 	}
 
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKitPartTable extends Migration {
+class CreateHardwareSoftwareTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,13 @@ class CreateKitPartTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('kitParts', function(Blueprint $table){
-			$table->increments('id');
+		Schema::create('hardwareSoftware', function(Blueprint $table) {
 			$table->bigInteger('kitID');
 			$table->foreign('kitID')->references('id')->on('kit');
-			$table->bigInteger('statusID');
-			$table->foreign('statusID')->references('id')->on('partStatus');
-			$table->string('name');
-		});
 			
+			$table->bigInteger('softwareID');
+			$table->foreign('softwareID')->references('id')->on('software');
+		});
 	}
 
 	/**
@@ -30,8 +28,7 @@ class CreateKitPartTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('kitParts');
-		//
+		Schema::drop('hardwareSoftware');
 	}
 
 }
