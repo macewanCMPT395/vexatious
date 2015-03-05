@@ -13,14 +13,14 @@ class CreateNotificationsTable extends Migration {
 	public function up()
 	{
 		Schema::create('notifications', function(Blueprint $table) {
-			$table->bigInteger('userId');
-			$table->foreign('userId')->references('id')->on('users');
+			$table->bigInteger('userID');
+			$table->foreign('userID')->references('id')->on('users');
 			
 			$table->bigInteger('bookingID');
 			$table->foreign('bookingID')->references('id')->on('booking');
 			
-			$table->bigInteger('msgId');
-			$table->foreign('msgId')->references('id')->on('notificationMsg');
+			$table->bigInteger('msgID');
+			$table->foreign('msgID')->references('id')->on('notificationMsg');
 		});
 	}
 
