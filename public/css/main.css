@@ -1,4 +1,16 @@
-.bar {
+body {
+    margin: 0;
+}
+
+#Image {
+  position:absolute;
+  top: 5px;
+  left: 10px;
+}
+
+#bar {
     height: 15px;
     background: #EEAC00; #lightgrey
+    position: absolute;
+    top: 50px;
 }

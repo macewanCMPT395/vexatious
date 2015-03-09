@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
-<head>
+<body>
     {{ HTML::style('css/main.css') }}
-<div><img src="http://www.epl.ca/sites/all/themes/epl/img/epl_logo.jpg" border="0"></div>
-<div class="bar"></div>
-</head>
+<div id="Image"><img src="http://www.epl.ca/sites/all/themes/epl/img/epl_logo.jpg" border="0"></div>
+<div id="bar"></div>
+</body>
 </html>
