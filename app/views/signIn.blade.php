@@ -3,7 +3,7 @@
 @section('items')
 
         <li>
-        {{ Form::open(['route' => 'users.validate']) }}
+        {{ Form::open(['route' => 'sessions.store']) }}
         <div id="form">
             <ul>
                 <li>
@@ -12,11 +12,11 @@
                 <li>
                     <div id="textareasOut">
                     <div id="textareasIn">
-                        {{ Form::label('Username', 'Username: ') }}
-                        {{ Form::input('text','Username') }}
+                        {{ Form::label('email', 'Email: ') }}
+                        {{ Form::email('email') }}
                         <br>
-                        {{ Form::label('Password', 'Password: ') }}
-                        {{ Form::input('password','Password') }}
+                        {{ Form::label('password', 'Password: ') }}
+                        {{ Form::password('password') }}
                         <br>
                         {{ Form::submit('Sign In') }}
                     </div>
