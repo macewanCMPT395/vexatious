@@ -18,7 +18,7 @@ class CreateHardwareTable extends Migration {
 			$table->bigInteger('hardwareTypeID');
 			$table->foreign('hardwareTypeID')->references('id')->on('hardwareType');
 			
-			$table->string('barcode');
+			$table->string('assetTag');
 			$table->string('damaged');
 		});
 	}
