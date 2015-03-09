@@ -13,6 +13,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public $timestamps = false;
 	use UserTrait, RemindableTrait;
 
+	public static $rules = [
+		'email'     => 'required|email|unique:users,email',
+        'password'  => 'required'
+	];
+	
+	/*
+	Stores error messages related to user authentication
+	*/
+	public $messages;
+	
 	/**
 	 * The database table used by the model.
 	 *
@@ -33,4 +43,27 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'branchID', 'email', 'password', 'firstName', 'lastName', 'role'
 	);
 
+    public function setPasswordAttribute($pass){
+        $this->attributes['password'] = Hash::make($pass);
+    }
+
+
+    private function validate($ruleSet) {
+		$validation = Validator::make($this->attributes, $ruleSet);
+		if($validation->passes()) return true;
+
+		$this->messages = $validation->messages();
+		return false;            
+    }
+    
+    
+	public function isValid() {
+		return $this->validate(static::$rules);
+	}
+
+	public function isUpdateValid() {
+		$updaterule = static::$rules;
+		$updaterule['email'].=','.$this->id;
+		return $this->validate($updaterule);
+	}
 }
