@@ -13,20 +13,16 @@ class CreateBookingsTable extends Migration {
 	public function up()
 	{
 		Schema::create('booking', function(Blueprint $table){
-			$table->increments('id');
-			$table->bigInteger('userId');
-			$table->foreign('userId')->references('id')->on('users');
-			
-			$table->bigInteger('kitId');
-			$table->foreign('kitId')->references('id')->on('kit');
-			
-			$table->bigInteger('destination');
-			$table->foreign('destination')->references('id')->on('branch');
-			
+			$table->increments('id');		
 			$table->string('eventName');
+			
 			$table->date('start');
 			$table->date('end');
 			$table->date('shipping');
+			
+			$table->bigInteger('destination');
+			$table->foreign('destination')->references('id')->on('branch');
+
 			$table->boolean('received');
 			$table->boolean('shipped');
 		});
@@ -39,7 +35,7 @@ class CreateBookingsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('bookings');
+		Schema::drop('booking');
 	}
 
 }

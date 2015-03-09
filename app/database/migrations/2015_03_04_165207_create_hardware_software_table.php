@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKitSoftwareRelationTable extends Migration {
+class CreateHardwareSoftwareTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class CreateKitSoftwareRelationTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('kitSoftware', function(Blueprint $table) {
-			$table->bigInteger('kitID');
-			$table->foreign('kitID')->references('id')->on('kit');
+		Schema::create('hardwareSoftware', function(Blueprint $table) {
+			$table->bigInteger('hardwareID');
+			$table->foreign('hardwareID')->references('id')->on('hardware');
 			
 			$table->bigInteger('softwareID');
 			$table->foreign('softwareID')->references('id')->on('software');
@@ -28,7 +28,7 @@ class CreateKitSoftwareRelationTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('kitSoftware');
+		Schema::drop('hardwareSoftware');
 	}
 
 }

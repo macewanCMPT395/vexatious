@@ -14,8 +14,8 @@ class CreateSoftwareTable extends Migration {
 	{
 		Schema::create('software', function(Blueprint $table) {
 			$table->increments('id');
-			$table->bigInteger('softwareTypeId');
-			$table->foreign('softwareTypeId')->references('id')->on('softwareType');
+			$table->bigInteger('softwareTypeID');
+			$table->foreign('softwareTypeID')->references('id')->on('softwareType');
 			$table->string('name');
 		});
 	}
