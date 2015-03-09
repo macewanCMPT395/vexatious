@@ -8,6 +8,11 @@ class PagesController extends BaseController {
 	{
 		return View::make('home');
 	}
+	
+	public function showReportDamage()
+	{
+		return View::make('reportdamage');
+	}
     
     public function signIn()
 	{
