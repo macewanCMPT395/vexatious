@@ -1,7 +1,14 @@
 <?php
 
 class UsersController extends BaseController {
-    
+	protected $user;
+
+
+	public function __construct(User $user) 
+	{
+		$this->user = $user;
+	}
+	
     public function index() 
     {
         $users = User::all();

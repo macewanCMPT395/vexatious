@@ -24,6 +24,7 @@ class CreateKitTable extends Migration {
 			$table->bigInteger('currentBranchID');
 			$table->foreign('currentBranchID')->references('id')->on('branch');
 			
+			$table->string("barcode");
 			$table->string("description");
 		});
 	}

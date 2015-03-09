@@ -13,3 +13,5 @@ Route::get('/calendar', ['as' => 'home', function(){
 Route::resource('sessions', 'SessionsController');
 Route::resource('users', 'UsersController');
 
+Route::resource('hardware', 'HardwareController');
+Route::resource('hardwaretype', 'HardwareTypeController');
