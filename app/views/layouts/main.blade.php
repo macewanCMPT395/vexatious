@@ -2,29 +2,7 @@
 <html lang="en">
 <head>
     {{ HTML::style('css/main.css') }}
-   
+<div><img src="http://www.epl.ca/sites/all/themes/epl/img/epl_logo.jpg" border="0"></div>
+<div class="bar"></div>
 </head>
-
-<body> 
-<div class="outer">
-<div class="middle">
-
-<div class="bar"></div>
-    
-<div id="title"> &nbsp&nbsp{{ link_to("/", "Kit MGMT") }} </div>
-    
-<div class="bar"></div>
-
-<div id="nav">
-    <ul>
-        @yield('items')
-        
-    </ul>
-</div>
-
-</div>
-</div>
-
-</body>
-
 </html>
