@@ -1,19 +1,15 @@
-<<<<<<< HEAD
-@import url(//fonts.googleapis.com/css?family=Lato:700);
-
 body {
     margin: 0;
 }
 
+#Image {
+  padding-top: 10px;
+  padding-left: 10px;
+}
 
 #bar {
     height: 15px;
     background: #EEAC00; #Orange
-}
-
-a {
-    text-decoration:none;
-    color: #FFFFFF;
 }
 
 a:link {
@@ -25,7 +21,6 @@ a:visited {
   text-decoration: none;
   color: #FFFFFF;
  }
-
 
 a:hover {
     text-decoration: none;
@@ -63,6 +58,3 @@ a:active {
     margin-top: 10px;
     float: right;
 }
-
-=======
->>>>>>> upstream
