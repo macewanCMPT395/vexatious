@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
 <body>
@@ -10,3 +11,5 @@
 >>>>>>> Add header for all webpages. Fix routing
 </body>
 </html>
+=======
+>>>>>>> upstream
