@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.header')
 
 @section('items')
         <li>
