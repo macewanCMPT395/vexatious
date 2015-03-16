@@ -1,6 +1,10 @@
 <?php
 
 Route::get('/home', 'PagesController@home');
+
+Route::get('/overview', 'PagesController@overview');
+
+
 Route::get('/signIn', 'PagesController@signIn');
 Route::get('/calendar', ['as' => 'home', function(){
     return View::make('calendar');
