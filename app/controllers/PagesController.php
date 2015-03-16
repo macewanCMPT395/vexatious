@@ -24,8 +24,10 @@ class PagesController extends BaseController {
         Return View::make('calendar');
     }
     
-    
-    
+    public function overview()
+    {
+        Return View::make('overview');
+    }
 }
 
 

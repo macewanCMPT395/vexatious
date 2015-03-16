@@ -40,7 +40,6 @@ class UsersController extends BaseController {
         return Redirect::to("/users/{$user->username}");
 	}  
     
-
     public function show($username)
     {
 		$user = User::whereEmail($username)->first();
