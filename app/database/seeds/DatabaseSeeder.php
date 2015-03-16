@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('HardwareTypeTableSeeder');
 		$this->call('HardwareTableSeeder');
 		$this->call('KitTableSeeder');
+		$this->call('KitHardwareTableSeeder');
 	}
 
 }
@@ -100,7 +101,6 @@ class KitTableSeeder extends Seeder {
 		DB::table('kit')->delete();
 		
 		Kit::create(array(
-			"hardwareID" => 1,
 			"type" => 1,
 			"currentBranchID" => 1,
 			"barcode" => "1234567890123456",
@@ -108,7 +108,19 @@ class KitTableSeeder extends Seeder {
 		));
 	}
 }
-					
+
+class KitHardwareTableSeeder extends Seeder {
+	public function run()
+	{
+		DB::table('kithardware')->delete();
+		
+		KitHardware::create(array(
+			"kitID" => 1,
+			"hardwareID" => 1
 			
+		));
+					
+	}
+}
 		
 		
