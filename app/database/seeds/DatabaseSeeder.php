@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder {
 		Eloquent::unguard();
 		$this->call('UserTableSeeder');
 		$this->call('HardwareTypeTableSeeder');
+		$this->call('HardwareTableSeeder');
+		$this->call('KitTableSeeder');
 	}
 
 }
@@ -72,3 +74,41 @@ class HardwareTypeTableSeeder extends Seeder {
 		));
 	}
 }
+
+
+class HardwareTableSeeder extends Seeder {
+	
+	public function run() 
+	{
+		DB::table('hardware')->delete();
+
+		
+		Hardware::create(array(
+			"hardwareTypeID" => 1,
+			"assetTag" => "123456",
+			"damaged" => "Has a sticky button"
+		));
+		
+		
+	}
+}
+
+class KitTableSeeder extends Seeder {
+	
+	public function run()
+	{
+		DB::table('kit')->delete();
+		
+		Kit::create(array(
+			"hardwareID" => 1,
+			"type" => 1,
+			"currentBranchID" => 1,
+			"barcode" => "1234567890123456",
+			"description" => "A test kit with one something"
+		));
+	}
+}
+					
+			
+		
+		
