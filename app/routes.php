@@ -12,5 +12,5 @@ Route::resource('sessions', 'SessionsController');
 Route::resource('users', 'UsersController');
 Route::resource('hardware', 'HardwareController');
 Route::resource('hardwaretype', 'HardwareTypeController');
-Route::get('/reportdamage', 'PagesController@showReportDamage');
+Route::get('/reportdamage', ['uses'=>'PagesController@showReportDamage', 'as'=> 'reportdamage']);
 Route::resource('kits','KitController');
