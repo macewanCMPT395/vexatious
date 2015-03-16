@@ -9,7 +9,7 @@ class KitController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return View::make('kits.index');
 	}
 
 

@@ -1,3 +1,4 @@
+
 {{ Form::open(['route' => 'sessions.store']) }}
 <div>Login</div>
 <div>
