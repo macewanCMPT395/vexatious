@@ -20,6 +20,12 @@ class HardwareController extends \BaseController {
 	{
 		$devices = Hardware::all();
 		//return View::make('devices.index', ['devices' => devices]);
+		$response = array(
+			'status' => 0,
+			'devices' =>  $devices
+		);
+		
+		return Response::json($response);
 	}
 
 
@@ -44,7 +50,7 @@ class HardwareController extends \BaseController {
 		//add a new device
         $device = new Hardware;
         $device->hardwareTypeID = Input::get('Type');
-        $device->barcode = Input::get('Barcode');
+        $device->assetTag = Input::get('assetTag');
 		$device->damaged = "";
 		
         $device->save();

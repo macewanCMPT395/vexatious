@@ -14,3 +14,4 @@ Route::resource('hardware', 'HardwareController');
 Route::resource('hardwaretype', 'HardwareTypeController');
 Route::get('/reportdamage', ['uses'=>'PagesController@showReportDamage', 'as'=> 'reportdamage']);
 Route::resource('kits','KitController');
+
