@@ -36,25 +36,9 @@ a:active {
     border: 10px solid;
     border-color: #17408A;
     background: #17408A;
-    border-radius: 25px;   
-}
-
-#home {
+    border-radius: 25px;
     float: right;
     margin-right: 10px;
     margin-top: 10px;
     position:relative;
-}
-#reportdamage {
-    float: right;
-    margin-right: 10px;
-    margin-top: 10px;
-    position:relative;
-}
-
-#browsekits {
-    position: relative;
-    margin-right: 10px;
-    margin-top: 10px;
-    float: right;
 }
