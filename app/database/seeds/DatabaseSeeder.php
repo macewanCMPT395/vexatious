@@ -51,5 +51,24 @@ class HardwareTypeTableSeeder extends Seeder {
 			"description" => "360 degrees of nothingness."
 		));
 
+		HardwareType::create(array(
+			"name" => "Playstation 3",
+			"description" => "Sony's 3rd source of grief."
+		));
+		
+		HardwareType::create(array(
+			"name" => "Arduinos",
+			"description" => "Stuff"
+		));
+		
+		HardwareType::create(array(
+			"name" => "Rasperry Pi",
+			"description" => "3.14159Something"
+		));
+		
+		HardwareType::create(array(
+			"name" => "Macbook",
+			"description" => "360 degrees of nothingness."
+		));
 	}
 }
