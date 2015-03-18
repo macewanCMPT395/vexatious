@@ -20,6 +20,15 @@ a:active {
     color: #FEF2D5; #palemandarin
 }
 
+.header-fixed {
+    z-index: 5;
+    width:100%;
+    position:absolute;
+    top:0px;
+    text-align: center;
+    background: #ffffff; #white
+}
+
 .bar {
     height: 15px;
     background: #FBBC2E; #orange
@@ -37,8 +46,8 @@ a:active {
 }
 
 .content {
-    margin: 0px auto;
-    margin-top: 60px;
+    margin: 50px auto;
+    margin-top: 15px;
 }
 
 /*----- Tabs -----*/
@@ -53,14 +62,14 @@ a:active {
     list-style: none;
     position: relative;
     padding: 0px;
-    margin: 0px auto;
+    margin: 75px auto;
 }
 .tabs li{
     float: left;
 }
 .tabs label {
     display: block;
-    padding: 0px 0px;
+    padding: 10px 20px;
     border-radius: 2px 2px 0 0;
     color: #FBBC2E; #orange
     font-size: 24px;
@@ -68,7 +77,7 @@ a:active {
     background: rgba(255,255,255,0.2);
     cursor: pointer;
     position: relative;
-    top: 0px;
+    top: 3px;
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
@@ -102,7 +111,7 @@ a:active {
     padding: 15px;
     color: black;
     position:absolute;
-    top: 0px;
+    top: 53px;
     left: 0;
     box-sizing: border-box;
     -webkit-animation-duration: 0.5s;
