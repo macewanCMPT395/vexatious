@@ -2,7 +2,8 @@
 
 Route::get('/home', 'PagesController@home');
 
-Route::get('/overview',['as' => 'overview',function() { return View::make('overview');}]);
+Route::get('/overview', 'PagesController@overview');
+
 
 Route::get('/signIn', 'PagesController@signIn');
 Route::get('/', 'PagesController@signIn');

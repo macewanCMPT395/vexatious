@@ -57,18 +57,13 @@ a:active {
     color: #FFFFFF;
  }
 
-.menu {
-    margin: auto 70px;
-}
-
 .button {
-    z-index: 0;
     border: 10px solid;
     border-color: #17408A;
     background: #17408A;
     border-radius: 25px;
-    float:left;
-    margin-left: 10px;
+    float: right;
+    margin-right: 10px;
     margin-top: 10px;
     position:relative;
 }
