@@ -15,8 +15,7 @@ class CreateKitTable extends Migration {
 		Schema::create('kit', function(Blueprint $table) {
 			$table->increments('id');
 			
-			$table->bigInteger('hardwareID');
-			$table->foreign('hardwareID')->references('id')->on('hardware');
+
 			
 			$table->bigInteger('type');
 			$table->foreign('type')->references('id')->on('hardwareType');

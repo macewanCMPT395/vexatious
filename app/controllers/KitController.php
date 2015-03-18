@@ -1,7 +1,13 @@
 <?php
 
 class KitController extends \BaseController {
+	protected $kit;
 
+
+	public function __construct(Kit $kit) 
+	{
+		$this->kit = $kit;
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -9,7 +15,14 @@ class KitController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return View::make('kits.index');
+		$kits = Kit::all();
+		$response = array(
+			'status' => 0,
+			'kits' =>  $kits
+		);
+		
+		return Response::json($response['kits']);
 	}
 
 
