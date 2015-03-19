@@ -122,5 +122,12 @@ class KitHardwareTableSeeder extends Seeder {
 					
 	}
 }
+
+class BookingSeeder extends Seeder {
+	public function run()
+	{
+		Booking::create(array());
+	}
+}
 		
 		

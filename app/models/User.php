@@ -66,4 +66,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$updaterule['email'].=','.$this->id;
 		return $this->validate($updaterule);
 	}
+	
+	public function isAdmin() {
+		return $this->role == $this->ADMIN_ROLE;
+	}
 }

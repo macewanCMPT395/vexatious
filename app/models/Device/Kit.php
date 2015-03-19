@@ -11,7 +11,7 @@ class Kit extends Eloquent {
 	public $timestamps = false;
 	
 	protected $fillable = array(
-		'hardwareID', 'type', 'currentBranchID', 'barcode', 'description'
+		'type', 'currentBranchID', 'barcode', 'description'
 	);
 	
 }
