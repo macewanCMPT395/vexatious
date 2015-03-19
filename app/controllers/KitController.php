@@ -52,13 +52,28 @@ class KitController extends \BaseController {
 	 *
 	 * @param  int  $id
 	 * @return Response
+	 *
+	 * Displays a kit with all the associated hardware
+	 *
 	 */
 	public function show($id)
 	{
-		$kit = Kit::find($id);
 		$response = ["status" => "1"];
+		
+		$kit = Kit::find($id);
 		if ($kit != null) {
-			$response = ["status" => "0", "kit" => $kit];
+			$devices = null;
+			$deviceIDs = KitHardware::where('kitID', '=', $kit->id)->get(['hardwareID']);
+			if($deviceIDs) {
+				$allID = [];
+				foreach ($deviceIDs as &$device) {
+					array_push($allID, $device->hardwareID);
+				}
+				$devices = Hardware::whereIn('id', $allID)->get();
+				$response = ["status" => "0", "kit" => $kit, "hardware" => $devices];
+				
+				
+			}
 		}
 		
 		
