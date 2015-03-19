@@ -10,7 +10,7 @@ When creating a new device, should be able to
 
 **/
 class HardwareController extends \BaseController {
-
+	protected $fields = ['type', 'assetTag', 'damaged'];
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -47,12 +47,13 @@ class HardwareController extends \BaseController {
 	 */
 	public function store()
 	{
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		
 		//add a new device
         $device = new Hardware;
-        $device->hardwareTypeID = Input::get('Type');
-        $device->assetTag = Input::get('assetTag');
-		$device->damaged = "";
-		
+		$input = array_filter(Input::only($this->fields));
+		$device->fill($input);	
         $device->save();
 
 		$response = array(
@@ -70,7 +71,8 @@ class HardwareController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$device = Hardware::find($id);
+		return Response::json($device);
 	}
 
 
@@ -82,7 +84,9 @@ class HardwareController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+
 	}
 
 
@@ -94,7 +98,19 @@ class HardwareController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		
+		$response = ["status" => "1"];
+		$device = Hardware::find($id);
+		if($device) {
+			$input = array_filter(Input::only($this->fields));
+			$device->fill($input);
+			$device->save();
+			$response = ["status" => "0", "device" => $device];
+		}
+		
+		return Response::json($response);
 	}
 
 
@@ -106,7 +122,13 @@ class HardwareController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		
+		$device = Hardware::find($id);
+		
+		if($device) $device->delete();
+		
 	}
 
 

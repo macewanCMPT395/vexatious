@@ -1,13 +1,8 @@
 <?php
 
 class KitController extends \BaseController {
-	protected $kit;
-
-
-	public function __construct(Kit $kit) 
-	{
-		$this->kit = $kit;
-	}
+	protected $fields = ['type', 'currentBranchID', 'barcode', 'description']; 
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -15,14 +10,14 @@ class KitController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('kits.index');
+		//return View::make('kits.index');
 		$kits = Kit::all();
 		$response = array(
 			'status' => 0,
 			'kits' =>  $kits
 		);
 		
-		return Response::json($response['kits']);
+		return Response::json($response);
 	}
 
 
@@ -44,7 +39,11 @@ class KitController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::only($this->fields);
+		$kit = new Kit;
+		$kit->fill($input);
+		$kit->save();
+		return Response::json($kit);
 	}
 
 
@@ -53,10 +52,32 @@ class KitController extends \BaseController {
 	 *
 	 * @param  int  $id
 	 * @return Response
+	 *
+	 * Displays a kit with all the associated hardware
+	 *
 	 */
 	public function show($id)
 	{
-		//
+		$response = ["status" => "1"];
+		
+		$kit = Kit::find($id);
+		if ($kit != null) {
+			$devices = null;
+			$deviceIDs = KitHardware::where('kitID', '=', $kit->id)->get(['hardwareID']);
+			if($deviceIDs) {
+				$allID = [];
+				foreach ($deviceIDs as &$device) {
+					array_push($allID, $device->hardwareID);
+				}
+				$devices = Hardware::whereIn('id', $allID)->get();
+				$response = ["status" => "0", "kit" => $kit, "hardware" => $devices];
+				
+				
+			}
+		}
+		
+		
+		return Response::json($response);
 	}
 
 
@@ -80,7 +101,20 @@ class KitController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$kit = Kit::find($id);
+		$response = ["status" => "1"];
+		if ($kit != null) {
+			$response = ["status" => "0", "kit"=> $kit];
+			$input = array_filter(Input::only($this->fields));
+			$kit->fill($input);
+			
+			echo($kit);
+			
+			$kit->save();
+
+		}
+		
+		return Response::json($response);
 	}
 
 
@@ -92,7 +126,12 @@ class KitController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		$kit::find($id);
+		if($kit) $kit->destroy();
+		
+		return Response::json(["status" => "0"]);
 	}
 
 

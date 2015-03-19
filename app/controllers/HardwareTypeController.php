@@ -1,13 +1,8 @@
 <?php
 
 class HardwareTypeController extends \BaseController {
-	protected $type;
+	protected $fields = ['name', 'description'];
 
-
-	public function __construct(HardwareType $type) 
-	{
-		$this->type = $type;
-	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -43,8 +38,12 @@ class HardwareTypeController extends \BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('name', 'description');
-		$this->type->fill($input);
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		
+		$input = array_filter(Input::only(fields));
+		$type = new HardwareType;
+		$type->fill($input);
 		$this->type->save();
 		
 		return Response::json($this->type);
@@ -59,7 +58,8 @@ class HardwareTypeController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$type = HardwareType::find($id);
+		return Response::json($type);
 	}
 
 
@@ -71,7 +71,9 @@ class HardwareTypeController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		return Response::json(["msg" => "Make Hardware Type Edit page!"]);
 	}
 
 
@@ -83,7 +85,24 @@ class HardwareTypeController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		
+		$type = HardwareType::find($id);
+		$response = ["status" => "1"];
+		
+		if ($type) {
+			$input = array_filter(Input::only('name', 'description'));
+			$type->fill($input);
+			$type->save();
+		
+			$response = [
+				"status" => 0,
+				"msg" => "Successfully Updated type ".$type->name
+			];
+		}
+		
+		return Response::json($type);
 	}
 
 
@@ -95,7 +114,11 @@ class HardwareTypeController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$user = Auth::user();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		
+		$type = HardwareType::find($id);
+		if ($type) $type->delete();
 	}
 
 

@@ -51,10 +51,8 @@ class UsersController extends BaseController {
 		//Need to check if user is an admin first before they can
 		//edit other users
 		$user = Auth::user();
-		if ($user->role == User::ADMIN_ROLE) 
-			return View::make('users.edit', ['user' => $user]);
-		
-		return Redirect::back();        
+		if (!$user || !$user->isAdmin()) return Redirect::back();
+		return View::make('users.edit', ['user' => $user]);       
     }
 	
     public function update()
@@ -66,8 +64,7 @@ class UsersController extends BaseController {
 		//once again, make sure the user logged in is the admin
 		//before updating
 		$user = Auth::user();
-		if ($user->role != User::ADMIN_ROLE)
-			return Redirect::back();
+		if (!$user || !$user->isAdmin()) return Redirect::back();
 		
 		//find user based on id (should be specified by the page form
 		$updateUser = User::find(Input::get("userID"));
