@@ -1,4 +1,4 @@
-<? php
+<?php
 /*
 Contains information for a given branch
 */

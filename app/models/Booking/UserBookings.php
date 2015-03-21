@@ -1,4 +1,4 @@
-<? php
+<?php
 /*
 Keeps track of all bookings created by every user. When a booking is created, 
 UserNotifications should be created as well.

@@ -60,23 +60,13 @@ class KitController extends \BaseController {
 	{
 		$response = ["status" => "1"];
 		
-		$kit = Kit::find($id);
-		if ($kit != null) {
-			$devices = null;
-			$deviceIDs = KitHardware::where('kitID', '=', $kit->id)->get(['hardwareID']);
-			if($deviceIDs) {
-				$allID = [];
-				foreach ($deviceIDs as &$device) {
-					array_push($allID, $device->hardwareID);
-				}
-				$devices = Hardware::whereIn('id', $allID)->get();
-				$response = ["status" => "0", "kit" => $kit, "hardware" => $devices];
-				
-				
-			}
-		}
 		
+		$kit = DB::table('kit')->join('kithardware', 'kithardware.kitID', '=', $id)
+						->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
+						->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
+						->get();
 		
+		if ($kit) $response = ["status" => "0", "kit" => $kit];		
 		return Response::json($response);
 	}
 

@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder {
 		$this->call('HardwareTypeTableSeeder');
 		$this->call('HardwareTableSeeder');
 		$this->call('KitTableSeeder');
+		$this->call('NotificationMessageSeeder');
 		$this->call('KitHardwareTableSeeder');
+		$this->call('BookingSeeder');
 	}
 
 }
@@ -123,10 +125,63 @@ class KitHardwareTableSeeder extends Seeder {
 	}
 }
 
+class NotificationMessageSeeder extends Seeder {
+	
+	public function run()
+	{
+		DB::table('notificationMsg')->delete();
+		
+		//messages can be replaced with whatever
+		Messages::create(array(
+			"message" => "Have you receieved kit ### yet?"
+		));
+		
+		Messages::create(array(
+			"message" => "Have you sent kit ### yet?"
+		));
+	}
+}
+
 class BookingSeeder extends Seeder {
 	public function run()
 	{
-		Booking::create(array());
+		DB::table('booking')->delete();
+		//create the actual booking
+		$booking = Booking::create(array(
+			"eventName" => "Test Event Number 1",
+			"start" => date("d/m/Y", time()),//start time today
+			"end"=> date("d/m/Y", time() + (2* 24*60*60)),//end date 2 days from now
+			"shipping" => date("d/m/Y", time() + (3* 24*60*60)),
+			"destination" => 1,
+			"received" => false,
+			"shipped" => false
+		));
+
+		//now link the booking with a user
+		DB::table('allBookings')->delete();
+		UserBookings::create(array(
+			"userID" => 0,
+			"bookingID" => $booking->id,
+			"kitID" => 1
+		));
+		
+		//create notifications for the user
+		//notifications will need to be joined with the 
+		//bookings table to get the proper dates
+		DB::table('notifications')->delete();
+		//first notification for receiving
+		UserNotifications::create(array(
+			"userID" => 0,
+			"bookingID" => $booking->id,
+			"msgID" => 1
+		));
+		//second notification for shipping
+		UserNotifications::create(array(
+			"userID" => 0,
+			"bookingID" => $booking->id,
+			"msgID" => 2
+		));	
+		
 	}
 }
 		

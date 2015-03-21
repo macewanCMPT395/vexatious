@@ -1,9 +1,8 @@
-<? php
+<?php
 /*
 Booking information
 */
-	
-	
+
 class Booking extends Eloquent {
 	protected $table = 'booking';
 	public $timestamps = false;
@@ -14,3 +13,4 @@ class Booking extends Eloquent {
 	);
 	
 }
+
