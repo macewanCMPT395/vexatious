@@ -2,24 +2,28 @@
 
 body, html {
     height: 100%;
+    width: 100%;
     margin: 0;
     margin-left: auto;
     margin-right: auto;
     -webkit-font-smoothing: antialiased;
     font-weight: 100;
     background: #ffffff;
-    text-align: center;
     font-family: helvetica;
 }
 
 #Image {
-  padding-top: 10px;
-  padding-left: 10px;
+    text-align: left;
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 5%;
+    position: relative;
+    background: #ffffff;
 }
 
 #bar {
     height: 15px; 
-    background: #EEAC00; #Orange
+    background: #FBBC2E; #Orange
 }
 
 .cal {
