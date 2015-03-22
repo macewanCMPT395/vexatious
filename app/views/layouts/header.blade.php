@@ -13,7 +13,7 @@
 
 <div class="menu">
 <div class="button">{{ HTML::linkRoute('home', 'Overview') }}</div>
-<div class="button">{{ HTML::linkRoute('home', 'Book Kit') }}</div>
+<div class="button">{{ HTML::linkRoute('bookkit', 'Book Kit') }}</div>
 <div class="button">{{ HTML::linkRoute('browsekits', 'Browse Kits') }}</div>
 
 @yield('adminButtons')
