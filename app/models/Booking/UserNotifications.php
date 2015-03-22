@@ -1,4 +1,4 @@
-<? php
+<?php
 /*
 Keeps track of what notification messages need to be generated and sent out.
 Each notification entry refers to a user, their booking, and what message needs
