@@ -13,6 +13,8 @@
     {{ HTML::linkRoute('home', 'Overview') }} </li>
 <li @yield('bookkitli')> 
     {{ HTML::linkRoute('bookkit', 'Book Kit') }} </li>
+<li @yield('shippingli')> 
+    {{ HTML::linkRoute('shipping', 'Shipping') }} </li>
 <li @yield('browsekitsli')> 
     {{ HTML::linkRoute('browsekits', 'Browse Kits') }} </li>
 @yield('adminItems')

@@ -28,6 +28,15 @@ class PagesController extends BaseController {
         //Pass bookings to view
 		return View::make('bookkit' ,compact('bookings'));
 	}
+    
+    public function shipping()
+	{
+        //Get all kits
+        $kits = DB::table('kit')->get();
+        //dd($kits);
+        //Pass kits to view
+		return View::make('shipping' ,compact('kits'));
+	}
 	
 	public function showReportDamage()
 	{

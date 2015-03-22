@@ -85,14 +85,11 @@ a:active {
 }
 
 .navMenu a {
-    padding: 6px;
-    padding-bottom: 7px;
+    padding: 6px 10px 7px 10px;
     width: auto;
 }
 
 .navMenu a:hover {
     color: #FBBC2E;
     background-color: #FFF;
-    padding: 6px;
-    padding-bottom: 7px;
 }
