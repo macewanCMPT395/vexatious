@@ -10,6 +10,7 @@
 <div id="Image"><img src="http://www.epl.ca/sites/all/themes/epl/img/EPL_logo2.png" border="0" style="width:400px;"></div>
     
 <div id="bar"></div>
+
 <div class="menu">
 <div class="button">{{ HTML::linkRoute('home', 'Overview') }}</div>
 <div class="button">{{ HTML::linkRoute('home', 'Book Kit') }}</div>
