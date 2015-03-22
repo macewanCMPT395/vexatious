@@ -1,6 +1,8 @@
 @extends('layouts.header')
 
-@section('adminButtons')
-<div class="button">{{ HTML::linkRoute('kits.edit', 'Edit Kits') }}</div>
-<div class="button">{{ HTML::linkRoute('users.edit', 'Edit Users') }}</div>
+@section('adminItems')
+<li @yield('editkitsli')> 
+    {{ HTML::linkRoute('kits.edit', 'Edit Kits') }} </li>
+<li @yield('editusersli')> 
+    {{ HTML::linkRoute('users.edit', 'Edit Users') }} </li>
 @stop

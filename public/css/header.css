@@ -22,21 +22,6 @@ body, html {
     background: #ffffff;
 }
 
-#bar {
-    height: 15px; 
-    background: #FBBC2E; #Orange
-}
-
-.cal {
-    width: 300px;
-    height: 200px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -150px;
-    margin-top: -100px;
-}
-
 a {
     text-decoration:none;
     color: #FFFFFF;
@@ -62,18 +47,52 @@ a:active {
     color: #FFFFFF;
  }
 
-.menu {
-    margin: auto 70px;
+.navMenu {
+    padding-left: 70px;
+    width: width;
+    height: 36px;
+    font-size: 20px;
+    line-height: 36px;
+    text-align: left;
+    color: white;
+    font-weight: 400;
+    background-color: #FBBC2E;
 }
 
-.button {
-    z-index: 0;
-    border: 10px solid;
-    border-color: #17408A;
-    background: #17408A;
-    border-radius: 25px;
-    float:left;
-    margin-left: 10px;
-    margin-top: 10px;
-    position:relative;
+.navMenu ul {
+    height: auto;
+    padding: 0px 0px;
+    margin: 0px;
+}
+
+.navMenu li { 
+    box-sizing: border-box;
+    display: block;
+    height: auto;
+    display: block;
+    float: left;
+    list-style-type: none;
+    position: relative;
+}
+
+.active a {
+    background: #039CE0;
+}
+
+#bar {
+    height: 15px;
+    background: #FBBC2E; #orange
+}
+
+.navMenu a {
+    padding: 6px;
+    padding-bottom: 7px;
+    width: auto;
+}
+
+.navMenu a:hover {
+    color: #FBBC2E;
+    background-color: #FFF;
+    padding: 6px;
+    padding-bottom: 7px;
 }

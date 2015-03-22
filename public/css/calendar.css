@@ -37,8 +37,8 @@ a:active {
 }
 
 .content {
-    margin: 0px auto;
-    margin-top: 60px;
+    margin: 0px;
+    margin-top: 0px;
 }
 
 /*----- Tabs -----*/

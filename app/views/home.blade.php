@@ -61,6 +61,7 @@ function parseDate(date) {
 }
 </script>
 @stop
+@section('homeli') class="active" @stop
 @section('content')
 <div class="content">
 <div class="tabs">
