@@ -31,7 +31,7 @@ $(document).ready(function() {
     
     $('#calendar').fullCalendar({
         header: {
-            left: 'title',
+            left: ' title',
             center: '',
             right: 'prev,next today'
         },
