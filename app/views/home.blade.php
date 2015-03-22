@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 
-
 @section('headerScript')
 {{ HTML::style('css/calendar.css') }}
 <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
@@ -9,8 +8,35 @@
 <script src='fullcalendar/fullcalendar.js'></script>
 <script type='text/javascript' src='fullcalendar/gcal.js'></script>
 <script> 
-$(document).ready(function() {
-    var eventsArray = [
+    
+var bookings = <?php echo json_encode($bookings); ?>;
+
+var eventsArray = [];
+    
+console.log(bookings[0])
+
+//LOAD Bookings into events array
+for (var i = 0; i < bookings.length; i++) {
+    eventsArray.unshift({
+        title: bookings[i].eventName,
+        start: parseDate(bookings[i].start),
+        end: parseDate(bookings[i].end),
+        tip: 'Destination: ' + bookings[i].destination,
+        color: '#7CC045',
+        allDay: true    
+        });
+}
+
+eventsArray.unshift({
+        title: 'iPad #388',
+        start: new Date(2015, 2, 20),
+        end: new Date(2015, 2, 25),
+        tip: 'Personal tip 1',
+        color: '#7CC045',
+        allDay: true    
+        });
+  /*  
+var eventsArray = [
         {
         title: 'iPad #388',
         start: new Date(2015, 2, 20),
@@ -43,9 +69,14 @@ $(document).ready(function() {
         allDay: true 
         }
     ];
+*/
+    
+$(document).ready(function() {
+    
+    
+    
 
     $('#calendar').fullCalendar({
-        editable: true,
         header: {
             left: 'title',
             center: '',
@@ -58,7 +89,7 @@ $(document).ready(function() {
         //theme: true,
         contentHeight: 600,
         //defaultDate: '2015-04-12',
-        editable: true,
+        editable: false,
         eventLimit: true, // allow "more" link when too many events
         events: eventsArray,
         eventRender: function(event, element) {
@@ -66,6 +97,15 @@ $(document).ready(function() {
         }
     });
 });
+    
+function parseDate(date) {
+    var day = date.substring(0,2);
+    //Decrement Month to convert to month system starting with 0
+    var month = date.substring(3,5) - 1; 
+    var year = date.substring(6,10);
+    
+    return new Date(year, month, day);
+}
 </script>
 
 

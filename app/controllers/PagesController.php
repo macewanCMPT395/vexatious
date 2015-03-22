@@ -2,11 +2,13 @@
 
 class PagesController extends BaseController {
 
-	
-
 	public function home()
 	{
-		return View::make('home');
+        //Find all bookings
+        $bookings = DB::table('booking')->get();
+        //dd($bookings);
+        //Pass bookings to view
+		return View::make('home' ,compact('bookings'));
 	}
 	
 	public function showReportDamage()
