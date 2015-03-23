@@ -161,7 +161,7 @@ class BookingSeeder extends Seeder {
 		//now link the booking with a user
 		DB::table('allBookings')->delete();
 		UserBookings::create(array(
-			"userID" => 0,
+			"userID" => 1,
 			"bookingID" => $booking->id
 		));
 		
@@ -171,13 +171,13 @@ class BookingSeeder extends Seeder {
 		DB::table('notifications')->delete();
 		//first notification for receiving
 		UserNotifications::create(array(
-			"userID" => 0,
+			"userID" => 1,
 			"bookingID" => $booking->id,
 			"msgID" => 1
 		));
 		//second notification for shipping
 		UserNotifications::create(array(
-			"userID" => 0,
+			"userID" => 1,
 			"bookingID" => $booking->id,
 			"msgID" => 2
 		));	
