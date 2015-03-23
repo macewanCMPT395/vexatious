@@ -11,7 +11,9 @@ class KitController extends \BaseController {
 	public function index()
 	{
 		$response = ["status" => "1"];
-		$kits = DB::table('kit')->join('hardwareType', 'hardwareType.id', '=', 'kit.type')->get();
+		$kits = DB::table('kit')->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
+					->join('branch', 'currentBranchID', '=', 'branch.id') 
+					->get(['kit.id', 'kit.description', 'barcode', 'hardwareType.name', 'identifier']);
 		if ($kits) {
 			$response = array(
 				'status' => 0,

@@ -55,8 +55,8 @@
         <tr>
             <td>{{$kit->description}}</td>
             <td>{{$kit->name}}</td>
-            <td>{{$kit->currentBranchID}}</td>
             <td>{{$kit->barcode}}</td>
+            <td>{{$kit->identifier}}</td>
             <td>None</td>
         </tr>
         @endforeach
