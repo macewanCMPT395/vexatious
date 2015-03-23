@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('NotificationMessageSeeder');
 		$this->call('KitHardwareTableSeeder');
 		$this->call('BookingSeeder');
+		$this->call('BranchSeeder');
 	}
 
 }
@@ -233,4 +234,38 @@ class BookingSeeder extends Seeder {
 	}
 }
 		
-		
+class BranchSeeder extends Seeder {
+
+	public function run()
+	{
+
+		DB::table('branch')->delete();
+
+		// load the contents of the branches.xml file
+		$xml = file_get_contents('app/database/branches.xml');
+
+		// parse the loaded xml file
+		$parsed = Parser::xml($xml);
+
+		// get the important information out of the branches.xml
+		// file and seed the database with it
+		foreach($parsed['BranchInfo'] as $branchinfo) {
+
+			$branchID = $branchinfo['BranchId'];
+			$branchName = $branchinfo['Name'];
+			$branchAddress = $branchinfo['Address'];
+			$branchZip = $branchinfo['ZipCode'];
+			$branchLocation = $branchAddress." ".$branchZip;
+
+			Branch::create(array(
+				"identifier" => $branchID,
+				"name" => $branchName,
+				"location" => $branchLocation
+			));
+
+		}
+
+	}
+
+}
+
