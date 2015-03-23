@@ -20,7 +20,7 @@ class SessionsController extends BaseController {
 			$response = array(
 			 "status" => 0
 			 );
-			return Redirect::route('home',array('email' => $email));
+			return Redirect::route('bookings.index');
 		}
 
 		$response = array(

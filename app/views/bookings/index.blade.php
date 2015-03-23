@@ -97,7 +97,7 @@ function parseDate(date) {
     <div class="title"></div>
     <ul class="formFields">
     <li>
-    {{ Form::label('branch', 'Branch') }}
+    {{ Form::label('branch', 'Bookings For') }}
     {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
     </li>
     <li>
