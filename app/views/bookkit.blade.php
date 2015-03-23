@@ -8,6 +8,7 @@
 <script src='fullcalendar/lib/moment.min.js'></script>
 <script src='fullcalendar/fullcalendar.js'></script>
 <script type='text/javascript' src='fullcalendar/gcal.js'></script>
+<script type='text/javascript' src='lightbox.js'></script>
 <script> 
 
 $('td.fc-day-number').mouseover(function ()
@@ -15,7 +16,7 @@ $('td.fc-day-number').mouseover(function ()
 var strDate = $(this).data('date');
 $("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
 });
-    
+
 //LOAD Bookings into events array
 var bookings = <?php echo json_encode($bookings); ?>;
 var eventsArray = [];
@@ -32,6 +33,7 @@ for (var i = 0; i < bookings.length; i++) {
 
 var selectedDay;
 $(document).ready(function() {
+    //var lightbox = LightBox.init();
     $('#calendar').fullCalendar({
         header: {
             left: ' title',
@@ -56,7 +58,12 @@ $(document).ready(function() {
             //Must not be in the past, 
             //Must have kits available
             selectDay($(this));
-            
+            /*
+            $.get('/signIn',function(data) {
+                lightbox.width("300px").height("300px");
+                  lightbox.show(data);
+            });
+            */
             //Auto-Fill Date Fields
             var start = document.getElementById('startField'),
                 end = document.getElementById('endField');
@@ -90,6 +97,10 @@ function parseDate(date) {
     <div class="title"></div>
     <ul class="formFields">
     <li>
+    {{ Form::label('branch', 'Branch') }}
+    {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
+    </li>
+    <li>
     {{ Form::label('type', 'Type') }}
     {{ Form::select('type', array('ipad' => 'iPad', 'zune' => 'Zune')) }}
     </li>
@@ -104,10 +115,6 @@ function parseDate(date) {
     <li>
     {{ Form::label('end', 'End') }}
     {{ Form::input('date', 'end',  null, ['id' => 'endField']) }}
-    </li>
-    <li>
-    {{ Form::label('branch', 'Branch') }}
-    {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
     </li>
     <li>
     {{ Form::label('barcode', 'Barcode ') }}
@@ -130,4 +137,9 @@ function parseDate(date) {
 </ul>
 </div>
 </div>
+
+<script>
+
+
+</script>
 @stop

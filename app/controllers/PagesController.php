@@ -11,15 +11,6 @@ class PagesController extends BaseController {
 		return View::make('home' ,compact('bookings'));
 	}
     
-    public function browsekits()
-	{
-        //Get all kits
-        $kits = DB::table('kit')->get();
-        //dd($kits);
-        //Pass kits to view
-		return View::make('browsekits' ,compact('kits'));
-	}
-    
     public function bookkit()
 	{
         //Get all bookings
