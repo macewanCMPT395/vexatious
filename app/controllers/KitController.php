@@ -70,7 +70,8 @@ class KitController extends \BaseController {
 		$response = ["status" => "1"];
 		
 		
-		$kit = DB::table('kit')->join('kithardware', 'kithardware.kitID', '=', $id)
+		$kit = DB::table('kit')->where('kit.id', '=', $id)
+						->join('kithardware', 'kithardware.kitID', '=', $id)
 						->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
 						->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
 						->get();
