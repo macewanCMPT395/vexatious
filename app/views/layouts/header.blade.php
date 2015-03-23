@@ -10,7 +10,7 @@
 <div class="navMenu">
 <ul>
 <li @yield('bookkitli')> 
-    {{ HTML::linkRoute('bookkit', 'Booking') }} </li>
+    {{ HTML::linkRoute('bookings.index', 'Bookings') }} </li>
 <li @yield('shippingli')> 
     {{ HTML::linkRoute('shipping', 'Shipping') }} </li>
 <li @yield('browsekitsli')> 
