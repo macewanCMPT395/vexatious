@@ -61,13 +61,14 @@ class KitController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$kits = DB::table('kit')->join('kithardware', 'kithardware.kitID', '=', $id)
+		$response = ["status" => "1"];
+		
+		
+		$kit = DB::table('kit')->where('kit.id', '=', $id)
+						->join('kithardware', 'kithardware.kitID', '=', $id)
 						->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
 						->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
 						->get();
-        
-        //Get all kits
-        $kits = DB::table('kit')->get();
         
         //Pass kits to view
 		return View::make('browsekits' ,compact('kits'));

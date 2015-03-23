@@ -19,7 +19,6 @@ class BookingController extends \BaseController {
 						->get();
 		
 		if ($bookings) {
-			//unset($bookings->password);
 			foreach ($bookings as &$book) {
 				unset($book->password);
 				unset($book->email);
@@ -61,7 +60,25 @@ class BookingController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$response = ["status" => "1"];
+		
+		
+		$bookings = DB::table('booking')->where('booking.id', '=', $id)
+						->join('allBookings', 'allBookings.bookingID', '=', $id)
+						->join('users', 'allBookings.userID', '=', 'users.id')
+						->join('kit', 'booking.kitID', '=', 'kit.id')
+						->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
+						->get();
+		
+		if ($bookings) {
+			foreach ($bookings as &$book) {
+				unset($book->password);
+				unset($book->email);
+			}
+			$response = ["status" => "0", "bookings" => $bookings];
+			
+		}
+		return Response::json($response);
 	}
 
 
