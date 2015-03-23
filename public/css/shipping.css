@@ -1,0 +1,64 @@
+body {
+}
+
+.tableTitle {
+    margin: 5px 0% 5px 0%;
+    font-size: 25px;
+    float: left;
+}
+
+#tomorrowDate, #todayDate {
+    margin: 10px 0% 5px 3%;
+    float: left;
+    font-size: 20px;
+    color: grey;
+}
+
+
+#todayTable, #tomorrowTable {
+    margin: 0px 0% 40px 3.3%;
+    width: 45%;
+    height: 76%;
+    float: left;
+    text-align: left;
+}
+
+.tableRows {
+    height: 100%;
+    overflow:auto;
+}
+
+.kitsTable{
+    table-layout: fixed;
+    width:100%; 
+    border-collapse:collapse; 
+}
+.kitsTable th{ 
+    padding:7px; 
+    text-align: left;
+    background: #666666;
+    color: #ffffff;
+}
+.kitsTable td{ 
+    padding:7px; 
+}
+/* Define the default color for all the table rows */
+.kitsTable tr{
+    background: #eeeeee;
+}
+/* Define the hover highlight color for the table row */
+.kitsTable tbody tr:hover {
+      background: #dddddd;
+}
+
+.selected {
+    background-color: #FBBC2E !important;
+}
+
+th, td {
+    width: 20%;
+}
+
+.highlight {
+    background: #ffffff;
+}

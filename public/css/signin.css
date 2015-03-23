@@ -1,0 +1,30 @@
+.outer {
+    margin-top: 20%;
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.login {
+    width: 20%;
+    margin: auto;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.title {
+    font-size: 50px;
+    width: 100%;
+    float: left;
+    margin: auto;
+    text-align: right;
+}
+
+#Image {
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 5%;
+    position: relative;
+    background: #ffffff;
+}
