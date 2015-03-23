@@ -20,7 +20,7 @@ class KitController extends \BaseController {
 		}
         
         //Pass kits to view
-		return View::make('browsekits' ,compact('kits'));
+		return View::make('kits/index' ,compact('kits'));
 	}
 
 
