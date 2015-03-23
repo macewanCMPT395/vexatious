@@ -10,13 +10,6 @@ class KitController extends \BaseController {
 	 */
 	public function index()
 	{
-		//return View::make('kits.index');
-		/*$kits = Kit::all();
-		$response = array(
-			'status' => 0,
-			'kits' =>  $kits
-		);*/
-		
 		$response = ["status" => "1"];
 		$kits = DB::table('kit')->join('hardwareType', 'hardwareType.id', '=', 'kit.type')->get();
 		if ($kits) {
@@ -25,8 +18,9 @@ class KitController extends \BaseController {
 				'kits' =>  $kits
 			);		
 		}
-		
-		return Response::json($response);
+        
+        //Pass kits to view
+		return View::make('kits/index' ,compact('kits'));
 	}
 
 
@@ -67,16 +61,16 @@ class KitController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$response = ["status" => "1"];
-		
-		
-		$kit = DB::table('kit')->join('kithardware', 'kithardware.kitID', '=', $id)
+		$kits = DB::table('kit')->join('kithardware', 'kithardware.kitID', '=', $id)
 						->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
 						->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
 						->get();
-		
-		if ($kit) $response = ["status" => "0", "kit" => $kit];		
-		return Response::json($response);
+        
+        //Get all kits
+        $kits = DB::table('kit')->get();
+        
+        //Pass kits to view
+		return View::make('browsekits' ,compact('kits'));
 	}
 
 
