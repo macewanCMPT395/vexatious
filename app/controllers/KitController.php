@@ -11,11 +11,20 @@ class KitController extends \BaseController {
 	public function index()
 	{
 		//return View::make('kits.index');
-		$kits = Kit::all();
+		/*$kits = Kit::all();
 		$response = array(
 			'status' => 0,
 			'kits' =>  $kits
-		);
+		);*/
+		
+		$response = ["status" => "1"];
+		$kits = DB::table('kit')->join('hardwareType', 'hardwareType.id', '=', 'kit.type')->get();
+		if ($kits) {
+			$response = array(
+				'status' => 0,
+				'kits' =>  $kits
+			);		
+		}
 		
 		return Response::json($response);
 	}
