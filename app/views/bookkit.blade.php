@@ -3,6 +3,7 @@
 @section('headerScript')
 {{ HTML::style('css/calendar.css') }}
 {{ HTML::style('css/bookkit.css') }}
+{{ HTML::style('css/lightbox.css') }}
 <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
 <script src='fullcalendar/lib/jquery.min.js'></script>
 <script src='fullcalendar/lib/moment.min.js'></script>
@@ -33,7 +34,7 @@ for (var i = 0; i < bookings.length; i++) {
 
 var selectedDay;
 $(document).ready(function() {
-    //var lightbox = LightBox.init();
+    var lightbox = LightBox.init();
     $('#calendar').fullCalendar({
         header: {
             left: ' title',
@@ -58,12 +59,9 @@ $(document).ready(function() {
             //Must not be in the past, 
             //Must have kits available
             selectDay($(this));
-            /*
-            $.get('/signIn',function(data) {
-                lightbox.width("300px").height("300px");
-                  lightbox.show(data);
-            });
-            */
+            lightbox.width("600px").height("600px");
+            lightbox.show("Test");
+   
             //Auto-Fill Date Fields
             var start = document.getElementById('startField'),
                 end = document.getElementById('endField');
