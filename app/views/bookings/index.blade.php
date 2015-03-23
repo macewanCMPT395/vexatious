@@ -2,20 +2,24 @@
 
 @section('headerScript')
 {{ HTML::style('css/calendar.css') }}
+{{ HTML::style('css/bookkit.css') }}
 <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
 <script src='fullcalendar/lib/jquery.min.js'></script>
 <script src='fullcalendar/lib/moment.min.js'></script>
 <script src='fullcalendar/fullcalendar.js'></script>
 <script type='text/javascript' src='fullcalendar/gcal.js'></script>
+<script type='text/javascript' src='lightbox.js'></script>
 <script> 
-    
-var bookings = <?php echo json_encode($bookings); ?>;
 
-var eventsArray = [];
-    
-console.log(bookings[0])
+$('td.fc-day-number').mouseover(function ()
+{
+var strDate = $(this).data('date');
+$("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
+});
 
 //LOAD Bookings into events array
+var bookings = <?php echo json_encode($bookings); ?>;
+var eventsArray = [];
 for (var i = 0; i < bookings.length; i++) {
     eventsArray.unshift({
         title: bookings[i].eventName,
@@ -27,8 +31,9 @@ for (var i = 0; i < bookings.length; i++) {
         });
 }
 
+var selectedDay;
 $(document).ready(function() {
-    
+    //var lightbox = LightBox.init();
     $('#calendar').fullCalendar({
         header: {
             left: ' title',
@@ -47,9 +52,32 @@ $(document).ready(function() {
         events: eventsArray,
         eventRender: function(event, element) {
             element.attr('title', event.tip);
+        },
+        dayClick: function(date, jsEvent, view) {
+            //CHECK if day can be selected
+            //Must not be in the past, 
+            //Must have kits available
+            selectDay($(this));
+            /*
+            $.get('/signIn',function(data) {
+                lightbox.width("300px").height("300px");
+                  lightbox.show(data);
+            });
+            */
+            //Auto-Fill Date Fields
+            var start = document.getElementById('startField'),
+                end = document.getElementById('endField');
+            start.value = end.value = date.format();
         }
     });
 });
+    
+function selectDay(day){
+    if (selectedDay != null)
+        selectedDay.css('background-color', 'white');
+    selectedDay = day;
+    selectedDay.css('background-color', '#FBBC2E');
+}
     
 function parseDate(date) {
     var day = date.substring(0,2);
@@ -64,6 +92,40 @@ function parseDate(date) {
 @section('bookkitli') class="active" @stop
 @section('content')
 <div class="content">
+<div class="bookKitForm">
+    {{ Form::open(['method' => 'get', 'route' => 'kits.index']) }}
+    <div class="title"></div>
+    <ul class="formFields">
+    <li>
+    {{ Form::label('branch', 'Bookings For') }}
+    {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
+    </li>
+    <li>
+    {{ Form::label('type', 'Type') }}
+    {{ Form::select('type', array('ipad' => 'iPad', 'zune' => 'Zune')) }}
+    </li>
+    <li>
+    {{ Form::label('eventName', 'Event Name') }}
+    {{ Form::text('eventName') }}
+    </li>
+    <li>
+    {{ Form::label('start', 'Start') }}
+    {{ Form::input('date', 'start',  null, ['id' => 'startField']) }}
+    </li>
+    <li>
+    {{ Form::label('end', 'End') }}
+    {{ Form::input('date', 'end',  null, ['id' => 'endField']) }}
+    </li>
+    <li>
+    {{ Form::label('barcode', 'Barcode ') }}
+    {{ Form::text('barcode') }}
+    </li>
+    <li>
+    {{ Form::submit('Book Kit') }}
+    </li>
+    </ul>
+    {{ Form::close() }}
+</div>
 <div class="tabs">
     <ul class="tabs">
         <li>
@@ -76,4 +138,8 @@ function parseDate(date) {
 </div>
 </div>
 
+<script>
+
+
+</script>
 @stop

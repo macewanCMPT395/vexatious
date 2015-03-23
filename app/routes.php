@@ -8,4 +8,4 @@ Route::resource('bookings', 'BookingController');
 
 Route::get('/shipping', ['uses'=>'BookingController@shipping', 'as'=> 'shipping']);
 Route::get('/', 'PagesController@signIn');
-Route::get('/{email}', ['as' => 'home','uses' => 'PagesController@home']);
+
