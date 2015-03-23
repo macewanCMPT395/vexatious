@@ -14,8 +14,12 @@ class CreateAllBookingsTable extends Migration {
 	{
 		Schema::create('allBookings', function(Blueprint $table) {
 			$table->bigInteger('bookingID');
+			$table->foreign('bookingID')->references('id')->on('booking');
+			
+			
 			$table->bigInteger('userID');
-			$table->bigInteger('kitID');
+			$table->foreign('userID')->references('id')->on('users');
+			
 		});
 	}
 

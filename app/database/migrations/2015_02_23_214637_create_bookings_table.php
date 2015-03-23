@@ -25,6 +25,9 @@ class CreateBookingsTable extends Migration {
 
 			$table->boolean('received');
 			$table->boolean('shipped');
+			
+			$table->bigInteger('kitID');
+			$table->foreign('kitID')->references('id')->on('kit');
 		});
 	}
 
