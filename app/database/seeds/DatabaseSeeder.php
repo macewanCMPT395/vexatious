@@ -154,15 +154,15 @@ class BookingSeeder extends Seeder {
 			"shipping" => date("d/m/Y", time() + (3* 24*60*60)),
 			"destination" => 1,
 			"received" => false,
-			"shipped" => false
+			"shipped" => false,
+			"kitID" => 1
 		));
 
 		//now link the booking with a user
 		DB::table('allBookings')->delete();
 		UserBookings::create(array(
 			"userID" => 0,
-			"bookingID" => $booking->id,
-			"kitID" => 1
+			"bookingID" => $booking->id
 		));
 		
 		//create notifications for the user
