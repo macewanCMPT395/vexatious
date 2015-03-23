@@ -19,9 +19,8 @@ class SessionsController extends BaseController {
 			//successful authentication
 			$response = array(
 			 "status" => 0
-			);
-
-			return Redirect::home();
+			 );
+			return Redirect::route('home',array('email' => $email));
 		}
 
 		$response = array(

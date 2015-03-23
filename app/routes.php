@@ -1,13 +1,8 @@
 <?php
 
-Route::get('/home', 'PagesController@home');
-
-Route::get('/overview', 'PagesController@overview');
-
-
-Route::get('/signIn', 'PagesController@signIn');
 Route::get('/', 'PagesController@signIn');
-Route::get('/test',['as' => 'home',function() { return View::make('home');}]);
+Route::get('/{email}', ['as' => 'home','uses' => 'PagesController@home']);
+Route::get('/signin', 'PagesController@signIn');
 Route::resource('sessions', 'SessionsController');
 Route::resource('users', 'UsersController');
 Route::resource('hardware', 'HardwareController');
