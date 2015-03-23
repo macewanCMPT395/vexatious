@@ -7,26 +7,40 @@ class BookingController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		$response = ["status" => "1"];
+    public function getBookings() {
+        $bookings = ["status" => "1"];
 		
-		
-		$bookings = DB::table('booking')->join('allBookings', 'allBookings.bookingID', '=', 'booking.id')
+		$allBookings = DB::table('booking')->join('allBookings', 'allBookings.bookingID', '=', 'booking.id')
 						->join('users', 'allBookings.userID', '=', 'users.id')
 						->join('kit', 'booking.kitID', '=', 'kit.id')
 						->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
 						->get();
 		
-		if ($bookings) {
-			foreach ($bookings as &$book) {
+
+		if ($allBookings) {
+			//unset($bookings->password);
+			foreach ($allBookings as &$book) {
 				unset($book->password);
 				unset($book->email);
 			}
-			$response = ["status" => "0", "bookings" => $bookings];
+			$bookings = ["status" => "0", "bookings" => $allBookings];
 			
 		}
-		return Response::json($response);
+        
+        return $bookings;
+    }
+    
+	public function index()
+	{
+        $bookings = $this->getBookings();
+        
+		return View::make('bookings/index' ,compact('bookings'));
+	}
+    
+    public function shipping()
+	{
+        $kits = $this->getBookings();
+		return View::make('bookings/shipping' ,compact('kits'));
 	}
 
 

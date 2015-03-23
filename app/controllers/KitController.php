@@ -20,9 +20,8 @@ class KitController extends \BaseController {
 		}
         
         //Pass kits to view
-		return View::make('kits/index' ,compact('kits'));
+        return View::make('kits/index' ,compact('kits'));
 	}
-
 
 	/**
 	 * Show the form for creating a new resource.
