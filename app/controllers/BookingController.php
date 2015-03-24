@@ -151,6 +151,7 @@ class BookingController extends \BaseController {
 				->groupby('kitID')
 				->get(['start',DB::raw('count(*) as count')]);
 
+		
 		return //Response::json($availability);
 		       dd($availability);
 	}
