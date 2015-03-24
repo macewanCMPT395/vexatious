@@ -15,7 +15,14 @@
     {{ HTML::linkRoute('shipping', 'Shipping') }} </li>
 <li @yield('browsekitsli')> 
     {{ HTML::linkRoute('kits.index', 'Browse Kits') }} </li>
-@yield('adminItems')
+@if(Auth::user()->role == 1)
+<li @yield('editkitsli')> 
+    {{ HTML::linkRoute('kits.edit', 'Edit Kits') }}</li>
+<li @yield('editusersli')> 
+    {{ HTML::linkRoute('users.edit', 'Edit Users') }} </li>
+@endif
+<li>
+  {{HTML::linkRoute('signIn', 'Logout') }} </li>
 </ul>
 </div>
 @yield('content')

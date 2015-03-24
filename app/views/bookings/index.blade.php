@@ -1,5 +1,4 @@
-@extends('layouts.admin')
-
+@extends('layouts.header')
 @section('headerScript')
 {{ HTML::style('css/calendar.css') }}
 {{ HTML::style('css/bookkit.css') }}
