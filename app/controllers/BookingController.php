@@ -32,7 +32,7 @@ class BookingController extends \BaseController {
     
     public function getBlackOuts($type) {
     	   $id = DB::table('hardwareType')->where('name',$type)->pluck('id');
-    	   $blackouts = DB::table('booking')->select('start','end')->where('kitID',$id)->where('recieved','true')->get();
+    	   $blackouts = DB::table('booking')->select('start','end')->where('kitID',$id)->where('recieved','false')->get();
 	   return $blackouts;					        
 }    
 	public function index()
