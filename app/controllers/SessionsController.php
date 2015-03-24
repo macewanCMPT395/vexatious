@@ -36,6 +36,6 @@ class SessionsController extends BaseController {
 
 	public function destroy () {
 		Auth::logout();
-		return Redirect::home();
+		return Redirect::route('signIn');
 	}
 }

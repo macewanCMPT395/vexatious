@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration {
 	{
 		Schema::create('users', function(Blueprint $table){
 			$table->increments('id');
+			$table->string('remember_token', 100)->nullable();
 			$table->bigInteger('branchID');
 			$table->foreign('branchID')->references('id')->on('branch');
 			$table->string('email')->unique();
