@@ -169,19 +169,26 @@ class NotificationMessageSeeder extends Seeder {
 class BookingSeeder extends Seeder {
 	public function run()
 	{
+		
+		
+		$today = getdate();
+		$today = strtotime($today['mday'].'-'.$today['mon'].'-'.$today['year']);
+		
+		
 		DB::table('booking')->delete();
 		//create the actual booking
 		$booking = Booking::create(array(
 			"eventName" => "Test Event Number 1",
-			"start" => date("d/m/Y", time()),//start time today
-			"end"=> date("d/m/Y", time() + (2* 24*60*60)),//end date 2 days from now
-			"shipping" => date("d/m/Y", time() + (3* 24*60*60)),
+			"start" => $today,//start time today
+			"end"=> $today + (2* 24*60*60),//end date 2 days from now
+			"shipping" => $today + (3* 24*60*60),
 			"destination" => 1,
 			"received" => false,
 			"shipped" => false,
 			"kitID" => 1
 		));
 
+	
 		//now link the booking with a user
 		DB::table('allBookings')->delete();
 		UserBookings::create(array(
@@ -211,13 +218,13 @@ class BookingSeeder extends Seeder {
 		//create a second booking
 		$booking = Booking::create(array(
 			"eventName" => "Test Event Number 2",
-			"start" => date("d/m/Y", time()),//start time today
-			"end"=> date("d/m/Y", time() + (2* 24*60*60)),//end date 2 days from now
-			"shipping" => date("d/m/Y", time() + (3* 24*60*60)),
+			"start" => $today,//start time today
+			"end"=> $today + (2* 24*60*60),//end date 2 days from now
+			"shipping" => $today + (3* 24*60*60),
 			"destination" => 1,
 			"received" => false,
 			"shipped" => false,
-			"kitID" => 1
+			"kitID" => 2
 		));
 
 		//now link the booking with a user
@@ -244,6 +251,39 @@ class BookingSeeder extends Seeder {
 		
 		
 		
+		//create a third booking
+		$booking = Booking::create(array(
+			"eventName" => "Test Event Number 3",
+			"start" => $today - (2*24*60*60),//start time today
+			"end"=> $today - (1* 24*60*60),//end date 2 days from now
+			"shipping" => $today - (3* 24*60*60),
+			"destination" => 1,
+			"received" => true,
+			"shipped" => true,
+			"kitID" => 1
+		));
+
+		//now link the booking with a user
+		UserBookings::create(array(
+			"userID" => 1,
+			"bookingID" => $booking->id
+		));
+		
+		//create notifications for the user
+		//notifications will need to be joined with the 
+		//bookings table to get the proper dates
+		//first notification for receiving
+		UserNotifications::create(array(
+			"userID" => 1,
+			"bookingID" => $booking->id,
+			"msgID" => 1
+		));
+		//second notification for shipping
+		UserNotifications::create(array(
+			"userID" => 1,
+			"bookingID" => $booking->id,
+			"msgID" => 2
+		));		
 		
 	}
 }
