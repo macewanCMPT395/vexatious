@@ -198,10 +198,15 @@ class BookingController extends \BaseController {
 				->join('hardwareType', 'hardwareType.id', '=', $type)
 				->groupby('kitID')
 				->get(['start',DB::raw('count(*) as count')]);
-
 		
+		$total = DB::table('kit')->count();//get total number of kits for specific type		
+		for($i=1; $i<count($availability)-1;$i++) {
+			  if(($availability[$i-1]+$availability[$i]+$availability[$i+1]) > ($total*3)) {
+			  	//blackout space here showing that there are no kits available 
+				}
+		}
 		return //Response::json($availability);
-		       dd($availability);
+		       dd($total);
 	}
 
 }
