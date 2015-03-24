@@ -16,11 +16,6 @@ class PagesController extends BaseController {
 		return View::make('reportdamage');
 	}
     
-    public function signIn()
-	{
-		return View::make('signIn');
-	}
-    
     public function calendar()
     {
         Return View::make('calendar');

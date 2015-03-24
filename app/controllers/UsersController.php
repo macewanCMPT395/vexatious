@@ -17,12 +17,12 @@ class UsersController extends BaseController {
     
 	public function create() 
     {
+		if(Auth::check()) return Redirect::route('/');
         return View::make('users.create');
     }
     
 	public function store()
 	{
-
 		$input = Input::all();
 		if (!$this->user->fill($input)->isValid()) {
 

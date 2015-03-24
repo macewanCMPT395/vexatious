@@ -7,5 +7,7 @@ Route::resource('kits','KitController');
 Route::resource('bookings', 'BookingController');
 
 Route::get('/shipping', ['uses'=>'BookingController@shipping', 'as'=> 'shipping']);
-Route::get('/', 'PagesController@signIn');
+Route::get('/', 'SessionsController@create');
 
+Route::get('kitavailability/{type}/{start}/{end}', 
+		   ['uses' => 'BookingController@kitAvailability', 'as' => 'availability']);
