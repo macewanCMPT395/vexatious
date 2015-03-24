@@ -29,12 +29,7 @@ class BookingController extends \BaseController {
         
         return $bookings;
     }
-    
-    public function getBlackOuts($type) {
-    	   $id = DB::table('hardwareType')->where('name',$type)->pluck('id');
-    	   $blackouts = DB::table('booking')->select('start','end')->where('kitID',$id)->where('recieved','false')->get();
-	   return $blackouts;					        
-}    
+        
 	public function index()
 	{
         $bookings = $this->getBookings();
@@ -153,10 +148,12 @@ class BookingController extends \BaseController {
 				
 				})
 				->join('hardwareType', 'hardwareType.id', '=', $type)
-				->get();
+				->groupby('kitID')
+				->get(['start',DB::raw('count(*) as count')]);
 
-		return Response::json($availability);
-
+		
+		return //Response::json($availability);
+		       dd($availability);
 	}
 
 }

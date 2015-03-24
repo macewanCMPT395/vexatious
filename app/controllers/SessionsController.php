@@ -4,6 +4,7 @@
 Handles user login and logout.
 */
 
+use Illuminate\Support\MessageBag;
 
 class SessionsController extends BaseController {
 
@@ -18,7 +19,7 @@ class SessionsController extends BaseController {
 	public function store() {
 		$email = Input::get('email');
 		$password = Input::get('password');	
-
+		$errors = new MessageBag;
 		if (Auth::attempt(Input::only('email', 'password'))) {
 			//successful authentication
 			$response = array(
@@ -31,7 +32,10 @@ class SessionsController extends BaseController {
 			"status" => 1,
 			"error" => "Invalid Username or Password"
 		);
-		return Response::json($response);
+
+		 $errors = new MessageBag(['password' => ['Email and/or password invalid.']]);
+		 return Redirect::back()->withErrors($errors)->withInput(Input::except('password'));
+		//return Response::json($response);
 	}
 
 	public function destroy () {
