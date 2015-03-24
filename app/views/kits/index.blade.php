@@ -50,8 +50,8 @@
 <div id="tableRows">
 <table class="kitsTable kitRows">
 <tbody>
-    @for ($i = 0; $i < 100; $i++) 
-        @foreach ($kits as $kit)
+	@for($i = 0; $i < 100; $i++)
+       	@foreach ($kits as $kit)
         <tr>
             <td>{{$kit->description}}</td>
             <td>{{$kit->name}}</td>
@@ -60,7 +60,7 @@
             <td>None</td>
         </tr>
         @endforeach
-    @endfor
+	@endfor
 </tbody>
 </table>
 </div>

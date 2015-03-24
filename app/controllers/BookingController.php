@@ -131,5 +131,17 @@ class BookingController extends \BaseController {
 		//
 	}
 
+	
+	
+	public function kitAvailability($type, $startDate, $endDate) {
+		
+		return Response::json([
+			'kitType' => $type,
+			'start' => $startDate,
+			'end' => $endDate
+		
+		]);
+
+	}
 
 }

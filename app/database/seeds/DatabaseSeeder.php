@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder {
 		
 		DB::table('users')->delete();
         User::create(array('email' => 'foo@bar.com', 
-						  'branchID' => '1',
+						  'branchID' => '5',
 						  'password' => 'test',
 						  'firstName' => "Bob",
 						  'lastName' => "BobbingTon",
@@ -117,6 +117,20 @@ class KitTableSeeder extends Seeder {
 			"currentBranchID" => 1,
 			"barcode" => "1234567890123456",
 			"description" => "A test kit with one something"
+		));
+		
+		Kit::create(array(
+			"type" => 2,
+			"currentBranchID" => 3,
+			"barcode" => "1001001001001001",
+			"description" => "This kit contains 4 whatevers with their accessories."
+		));
+		
+		Kit::create(array(
+			"type" => 3,
+			"currentBranchID" => 2,
+			"barcode" => "NOTABARCODEWATEV",
+			"description" => "This kit contains 7 number 3 combos and a large fries."
 		));
 	}
 }

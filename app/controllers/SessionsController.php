@@ -1,13 +1,17 @@
 <?php
 
-
+/*
+Handles user login and logout.
+*/
 
 
 class SessionsController extends BaseController {
 
 	public function create() {
-		if (Auth::check()) return Redirect::to('/');
-		return View::make('sessions.create');
+		if (Auth::check())
+			return Redirect::route('bookings.index');
+		
+		return View::make('signIn');
 	}
 
 	public function store() {

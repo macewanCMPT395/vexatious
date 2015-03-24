@@ -70,6 +70,12 @@ $(document).ready(function() {
             start.value = end.value = date.format();
         }
     });
+	
+	
+	
+	
+	
+	
 });
     
 function selectDay(day){
@@ -98,11 +104,11 @@ function parseDate(date) {
     <ul class="formFields">
     <li>
     {{ Form::label('branch', 'Bookings For') }}
-    {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
+	{{ Form::select('branch', Branch::lists('name', 'id'), Auth::user()->branchID) }}
     </li>
     <li>
     {{ Form::label('type', 'Type') }}
-    {{ Form::select('type', array('ipad' => 'iPad', 'zune' => 'Zune')) }}
+	{{ Form::select('type', HardwareType::lists('name', 'id')) }}
     </li>
     <li>
     {{ Form::label('eventName', 'Event Name') }}
