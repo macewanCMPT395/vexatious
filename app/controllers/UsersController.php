@@ -2,7 +2,7 @@
 
 class UsersController extends BaseController {
 	protected $user;
-
+	public $layout = 'layouts.header';
 
 	public function __construct(User $user) 
 	{
@@ -12,7 +12,7 @@ class UsersController extends BaseController {
     public function index() 
     {
         $users = User::all();
-        return View::make('users.index', ['users' => $users]);
+        return $layout->nest('content','users.index');
     }
     
 	public function create() 

@@ -30,10 +30,14 @@ class BookingController extends \BaseController {
         return $bookings;
     }
     
+    public function getBlackOuts($type) {
+    	   $id = DB::table('hardwareType')->where('name',$type)->pluck('id');
+    	   $blackouts = DB::table('booking')->select('start','end')->where('kitID',$id)->where('recieved','true')->get();
+	   return $blackouts;					        
+}    
 	public function index()
 	{
         $bookings = $this->getBookings();
-        
 		return View::make('bookings/index' ,compact('bookings'));
 	}
     

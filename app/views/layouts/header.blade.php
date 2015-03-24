@@ -16,6 +16,8 @@
 <li @yield('browsekitsli')> 
     {{ HTML::linkRoute('kits.index', 'Browse Kits') }} </li>
 @yield('adminItems')
+<li>
+  {{HTML::linkRoute('signIn', 'Logout') }} </li>
 </ul>
 </div>
 @yield('content')

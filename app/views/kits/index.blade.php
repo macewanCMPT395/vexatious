@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('headerScript')
 {{ HTML::style('css/kits.css') }}
 <script src='fullcalendar/lib/jquery.min.js'></script>

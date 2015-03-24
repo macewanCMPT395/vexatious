@@ -7,6 +7,7 @@ Handles user login and logout.
 
 class SessionsController extends BaseController {
 
+
 	public function create() {
 		if (Auth::check())
 			return Redirect::route('bookings.index');
@@ -16,8 +17,7 @@ class SessionsController extends BaseController {
 
 	public function store() {
 		$email = Input::get('email');
-		$password = Input::get('password');
-
+		$password = Input::get('password');	
 
 		if (Auth::attempt(Input::only('email', 'password'))) {
 			//successful authentication
