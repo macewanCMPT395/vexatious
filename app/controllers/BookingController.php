@@ -138,13 +138,24 @@ class BookingController extends \BaseController {
 	
 	
 	public function kitAvailability($type, $startDate, $endDate) {
+		$start = strtotime($startDate);
+		$end = strtotime($endDate);
 		
-		return Response::json([
-			'kitType' => $type,
-			'start' => $startDate,
-			'end' => $endDate
+		//return Response::json(['start date' => $start, 'end date' => $end]);
+		$this->tempType = $type; //wat
 		
-		]);
+		$availability = DB::table('booking')
+				->whereBetween('start', [$start,$end])
+				->orWhereBetween('end', [$start, $end])
+				->join('kit', function($join){
+					$join->on('booking.kitID', '=', 'kit.id')
+						  ->on('kit.type', '=', $this->tempType);
+				
+				})
+				->join('hardwareType', 'hardwareType.id', '=', $type)
+				->get();
+
+		return Response::json($availability);
 
 	}
 

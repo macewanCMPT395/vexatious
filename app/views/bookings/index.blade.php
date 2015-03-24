@@ -103,7 +103,10 @@ function parseDate(date) {
     <ul class="formFields">
     <li>
     {{ Form::label('branch', 'Bookings For') }}
-	{{ Form::select('branch', Branch::lists('name', 'id'), Auth::user()->branchID) }}
+	{{ 
+		
+		Form::select('branch', Branch::lists('name', 'id')); 
+	}}
     </li>
     <li>
     {{ Form::label('type', 'Type') }}
