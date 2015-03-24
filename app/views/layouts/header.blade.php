@@ -22,7 +22,10 @@
     {{ HTML::linkRoute('users.edit', 'Edit Users') }} </li>
 @endif
 <li>
-  {{HTML::linkRoute('signIn', 'Logout') }} </li>
+  <!--{{HTML::linkRoute('sessions.destroy', 'Logout') }}-->
+	<a href="logout">Logout</a>
+	
+	</li>
 </ul>
 </div>
 @yield('content')
