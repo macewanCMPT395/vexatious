@@ -1,5 +1,5 @@
 .bookKitForm {
-    height: 34px;
+    height: auto;
     line-height: 34px;
     font-size: 16px;
     text-align: left;
@@ -15,4 +15,5 @@
 .formFields li{
     display: inline;
     padding-left: 2px;
+    white-space: nowrap;
 }

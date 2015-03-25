@@ -42,8 +42,10 @@ class BookingController extends \BaseController {
     
     public function shipping()
 	{
-        $kits = $this->getBookings();
-		return View::make('bookings/shipping' ,compact('kits'));
+        
+        $bookings = $this->getBookings();
+        
+		return View::make('bookings/shipping' ,compact('bookings'));
 	}
 
 
@@ -54,7 +56,7 @@ class BookingController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('bookings/bookkit');
 	}
 
 
@@ -198,10 +200,10 @@ class BookingController extends \BaseController {
 				->join('hardwareType', 'hardwareType.id', '=', $type)
 				->groupby('kitID')
 				->get(['start',DB::raw('count(*) as count')]);
-
 		
-		return //Response::json($availability);
-		       dd($availability);
+		$total = DB::table('kit')->count();//get total number of kits for specific type
+		$total = $total * 3;		
+		return Response::json(['available'=>$availability,'count'=>$total]);
 	}
 
 }

@@ -9,8 +9,10 @@
 <div id="Image"><img src="http://www.epl.ca/sites/all/themes/epl/img/EPL_logo2.png" border="0" style="width:400px;"></div>
 <div class="navMenu">
 <ul>
+<li @yield('overviewli')>
+    {{ HTML::linkRoute('bookings.index','Overview') }} </li>
 <li @yield('bookkitli')> 
-    {{ HTML::linkRoute('bookings.index', 'Booking') }} </li>
+    {{ HTML::linkRoute('bookings.create', 'Booking') }} </li>
 <li @yield('shippingli')> 
     {{ HTML::linkRoute('shipping', 'Shipping') }} </li>
 <li @yield('browsekitsli')> 
@@ -21,11 +23,8 @@
 <li @yield('editusersli')> 
     {{ HTML::linkRoute('users.edit', 'Edit Users') }} </li>
 @endif
-<li>
-  <!--{{HTML::linkRoute('sessions.destroy', 'Logout') }}-->
-	<a href="logout">Logout</a>
+<li id="logout"> {{ HTML::linkRoute('logout', 'Logout') }} </li>
 	
-	</li>
 </ul>
 </div>
 @yield('content')

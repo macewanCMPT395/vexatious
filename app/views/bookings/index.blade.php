@@ -16,12 +16,32 @@ var strDate = $(this).data('date');
 $("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
 });
 
-
 var selectedDay;
+var currentDate = new Date();
+currentDate = currentDate.getUTCDate() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getFullYear();
+var date = new Date();
+var endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+endDate = endDate.getUTCDate() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getFullYear();
 $(document).ready(function() {
 	//LOAD Bookings into events array
 	var bookings = {{ json_encode($bookings['bookings']); }};
-	
+	$.ajax( {
+		'url': "/kitavailability/" + $('#type').val() + "/" + currentDate + "/" + endDate,
+		'success': function(data) {
+			   total = data.count * 3;
+			   data = data.availability
+			  for(var i=1; i<data - 1;i++) {
+                          	  if((data[i-1].count + data[i].count + data[i+1].count ) > total) {
+				        var blackoutDate = data[i].start;
+					blackoutDate = new Date(blackoutDate * 1000);
+					blackoutDate = blackoutDate.getUTCDate() + "-" + (blackoutDate.getMonth() + 1) + "-" + blackoutDate.getFullYear();
+                                  	$(".fc-day[data-date='" + blackoutDate + "']").css('background-color', '#AAAAAA');	      
+                               	  }
+                }
+
+			 },
+		'dataType': "json"
+		});
 	function filterBookings(filteredEvents) {
 		//first, only grab the bookings for the current branch
 		var filterEvents = bookings.filter(function(a) {
@@ -53,8 +73,6 @@ $(document).ready(function() {
 		})(filterBookings());	
 	}
 
-							  
-    //var lightbox = LightBox.init();
     $('#calendar').fullCalendar({
         header: {
             left: ' title',
@@ -79,17 +97,11 @@ $(document).ready(function() {
             //Must not be in the past, 
             //Must have kits available
             selectDay($(this));
-            /*
-            $.get('/signIn',function(data) {
-                lightbox.width("300px").height("300px");
-                  lightbox.show(data);
-            });
-            */
+            
             //Auto-Fill Date Fields
             var start = document.getElementById('startField'),
                 end = document.getElementById('endField');
             start.value = end.value = date.format();
-			
 			
         }
     });
@@ -97,7 +109,6 @@ $(document).ready(function() {
 	//update calender with appropriate filters
 	$('#branch').change(updateFilters);
 	$('#type').change(updateFilters);
-	
 	
 	//sample accessing certain days on the calendar
 	//$(".fc-day[data-date='2015-03-01']").css('background-color', '#AAAAAA');
@@ -122,7 +133,7 @@ function parseDate(date) {
 }
 </script>
 @stop
-@section('bookkitli') class="active" @stop
+@section('overviewli') class="active" @stop
 @section('content')
 <div class="content">
 <div class="bookKitForm">
@@ -131,37 +142,13 @@ function parseDate(date) {
     <ul class="formFields">
     <li>
     {{ Form::label('branch', 'Bookings For') }}
-	{{ 
-		
-		Form::select('branch', Branch::lists('name', 'id')); 
-	}}
+	{{ Form::select('branch', Branch::lists('name', 'id')); }}
     </li>
     <li>
     {{ Form::label('type', 'Type') }}
 	{{ Form::select('type', HardwareType::lists('name', 'id')) }}
+	{{Form::close() }}
     </li>
-    <li>
-    {{ Form::label('eventName', 'Event Name') }}
-    {{ Form::text('eventName') }}
-    </li>
-    <li>
-    {{ Form::label('start', 'Start') }}
-    {{ Form::input('date', 'start',  null, ['id' => 'startField']) }}
-    </li>
-    <li>
-    {{ Form::label('end', 'End') }}
-    {{ Form::input('date', 'end',  null, ['id' => 'endField']) }}
-    </li>
-    <li>
-    {{ Form::label('barcode', 'Barcode ') }}
-    {{ Form::text('barcode') }}
-    </li>
-    <li>
-    {{ Form::submit('Book Kit') }}
-    </li>
-    </ul>
-    {{ Form::close() }}
-</div>
 <div class="tabs">
     <ul class="tabs">
         <li>
