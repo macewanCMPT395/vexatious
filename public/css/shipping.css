@@ -28,26 +28,26 @@ body {
     overflow:auto;
 }
 
-.kitsTable{
+.bookingsTable{
     table-layout: fixed;
     width:100%; 
     border-collapse:collapse; 
 }
-.kitsTable th{ 
+.bookingsTable th{ 
     padding:7px; 
     text-align: left;
     background: #666666;
     color: #ffffff;
 }
-.kitsTable td{ 
+.bookingsTable td{ 
     padding:7px; 
 }
 /* Define the default color for all the table rows */
-.kitsTable tr{
+.bookingsTable tr{
     background: #eeeeee;
 }
 /* Define the hover highlight color for the table row */
-.kitsTable tbody tr:hover {
+.bookingsTable tbody tr:hover {
       background: #dddddd;
 }
 

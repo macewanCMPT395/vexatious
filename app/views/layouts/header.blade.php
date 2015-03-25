@@ -23,11 +23,8 @@
 <li @yield('editusersli')> 
     {{ HTML::linkRoute('users.edit', 'Edit Users') }} </li>
 @endif
-<li>
-  <!--{{HTML::linkRoute('sessions.destroy', 'Logout') }}-->
-	<a href="logout">Logout</a>
+<li id="logout"> {{ HTML::linkRoute('logout', 'Logout') }} </li>
 	
-	</li>
 </ul>
 </div>
 @yield('content')

@@ -16,7 +16,6 @@ var strDate = $(this).data('date');
 $("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
 });
 
-
 var selectedDay;
 var currentDate = new Date();
 currentDate = currentDate.getUTCDate() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getFullYear();
@@ -74,8 +73,6 @@ $(document).ready(function() {
 		})(filterBookings());	
 	}
 
-							  
-    //var lightbox = LightBox.init();
     $('#calendar').fullCalendar({
         header: {
             left: ' title',
@@ -100,17 +97,11 @@ $(document).ready(function() {
             //Must not be in the past, 
             //Must have kits available
             selectDay($(this));
-            /*
-            $.get('/signIn',function(data) {
-                lightbox.width("300px").height("300px");
-                  lightbox.show(data);
-            });
-            */
+            
             //Auto-Fill Date Fields
             var start = document.getElementById('startField'),
                 end = document.getElementById('endField');
             start.value = end.value = date.format();
-			
 			
         }
     });
@@ -118,7 +109,6 @@ $(document).ready(function() {
 	//update calender with appropriate filters
 	$('#branch').change(updateFilters);
 	$('#type').change(updateFilters);
-	
 	
 	//sample accessing certain days on the calendar
 	//$(".fc-day[data-date='2015-03-01']").css('background-color', '#AAAAAA');

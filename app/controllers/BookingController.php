@@ -42,8 +42,10 @@ class BookingController extends \BaseController {
     
     public function shipping()
 	{
-        $kits = $this->getBookings();
-		return View::make('bookings/shipping' ,compact('kits'));
+        
+        $bookings = $this->getBookings();
+        
+		return View::make('bookings/shipping' ,compact('bookings'));
 	}
 
 
