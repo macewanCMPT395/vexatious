@@ -56,9 +56,7 @@ var tomorrowTitle = document.querySelector("#tomorrowDate");
 todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
     
-//Add Rows to table
-
-    
+//Add Rows to table    
 var shippingToday = [],
     shippingTomorrow = [];
 var bookings = {{ json_encode($bookings['bookings']); }};
@@ -90,11 +88,6 @@ else {
         addRow("tomorrowBookings", b.description, b.barcode,b.destination);
     }
 }
-
-    
-
-    
-
     
 //Make Table Rows selectable
 var rows = document.querySelectorAll(".bookingRows tbody tr");
