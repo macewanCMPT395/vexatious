@@ -5,7 +5,7 @@
 <script src='fullcalendar/lib/jquery.min.js'></script>
 <script src='fullcalendar/lib/moment.min.js'></script>
 @stop
-@section('shippingli') class="active" @stop
+@section('receivingli') class="active" @stop
 @section('content')
 
 <div id="todayTable">
@@ -65,9 +65,9 @@ for (var i = 0; i < bookings.length; i++) {
     var today = new Date(moment());
     var tomorrow = new Date(moment(today).add(1,'days'));
     console.log(bookings[i]);
-    if (datesEqual(today,shippingDate) && (bookings[i].shipped == "0"))
+    if (datesEqual(today,shippingDate))
          shippingTomorrow.unshift(bookings[i]);
-    if (datesEqual(tomorrow,shippingDate) && (bookings[i].shipped == "0"))
+    if (datesEqual(tomorrow,shippingDate))
          shippingToday.unshift(bookings[i]);
 }
 

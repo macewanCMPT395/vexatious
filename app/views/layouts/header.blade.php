@@ -15,6 +15,8 @@
     {{ HTML::linkRoute('bookings.create', 'Booking') }} </li>
 <li @yield('shippingli')> 
     {{ HTML::linkRoute('shipping', 'Shipping') }} </li>
+<li @yield('receivingli')> 
+    {{ HTML::linkRoute('receiving', 'Receiving') }} </li>
 <li @yield('browsekitsli')> 
     {{ HTML::linkRoute('kits.index', 'Browse Kits') }} </li>
 @if(Auth::user()->role == 1)

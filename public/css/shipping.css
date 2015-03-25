@@ -18,7 +18,7 @@ body {
 #todayTable, #tomorrowTable {
     margin: 0px 0% 40px 3.3%;
     width: 45%;
-    height: 76%;
+    height: 70%;
     float: left;
     text-align: left;
 }
@@ -26,6 +26,7 @@ body {
 .tableRows {
     height: 100%;
     overflow:auto;
+    background: #f9f9f9;
 }
 
 .bookingsTable{
