@@ -16,8 +16,8 @@
 <li @yield('browsekitsli')> 
     {{ HTML::linkRoute('kits.index', 'Browse Kits') }} </li>
 @if(Auth::user()->role == 1)
-<li @yield('editkitsli')> 
-    {{ HTML::linkRoute('kits.edit', 'Edit Kits') }}</li>
+<!--li @yield('editkitsli')> 
+    {{ HTML::linkRoute('kits.edit', 'Edit Kits') }}</li-->
 <li @yield('editusersli')> 
     {{ HTML::linkRoute('users.edit', 'Edit Users') }} </li>
 @endif
