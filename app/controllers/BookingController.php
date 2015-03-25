@@ -1,6 +1,8 @@
 <?php
 
 class BookingController extends \BaseController {
+	protected $bookingFields = ['eventName', 'start', 'end', 'destination','shipping', 'kitID'];
+	
 
 	/**
 	 * Display a listing of the resource.
@@ -61,7 +63,42 @@ class BookingController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		
+		$input = array_filter(Input::only($this->bookingFields));
+		//return Response::json($input);
+		//create the actual booking
+		$booking = new Booking;
+		$booking->fill($input);
+		$booking->shipping = 0;
+		$booking->save();
+	
+		$userID = Input::get('userID');
+		//now link the booking with a user
+		UserBookings::create(array(
+			"userID" => $userID,
+			"bookingID" => $booking->id
+		));
+		
+		//create notifications for the user
+		//notifications will need to be joined with the 
+		//bookings table to get the proper dates
+		//first notification for receiving
+		UserNotifications::create(array(
+			"userID" => $userID,
+			"bookingID" => $booking->id,
+			"msgID" => 1
+		));
+		//second notification for shipping
+		UserNotifications::create(array(
+			"userID" => $userID,
+			"bookingID" => $booking->id,
+			"msgID" => 2
+		));	
+		
+		
+		return Response::json($booking);
+		
+		
 	}
 
 
@@ -127,7 +164,14 @@ class BookingController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		//remove booking from all bookings
+		DB::table('allBookings')->where('bookingID', '=', $id)->delete();
+		//remove notifications from bookings
+		DB::table('notifications')->where('bookingID', '=', $id)->delete();
+		//then remove the booking itself
+		Booking::find($id)->delete();
+		
+		return Redirect::route('/');
 	}
 
 	
