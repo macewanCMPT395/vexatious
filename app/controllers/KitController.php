@@ -84,7 +84,7 @@ class KitController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		return View::make('kits.edit');
 	}
 
 
