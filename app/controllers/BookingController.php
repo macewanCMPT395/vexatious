@@ -54,7 +54,7 @@ class BookingController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('bookings/bookkit');
 	}
 
 

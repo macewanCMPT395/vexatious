@@ -143,7 +143,7 @@ function parseDate(date) {
 }
 </script>
 @stop
-@section('bookkitli') class="active" @stop
+@section('overviewli') class="active" @stop
 @section('content')
 <div class="content">
 <div class="bookKitForm">
@@ -152,37 +152,13 @@ function parseDate(date) {
     <ul class="formFields">
     <li>
     {{ Form::label('branch', 'Bookings For') }}
-	{{ 
-		
-		Form::select('branch', Branch::lists('name', 'id')); 
-	}}
+	{{ Form::select('branch', Branch::lists('name', 'id')); }}
     </li>
     <li>
     {{ Form::label('type', 'Type') }}
 	{{ Form::select('type', HardwareType::lists('name', 'id')) }}
+	{{Form::close() }}
     </li>
-    <li>
-    {{ Form::label('eventName', 'Event Name') }}
-    {{ Form::text('eventName') }}
-    </li>
-    <li>
-    {{ Form::label('start', 'Start') }}
-    {{ Form::input('date', 'start',  null, ['id' => 'startField']) }}
-    </li>
-    <li>
-    {{ Form::label('end', 'End') }}
-    {{ Form::input('date', 'end',  null, ['id' => 'endField']) }}
-    </li>
-    <li>
-    {{ Form::label('barcode', 'Barcode ') }}
-    {{ Form::text('barcode') }}
-    </li>
-    <li>
-    {{ Form::submit('Book Kit') }}
-    </li>
-    </ul>
-    {{ Form::close() }}
-</div>
 <div class="tabs">
     <ul class="tabs">
         <li>
