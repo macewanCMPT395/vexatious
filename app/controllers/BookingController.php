@@ -33,7 +33,7 @@ class BookingController extends \BaseController {
 	public function index()
 	{
         $bookings = $this->getBookings();
-		return View::make('bookings/index' ,compact('bookings'));
+		return View::make('bookings/index')->with('bookings', $bookings);
 	}
     
     public function shipping()
