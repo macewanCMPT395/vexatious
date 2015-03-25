@@ -1,7 +1,8 @@
 <?php
 
 class BookingController extends \BaseController {
-	protected $bookingFields = ['eventName', 'start', 'end', 'destination','shipping', 'kitID'];
+	protected $bookingFields = ['eventName', 'start', 'end', 'destination','shipping', 
+								'kitID', 'shipped', 'received'];
 	
 
 	/**
@@ -71,6 +72,8 @@ class BookingController extends \BaseController {
 		$booking = new Booking;
 		$booking->fill($input);
 		$booking->shipping = 0;
+		$booking->shipped = false;
+		$booking->received = false;
 		$booking->save();
 	
 		$userID = Input::get('userID');
