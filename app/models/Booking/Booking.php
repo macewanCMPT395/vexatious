@@ -9,7 +9,7 @@ class Booking extends Eloquent {
 	
 	protected $fillable = array(
 		'eventName', 'start', 'end', 'shipping', 
-		'destination', 'received', 'shipped'
+		'destination', 'received', 'shipped', 'kitID'
 	);
 	
 }

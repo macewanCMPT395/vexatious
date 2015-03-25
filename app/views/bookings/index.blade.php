@@ -21,17 +21,36 @@ var selectedDay;
 $(document).ready(function() {
 	//LOAD Bookings into events array
 	var bookings = {{ json_encode($bookings['bookings']); }};
-	console.log(bookings);
-	var eventsArray = [];
-	for (var i = 0; i < bookings.length; i++) {
-		eventsArray.unshift({
-			title: bookings[i].eventName,
-			start: parseDate(new Date(bookings[i].start * 1000)),
-			end: parseDate(new Date(bookings[i].end * 1000)),
-			tip: 'Destination: ' + bookings[i].destination,
-			color: '#7CC045',
-			allDay: true    
-			});
+	
+	function filterBookings(filteredEvents) {
+		//first, only grab the bookings for the current branch
+		var filterEvents = bookings.filter(function(a) {
+			return a.destination == $('#branch').val() &&
+					a.type == $('#type').val();
+		});
+
+		var newEvents = filterEvents.map(function(e) {
+			return {
+				title: e.eventName,
+				start: new Date(e.start * 1000),
+				end: new Date(e.end * 1000),
+				tip: 'Destination: ' + e.identifier,
+				color: '#7CC045',
+				allDay: true 
+			};
+		});
+	
+		return newEvents;
+	}
+	
+	function updateFilters() {
+		//update events
+		(function(e) {
+			$('#calendar').fullCalendar('removeEvents');
+			console.log(e);
+			$('#calendar').fullCalendar('addEventSource', e);
+			$('#calendar').fullCalendar('refetchEvents');
+		})(filterBookings());	
 	}
 
 							  
@@ -51,7 +70,7 @@ $(document).ready(function() {
         //defaultDate: '2015-04-12',
         editable: false,
         eventLimit: true, // allow "more" link when too many events
-        events: eventsArray,
+        events: filterBookings(),
         eventRender: function(event, element) {
             element.attr('title', event.tip);
         },
@@ -74,6 +93,11 @@ $(document).ready(function() {
 			
         }
     });
+	
+	//update calender with appropriate filters
+	$('#branch').change(updateFilters);
+	$('#type').change(updateFilters);
+	
 	
 	//sample accessing certain days on the calendar
 	//$(".fc-day[data-date='2015-03-01']").css('background-color', '#AAAAAA');
