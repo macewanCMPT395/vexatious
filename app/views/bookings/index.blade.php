@@ -16,7 +16,6 @@ var strDate = $(this).data('date');
 $("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
 });
 
-
 var selectedDay;
 $(document).ready(function() {
 	//LOAD Bookings into events array

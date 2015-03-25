@@ -64,6 +64,7 @@ a:active {
 
 .navMenu {
     padding-left: 70px;
+    padding-right: 70px;
     width: width;
     height: 36px;
     font-size: 20px;
@@ -88,6 +89,10 @@ a:active {
     float: left;
     list-style-type: none;
     position: relative;
+}
+
+#logout{
+    float: right;
 }
 
 .active a {
