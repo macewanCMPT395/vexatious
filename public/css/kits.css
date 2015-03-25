@@ -10,7 +10,7 @@
 }
 
 .kitFilter {
-    height: 34px;
+    height: auto;
     line-height: 34px;
     font-size: 16px;
     text-align: left;
@@ -26,6 +26,7 @@
 .kitFilter li{
     display: inline;
     padding-left: 6px;
+    white-space: nowrap;
 }
 
 .filterTitle {
