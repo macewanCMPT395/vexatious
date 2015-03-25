@@ -16,22 +16,25 @@ var strDate = $(this).data('date');
 $("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
 });
 
-//LOAD Bookings into events array
-var bookings = <?php echo json_encode($bookings); ?>;
-var eventsArray = [];
-for (var i = 0; i < bookings.length; i++) {
-    eventsArray.unshift({
-        title: bookings[i].eventName,
-        start: parseDate(bookings[i].start),
-        end: parseDate(bookings[i].end),
-        tip: 'Destination: ' + bookings[i].destination,
-        color: '#7CC045',
-        allDay: true    
-        });
-}
 
 var selectedDay;
 $(document).ready(function() {
+	//LOAD Bookings into events array
+	var bookings = {{ json_encode($bookings['bookings']); }};
+	console.log(bookings);
+	var eventsArray = [];
+	for (var i = 0; i < bookings.length; i++) {
+		eventsArray.unshift({
+			title: bookings[i].eventName,
+			start: parseDate(new Date(bookings[i].start * 1000)),
+			end: parseDate(new Date(bookings[i].end * 1000)),
+			tip: 'Destination: ' + bookings[i].destination,
+			color: '#7CC045',
+			allDay: true    
+			});
+	}
+
+							  
     //var lightbox = LightBox.init();
     $('#calendar').fullCalendar({
         header: {
@@ -67,14 +70,13 @@ $(document).ready(function() {
             var start = document.getElementById('startField'),
                 end = document.getElementById('endField');
             start.value = end.value = date.format();
+			
+			
         }
     });
 	
-	
-	
-	
-	
-	
+	//sample accessing certain days on the calendar
+	//$(".fc-day[data-date='2015-03-01']").css('background-color', '#AAAAAA');
 });
     
 function selectDay(day){
@@ -85,10 +87,12 @@ function selectDay(day){
 }
     
 function parseDate(date) {
-    var day = date.substring(0,2);
+   /* var day = date.substring(0,2);
     //Decrement Month to convert to month system starting with 0
     var month = date.substring(3,5) - 1; 
-    var year = date.substring(6,10);
+    var year = date.substring(6,10);*/
+	
+	return date;
     
     return new Date(year, month, day);
 }
