@@ -22,10 +22,11 @@ $(document).ready(function() {
 	//LOAD Bookings into events array
 	var bookings = {{ json_encode($bookings['bookings']); }};
 	
-	function filterBookings() {
+	function filterBookings(filteredEvents) {
 		//first, only grab the bookings for the current branch
 		var filterEvents = bookings.filter(function(a) {
-			return a.destination == $('#branch').val();
+			return a.destination == $('#branch').val() &&
+					a.type == $('#type').val();
 		});
 
 		var newEvents = filterEvents.map(function(e) {
@@ -33,13 +34,23 @@ $(document).ready(function() {
 				title: e.eventName,
 				start: new Date(e.start * 1000),
 				end: new Date(e.end * 1000),
-				tip: 'Destination: ' + e.destination,
+				tip: 'Destination: ' + e.identifier,
 				color: '#7CC045',
 				allDay: true 
 			};
 		});
 	
 		return newEvents;
+	}
+	
+	function updateFilters() {
+		//update events
+		(function(e) {
+			$('#calendar').fullCalendar('removeEvents');
+			console.log(e);
+			$('#calendar').fullCalendar('addEventSource', e);
+			$('#calendar').fullCalendar('refetchEvents');
+		})(filterBookings());	
 	}
 
 							  
@@ -83,15 +94,9 @@ $(document).ready(function() {
         }
     });
 	
-	$('#branch').change(function() {
-		//update events
-		(function(e) {
-			$('#calendar').fullCalendar('removeEvents');
-			console.log(e);
-			$('#calendar').fullCalendar('addEventSource', e);
-			$('#calendar').fullCalendar('refetchEvents');
-		})(filterBookings());
-	});
+	//update calender with appropriate filters
+	$('#branch').change(updateFilters);
+	$('#type').change(updateFilters);
 	
 	
 	//sample accessing certain days on the calendar

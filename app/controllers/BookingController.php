@@ -16,6 +16,7 @@ class BookingController extends \BaseController {
 						->join('users', 'allBookings.userID', '=', 'users.id')
 						->join('kit', 'booking.kitID', '=', 'kit.id')
 						->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
+						->join('branch', 'branch.id', '=', 'booking.destination')
 						->get();
 		
 
