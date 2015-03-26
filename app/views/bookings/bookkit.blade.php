@@ -7,7 +7,7 @@
 {{ HTML::style('css/lightbox.css') }}
 
 @stop
-@section('overviewli') class="active" @stop
+@section('bookkitli') class="active" @stop
 @section('content')
 
 <script> 
