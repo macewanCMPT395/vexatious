@@ -183,7 +183,7 @@ class BookingSeeder extends Seeder {
 			"start" => $start,//start time today
 			"end"=> $end,//end date 2 days from now
 			"shipping" => $start - ((1)* 24*60*60),
-			"destination" => 1,
+			"destination" => 2,
 			"received" => false,
 			"shipped" => false,
 			"kitID" => 1

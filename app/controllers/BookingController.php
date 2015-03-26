@@ -172,8 +172,14 @@ class BookingController extends \BaseController {
         
         if (Input::get('form') == "ship")
             return Redirect::route('shipping');
-        else
-            return Redirect::route('receiving');
+        else {
+            if (Input::get('id') != "") {
+                $kit = Kit::find(Input::get('kitID'));
+                $kit->currentBranchID = Input::get('destination');
+                $kit->save();
+            }
+            return Redirect::route('receiving'); 
+        }
 	}
 
 

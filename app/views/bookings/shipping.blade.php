@@ -32,7 +32,7 @@
 <tr>
     <th>Description</th>
     <th>Barcode</th>
-    <th>Destination Branch ID</th>
+    <th>Destination Branch</th>
 </tr>
 </thead>
 </table>
@@ -52,7 +52,7 @@
 <tr>
     <th>Description</th>
     <th>Barcode</th>
-    <th>Destination Branch ID</th>
+    <th>Destination Branch</th>
 </tr>
 </thead>
 </table>
@@ -76,7 +76,9 @@ tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY
     
 var selected;
     
-//Add Rows to table    
+//Add Rows to table  
+var typeList = {{ json_encode(HardwareType::lists('name', 'id')) }};
+var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
 var allBookings = {{ json_encode($bookings['bookings']); }};
 var bookings;
 updateTables();
@@ -84,6 +86,7 @@ updateTables();
 $('#branch').change(updateTables);
 
 function updateTables() {
+    //Filter bookings
     bookings = allBookings.filter(function(a) { 
         return a.currentBranchID == $('#branch').val(); });
     clearTable("todayBookings");
@@ -144,13 +147,13 @@ function addRow(tableID, b) {
 
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
-
+    console.log(b);
     if (b == null)
         row.insertCell(0).innerHTML= "Nothing to Ship";
     else {
         row.insertCell(0).innerHTML= b.description;
         row.insertCell(1).innerHTML= b.barcode;
-        row.insertCell(2).innerHTML= b.destination;
+        row.insertCell(2).innerHTML= branchList[b.destination];
     }
     
     row.className += " row";
@@ -162,9 +165,14 @@ function addRow(tableID, b) {
             selected = this;
             selected.classList.toggle('selected');
             if (b != null) {
-                document.getElementsByName("id")[0].value = b.id;
+                document.getElementsByName("id")[0].value = b.bookingID;
                 document.getElementsByName("shipped")[0].value = 1;
                 document.getElementsByName("received")[0].value = 0;
+            } else {
+                document.getElementsByName("id")[0].value = "";
+                document.getElementsByName("shipped")[0].value = "";
+                document.getElementsByName("received")[0].value = "";
+                
             }
         }
 }

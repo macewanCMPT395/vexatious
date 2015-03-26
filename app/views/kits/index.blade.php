@@ -41,7 +41,7 @@
     <th>Description</th>
     <th>Kit Type</th>
     <th>Barcode</th>
-    <th>Current Branch ID</th>
+    <th>Current Branch</th>
     <th>Damage</th>
 </tr>
 </thead>
@@ -69,6 +69,7 @@
 //Make Table Rows selectable
 var selected;
 //Add Rows to table    
+var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
 var allKits = {{ json_encode($kits); }};
 var kits;
 
@@ -81,7 +82,7 @@ function updateTable() {
     //Filter Kits
     //Filter by type
     kits = allKits.filter(function(a) {
-        return a.id == $('#type').val(); });
+        return a.type == $('#type').val(); });
     
     clearTable("#kits");
     populateTable();
@@ -104,17 +105,15 @@ function clearTable(tableID) {
 
 function addRow(tableID, b) {
     var table = document.getElementById(tableID);
-
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
-
     if (b == null)
         row.insertCell(0).innerHTML= "No Kits";
     else {
         row.insertCell(0).innerHTML= b.description;
         row.insertCell(1).innerHTML= b.name;
         row.insertCell(2).innerHTML= b.barcode;
-        row.insertCell(3).innerHTML= b.identifier;
+        row.insertCell(3).innerHTML= branchList[b.currentBranchID];
         row.insertCell(4).innerHTML= "None";
     }
     
@@ -127,7 +126,7 @@ function addRow(tableID, b) {
             selected = this;
             selected.classList.toggle('selected');
             if (b != null) {
-                document.getElementsByName("id")[0].value = b.id;
+                document.getElementsByName("id")[0].value = b.bookingID;
                 document.getElementsByName("shipped")[0].value = 1;
                 document.getElementsByName("received")[0].value = 0;
             }
