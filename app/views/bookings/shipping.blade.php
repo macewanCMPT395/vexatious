@@ -8,13 +8,21 @@
 @section('shippingli') class="active" @stop
 @section('content')
 <div class="form">
+{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
 <ul class="formFields">
     <li>
     {{ Form::label('branch', 'Shipping from') }}
 	{{ Form::select('branch', Branch::lists('name', 'id')); }}
-    {{Form::close() }}
+    </li>
+    <li id="submit">
+    {{ Form::hidden('form', 'ship') }}
+    {{ Form::hidden('id', '') }}
+    {{ Form::hidden('shipped', '') }}
+    {{ Form::hidden('received', '') }}
+    {{ Form::submit('Ship') }}
     </li>
 </ul>
+{{Form::close() }}
 </div>
 <div id="todayTable">
 <div class="tableTitle">Today </div>
@@ -55,7 +63,6 @@
 </table>
 </div>
 </div>
-
 <script>
 //Set Table Dates
 var todayTitle = document.querySelector("#todayDate");
@@ -66,6 +73,8 @@ var tomorrow = new Date(moment(today).add(1,'days'));
     
 todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
+    
+var selected;
     
 //Add Rows to table    
 var allBookings = {{ json_encode($bookings['bookings']); }};
@@ -110,55 +119,58 @@ function populateTables() {
     }
 
     if (shippingToday.length == 0)
-        addRow("todayBookings", "Nothing to Ship", "", "");
+        addRow("todayBookings", null);
     else {   
         for (var i = 0; i < shippingToday.length; i++) {
             var b = shippingToday[i];
-            addRow("todayBookings", b.description, b.barcode,b.destination);
+            addRow("todayBookings", b);
         }
     }
 
     if (shippingTomorrow.length == 0)
-        addRow("tomorrowBookings", "Nothing to Ship", "", "");
+        addRow("tomorrowBookings", null);
     else {
         for (var i = 0; i < shippingTomorrow.length; i++) {
             var b = shippingTomorrow[i];
-            addRow("tomorrowBookings", b.description, b.barcode,b.destination);
-        }
-    }
-
-    //Make Table Rows selectable
-    var rows = document.querySelectorAll(".bookingRows tbody tr");
-    var selected;
-    for(var i = 0; i < rows.length; i++) {
-        rows[i].onclick = function() {
-            if (selected != null)
-                selected.classList.toggle('selected');
-            selected = this;
-            selected.classList.toggle('selected');
+            addRow("tomorrowBookings", b);
         }
     }
 }
 
-    
 function datesEqual(a,b) {
     return ((a.getMonth() == b.getMonth()) && 
             (a.getFullYear() == b.getFullYear()) && 
             (a.getDate() == b.getDate()));
 }
     
-function addRow(tableID, description, barcode, destinationID) {
-    
+function addRow(tableID, b) {
     var table = document.getElementById(tableID);
 
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
 
-    row.insertCell(0).innerHTML= description;
-    row.insertCell(1).innerHTML= barcode;
-    row.insertCell(2).innerHTML= destinationID;
+    if (b == null)
+        row.insertCell(0).innerHTML= "Nothing to Ship";
+    else {
+        row.insertCell(0).innerHTML= b.description;
+        row.insertCell(1).innerHTML= b.barcode;
+        row.insertCell(2).innerHTML= b.destination;
+    }
     
     row.className += " row";
+    
+    //Make row selectable
+    row.onclick = function() {
+            if (selected != null)
+                selected.classList.toggle('selected');
+            selected = this;
+            selected.classList.toggle('selected');
+            if (b != null) {
+                document.getElementsByName("id")[0].value = b.id;
+                document.getElementsByName("shipped")[0].value = 1;
+                document.getElementsByName("received")[0].value = 0;
+            }
+        }
 }
 
 </script>

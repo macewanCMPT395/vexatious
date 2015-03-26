@@ -12,6 +12,9 @@
     <li>
     {{ Form::label('branch', 'Receiving at') }}
 	{{ Form::select('branch', Branch::lists('name', 'id')); }}
+    </li>
+    <li id="submit">
+    {{ Form::submit('Received') }}
     {{Form::close() }}
     </li>
 </ul>
@@ -63,6 +66,8 @@ var tomorrowTitle = document.querySelector("#tomorrowDate");
     
 var today = new Date(moment());
 var tomorrow = new Date(moment(today).add(1,'days'));
+    
+var selected;
     
 todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
@@ -125,17 +130,6 @@ function populateTables() {
         }
     }
 
-    //Make Table Rows selectable
-    var rows = document.querySelectorAll(".bookingRows tbody tr");
-    var selected;
-    for(var i = 0; i < rows.length; i++) {
-        rows[i].onclick = function() {
-            if (selected != null)
-                selected.classList.toggle('selected');
-            selected = this;
-            selected.classList.toggle('selected');
-        }
-    }
 }
     
 function datesEqual(a,b) {
@@ -156,6 +150,14 @@ function addRow(tableID, description, barcode, destinationID) {
     row.insertCell(2).innerHTML= destinationID;
     
     row.className += " row";
+    
+    //Make row clickable
+    row.onclick = function() {
+            if (selected != null)
+                selected.classList.toggle('selected');
+            selected = this;
+            selected.classList.toggle('selected');
+        }
 }
 
 </script>
