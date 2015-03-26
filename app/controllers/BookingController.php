@@ -39,7 +39,7 @@ class BookingController extends \BaseController {
         $bookings = $this->getBookings();
 		return View::make('bookings/index')->with('bookings', $bookings);
 	}
-    
+	
     public function shipping()
 	{
         
@@ -178,6 +178,36 @@ class BookingController extends \BaseController {
 		Booking::find($id)->delete();
 		
 		return Redirect::route('/');
+	}
+	
+	public function getKitForDate($type, $startDate, $endDate) {
+		$response = ["status"=> "1"];
+		
+		
+		$start = strtotime($startDate);
+		$end = strtotime($endDate);
+		
+		$this->tempType = $type; //wat
+		
+		
+		//first grab a list of all the kits that are already booked for this period
+		$available = DB::table('booking')
+				->whereNotBetween('start', [$start,$end])
+				->WhereNotBetween('end', [$start, $end])
+				->join('kit', function($join){
+					$join->on('booking.kitID', '=', 'kit.id')
+						  ->on('kit.type', '=', $this->tempType);
+				})
+				->join('hardwareType', 'hardwareType.id', '=', $this->tempType)
+				->get(['kit.id', 'kit.barcode', 'kit.description']);
+		
+	
+		if(count($available) > 0) {
+			$response = ["status"=>"0", "available"=>$available];	
+		}
+		
+		
+		return Response::json($response);
 	}
 
 	
