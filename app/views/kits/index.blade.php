@@ -5,13 +5,10 @@
 @stop
 @section('browsekitsli') class="active" @stop
 @section('content')
-<div class="kitFilter">
+<div>
     {{ Form::open(['method' => 'get', 'route' => 'kits.index']) }}
     <div class="title"></div>
-    <ul class="kitFilter">
-    <li>
-    <div class="filterTitle">Filter By</div>
-    </li>
+    <ul class="kitFilters">
     <li>
     {{ Form::label('type', 'Type') }}
     {{ Form::select('type', HardwareType::lists('name', 'id')) }}

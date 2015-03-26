@@ -15,25 +15,19 @@ body, html {
     text-align: left;
     width: auto;
     padding-top: 10px;
-    padding-left: 5%;
     position: relative;
     background: #ffffff;
 }
 
-#bar {
-    height: 15px; 
-    background: #EEAC00; 
-}
-
-.cal {
+/*.cal {
     width: 300px;
-    height: 200px;
+    height:200px;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -150px;
     margin-top: -100px;
-}
+}*/
 
 a {
     text-decoration:none;
@@ -61,12 +55,12 @@ a:active {
  }
 
 .navMenu {
-    padding-left: 70px;
+    padding-left: 5%px;
     padding-right: 70px;
     width: width;
     height: 36px;
     font-size: 20px;
-    line-height: 36px;
+    line-height: 38px;
     text-align: left;
     color: white;
     font-weight: 400;
@@ -103,8 +97,9 @@ a:active {
 }
 
 .navMenu a {
-    padding: 6px 10px 7px 10px;
+    padding: 9px 12px 7px 12px;
     width: auto;
+    height: 10%;
 }
 
 .navMenu a:hover {

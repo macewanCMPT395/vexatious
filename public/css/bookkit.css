@@ -1,17 +1,28 @@
 .bookKitForm {
     height: auto;
-    line-height: 34px;
-    font-size: 16px;
+    line-height: 30px;
+    font-size: 20px;
     text-align: left;
-    padding-left: 40px;
+    margin-top: 5px;
+    padding-left: 30px;
     background: #eeeeee;
 }
 
 .formFields {
     list-style-type: none;
-    margin: 0px;
+    margin: 0;
+    padding: 5px 0px 5px 40px;
 }
 
+#branch {
+    font-size: 16px;
+
+} 
+
+#type {
+    font-size: 16px;
+
+}
 .formFields li{
     display: inline;
     padding-left: 2px;
