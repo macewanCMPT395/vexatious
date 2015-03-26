@@ -1,12 +1,14 @@
 @extends('layouts.admin')
 @section('headerScript')
-{{ HTML::style('css/kits.css') }}
 {{ HTML::style('css/shipping.css') }}
 <script src='fullcalendar/lib/jquery.min.js'></script>
 <script src='fullcalendar/lib/moment.min.js'></script>
 @stop
 @section('shippingli') class="active" @stop
 @section('content')
+<table class="layout">
+<tr>
+<td colspan="2"	>
 <div class="form">
 {{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
 <ul class="formFields">
@@ -24,6 +26,10 @@
 </ul>
 {{Form::close() }}
 </div>
+</td>
+</tr>
+<tr>
+<td>
 <div id="todayTable">
 <div class="tableTitle">Today </div>
 <div id="todayDate"> [Today's Date] </div>
@@ -43,7 +49,8 @@
 </table>
 </div>
 </div>
-
+</td>
+<td>
 <div id="tomorrowTable">
 <div class="tableTitle">Tomorrow </div>
 <div id="tomorrowDate"> [Tomorrow's Date] </div>
@@ -53,7 +60,6 @@
     <th>Description</th>
     <th>Barcode</th>
     <th>Destination Branch</th>
-</tr>
 </thead>
 </table>
 <div class="tableRows">
@@ -63,6 +69,8 @@
 </table>
 </div>
 </div>
+</td></tr>
+</table>
 <script>
 //Set Table Dates
 var todayTitle = document.querySelector("#todayDate");
