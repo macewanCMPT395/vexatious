@@ -5,26 +5,76 @@
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
 {{ HTML::script('lightbox.js') }}
 {{ HTML::style('css/lightbox.css') }}
-
+{{ HTML::script('polyfiller.js') }}
 @stop
 @section('bookkitli') class="active" @stop
 @section('content')
 
 <script> 
-
+//enable date picker for firefox
+webshims.setOptions('forms-ext', {types: 'date'});
+webshims.polyfill('forms forms-ext');
+	
+webshims.formcfg = {
+        en: {
+            dFormat: '-',
+            dateSigns: '-',
+            patterns: {
+                d: "dd-mm-yy"
+            }
+        }
+};
+webshims.activeLang('en');
+	
 
 $(document).ready(function() {
+	var hasStart = 0, hasEnd = 0, hasKit = 0;
+	
 	var myLightBox = LightBox.init();
+	var startSelector = "input[name='start']";
+	var endSelector = "input[name='end']";
+	
+	$('#kitCodeLabel').attr('readonly', true);
+	$('#kitCodeLabel').css('background-color' , '#DEDEDE');
+	
+	function updateSelectButton() {
+		var startDate = $(startSelector).val();
+		var endDate = $(endSelector).val();
+		
+		$('#selectKitBtn').attr('disabled', function() {
+			return !startDate || !endDate;
+		});	
+		
+		$("input[type='submit']").attr('disabled', function() {
+			return !startDate || !endDate || !$('#kitCodeLabel').attr('data-selected');
+		});
+	}
+	
+	function updateSelectedKit() {
+		$('#kitCodeLabel').val('No Kit Selected');	
+		$('#kitCodeLabel').attr('data-selected', null);
+	}
+	
+	$(startSelector).change(function() {
+		updateSelectButton();
+		updateSelectedKit();
+		
+	});
+	
+	$(endSelector).change(function() {
+		updateSelectButton();
+		updateSelectedKit();
+	});
+	
 	
 	$('#selectKitBtn').click(function() {
 		var kitType = $('#type').val();
 		var kitName = $('#type option:selected').html();
 		
-		var startDate = $("input[name='start']").val();
-		var endDate = $("input[name='end']").val();
+		var startDate = $(startSelector).val();
+		var endDate = $(endSelector).val();
 		
 		var url = "/checkForKit/" + kitType + "/" + startDate + "/" + endDate;
-		console.log(url);
 		$.get(url)
 			.done(function(data) {
 				//create container to hold our list
@@ -35,6 +85,7 @@ $(document).ready(function() {
 				if(data.status == 1) {
 					var title1 = '<h1>No ' + kitName + ' kits available';
 					$(htmlDisplay).append(title1).append(title2);
+					myLightBox.show($(htmlDisplay).html());
 					return;
 				}
 			
@@ -56,9 +107,10 @@ $(document).ready(function() {
 					//do a check for if a list item is clicked, then close lightbox
 					//and add kits barcode to selected kit field label
 					$('#lightBox').on('click','#' + kit.barcode, function() {
-							console.log("Clicked!");
-							$('#kitCodeLabel').text($(this).attr('id'));
-							myLightBox.close();
+						$('#kitCodeLabel').val($(this).attr('id'));
+						$('#kitCodeLabel').attr('data-selected', 'true');
+						myLightBox.close();
+						updateSelectButton();
 					});
 					
 					//add generated kit item to the kit list
@@ -68,16 +120,17 @@ $(document).ready(function() {
 				$(htmlDisplay).append($(kitList));
 				//and show the container in the lightbox
 				myLightBox.show($(htmlDisplay).html());
+			})
+			.fail(function(data) {
+				console.log(data);
+				alert(data);
 			});
 	});
 	
 	
-	
-	
-	
-	
-	
-	
+	//set initial state for our buttons
+	updateSelectButton();
+	updateSelectedKit();
 });
 
 </script>
@@ -93,22 +146,22 @@ $(document).ready(function() {
 		</div>
        <div>
             {{ Form::label('start', 'Start Date: ', ['id' => 'startDateLabel']) }}
-            {{ Form::text('start') }}
+            {{ Form::input('date', 'start') }}
        </div>
 
         <div>
             {{ Form::label('end', 'End Date: ', ['id' => 'endDateLabel']) }}
-            {{ Form::text('end') }}
+            {{ Form::input('date', 'end') }}
        </div>
 		
 		<div>
 			{{ Form::button('Select Kit', ['id'=>'selectKitBtn']); }}
-			{{ Form::label('kitCode', 'No Kit Selected', ['id'=>'kitCodeLabel']); }}
+			{{ Form::text('kitCode', 'No Kit Selected', ['id'=>'kitCodeLabel']); }}
 		</div>
 
        <div>
             {{ Form::label('eventName', 'Event Name: ', ['id' => 'eventLabel']) }}
-            {{ Form::password('eventName') }}
+            {{ Form::text('eventName') }}
        </div>
 
 
