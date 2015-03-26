@@ -23,30 +23,31 @@ var date = new Date();
 var endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 endDate = endDate.getUTCDate() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getFullYear();
 $(document).ready(function() {
+	
+	var userName = "{{ Auth::user()->firstName.' '.Auth::user()->lastName; }}";
+	
+	
+	
+	//add "All" to type filter
+	$('#type').prepend('<option value="0">All</option>');
+	//add "Mine" to branch filter
+	$('#branch').prepend('<option value="0">' + userName + '</option>');
+	
 	//LOAD Bookings into events array
 	var bookings = {{ json_encode($bookings['bookings']); }};
-	$.ajax( {
-		'url': "/kitavailability/" + $('#type').val() + "/" + currentDate + "/" + endDate,
-		'success': function(data) {
-			   total = data.count * 3;
-			   data = data.availability
-			  for(var i=1; i<data - 1;i++) {
-                          	  if((data[i-1].count + data[i].count + data[i+1].count ) > total) {
-				        var blackoutDate = data[i].start;
-					blackoutDate = new Date(blackoutDate * 1000);
-					blackoutDate = blackoutDate.getUTCDate() + "-" + (blackoutDate.getMonth() + 1) + "-" + blackoutDate.getFullYear();
-                                  	$(".fc-day[data-date='" + blackoutDate + "']").css('background-color', '#AAAAAA');	      
-                               	  }
-                }
-
-			 },
-		'dataType': "json"
-		});
+				  
+				  
 	function filterBookings(filteredEvents) {
 		//first, only grab the bookings for the current branch
 		var filterEvents = bookings.filter(function(a) {
-			return a.destination == $('#branch').val() &&
+			
+			var branchAdd = ($('#branch').val() == 0 || a.destination == $('#branch').val());
+			if ($('#type').val() == 0) {
+				return branchAdd;
+			} else {
+				return branchAdd &&
 					a.type == $('#type').val();
+			}
 		});
 
 		var newEvents = filterEvents.map(function(e) {
