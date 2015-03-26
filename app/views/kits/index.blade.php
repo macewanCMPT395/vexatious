@@ -14,11 +14,11 @@
     </li>
     <li>
     {{ Form::label('type', 'Type') }}
-    {{ Form::select('type', array('ipad' => 'iPad', 'zune' => 'Zune')) }}
+    {{ Form::select('type', HardwareType::lists('name', 'id')) }}
     </li>
     <li>
     {{ Form::label('branch', 'Branch') }}
-    {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
+    {{ Form::select('branch', Branch::lists('name', 'id')); }}
     </li>
     <li>
     {{ Form::label('barcode', 'Barcode') }}
