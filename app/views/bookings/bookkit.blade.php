@@ -133,49 +133,44 @@ $(document).ready(function() {
 	updateSelectedKit();
 });
 
-</script>
-
+</script> 
     <div class="bookingBox">
        {{ Form::open([ 'route' => 'bookings.store',
                         'id' => 'form-booking']
         )}}
-
-		<div>
-			{{ Form::label('type', 'Type') }}
+	<ul class="bookkit">
+	    <li>
+		{{ Form::label('eventName', 'Event Name: ', ['id' => 'eventLabel']) }}
+            	{{ Form::text('eventName') }}
+	     </li>
+	     <li>
+			{{ Form::label('type', 'Type:') }}
 			{{ Form::select('type', HardwareType::lists('name', 'id')) }}
-		</div>
-       <div>
-            {{ Form::label('start', 'Start Date: ', ['id' => 'startDateLabel']) }}
-            {{ Form::input('date', 'start') }}
-       </div>
-
-        <div>
-            {{ Form::label('end', 'End Date: ', ['id' => 'endDateLabel']) }}
-            {{ Form::input('date', 'end') }}
-       </div>
-		
-		<div>
+	     </li>
+	     <li>
+		   {{ Form::label('destination', "Deliver To: ", ['id' => "destLabel"]) }}
+            	   {{ Form::select('destination', Branch::lists('name', 'id')) }}
+  	      </li>
+	      <li>
+		{{ Form::label('start', 'Start Date: ', ['id' => 'startDateLabel']) }}
+            	{{ Form::input('date', 'start') }}
+	      </li>
+	      <li>
+               {{ Form::label('end', 'End Date: ', ['id' => 'endDateLabel']) }}
+               {{ Form::input('date', 'end') }}
+       	      </li>
+	       <li>
 			{{ Form::button('Select Kit', ['id'=>'selectKitBtn']); }}
 			{{ Form::text('kitCode', 'No Kit Selected', ['id'=>'kitCodeLabel']); }}
-		</div>
-
-       <div>
-            {{ Form::label('eventName', 'Event Name: ', ['id' => 'eventLabel']) }}
-            {{ Form::text('eventName') }}
-       </div>
-
-
-
-       <div>
-		   {{ Form::label('destination', "Deliver To: ", ['id' => "destLabel"]) }}
-            {{ Form::select('destination', Branch::lists('name', 'id')) }}
-
-       </div>
-
-
-        <div id="bookingErrorMsg"></div>
-
-       <div class="bookingButtons"> {{ Form::submit('Create Booking') }}</div>
+	 	</li>
+		<li>
+		<!-- add the notification table and adder function here -->
+		</li>
+		<li>
+		<div class="bookingButtons"> {{ Form::submit('Create Booking') }}</div>
+		<div id="bookingErrorMsg"></div>
+		</li>
+       		</ul>
 
        {{ Form::close() }}
     </div>
