@@ -1,7 +1,7 @@
 <?php
 
 class UsersController extends BaseController {
-	protected $user;
+	public $user;
 	public $layout = 'layouts.header';
 
 	public function __construct(User $user) 

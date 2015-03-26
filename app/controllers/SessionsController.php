@@ -8,11 +8,11 @@ use Illuminate\Support\MessageBag;
 
 class SessionsController extends BaseController {
 
+    
 
 	public function create() {
 		if (Auth::check())
 			return Redirect::route('bookings.index');
-		
 		return View::make('signIn');
 	}
 
