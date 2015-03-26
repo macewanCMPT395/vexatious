@@ -19,7 +19,7 @@ class CreateHardwareTable extends Migration {
 			$table->foreign('hardwareTypeID')->references('id')->on('hardwareType');
 			
 			$table->string('assetTag');
-			$table->string('damaged');
+			$table->string('damaged')->nullable();
 		});
 	}
 

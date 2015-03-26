@@ -101,8 +101,16 @@ class HardwareTableSeeder extends Seeder {
 			"assetTag" => "123456",
 			"damaged" => "Has a sticky button"
 		));
-		
-		
+		Hardware::create(array(
+			"hardwareTypeID" => 1,
+			"assetTag" => "789101112",
+			"damaged" => "Cracked screen"
+		));	
+		Hardware::create(array(
+			"hardwareTypeID" => 1,
+			"assetTag" => "adfadfadf",
+			"damaged" => null
+		));	
 	}
 }
 
@@ -151,7 +159,14 @@ class KitHardwareTableSeeder extends Seeder {
 			"hardwareID" => 1
 			
 		));
-					
+		KitHardware::create(array(
+			"kitID" => 1,
+			"hardwareID" => 2
+		));	
+		KitHardware::create(array(
+			"kitID" => 1,
+			"hardwareID" => 3
+		));
 	}
 }
 

@@ -37,7 +37,7 @@ $(document).ready(function() {
 	var bookings = {{ json_encode($bookings['bookings']); }};
 				  
 				  
-	function filterBookings(filteredEvents) {
+	function filterBookings() {
 		//first, only grab the bookings for the current branch
 		var filterEvents = bookings.filter(function(a) {
 			
