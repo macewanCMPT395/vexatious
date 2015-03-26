@@ -93,12 +93,12 @@ $(document).ready(function() {
 		</div>
        <div>
             {{ Form::label('start', 'Start Date: ', ['id' => 'startDateLabel']) }}
-            {{ Form::text('start') }}
+            {{ Form::input('date', 'start') }}
        </div>
 
         <div>
             {{ Form::label('end', 'End Date: ', ['id' => 'endDateLabel']) }}
-            {{ Form::text('end') }}
+            {{ Form::input('date', 'end') }}
        </div>
 		
 		<div>
