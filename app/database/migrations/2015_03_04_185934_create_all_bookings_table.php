@@ -20,6 +20,8 @@ class CreateAllBookingsTable extends Migration {
 			$table->bigInteger('userID');
 			$table->foreign('userID')->references('id')->on('users');
 			
+			$table->boolean('creator');
+			
 		});
 	}
 
