@@ -19,6 +19,8 @@
     {{ Form::hidden('id', '') }}
     {{ Form::hidden('shipped', '') }}
     {{ Form::hidden('received', '') }}
+    {{ Form::hidden('kitID', '') }}  
+    {{ Form::hidden('destination', '') }}
     {{ Form::submit('Received') }}
     </li>
 </ul>
@@ -32,7 +34,7 @@
 <tr>
     <th>Description</th>
     <th>Barcode</th>
-    <th>Destination Branch ID</th>
+    <th>Destination Branch</th>
 </tr>
 </thead>
 </table>
@@ -52,7 +54,7 @@
 <tr>
     <th>Description</th>
     <th>Barcode</th>
-    <th>Destination Branch ID</th>
+    <th>Destination Branch</th>
 </tr>
 </thead>
 </table>
@@ -77,7 +79,8 @@ var selected;
 todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
     
-//Add Rows to table    
+//Add Rows to table  
+var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
 var allBookings = {{ json_encode($bookings['bookings']); }};
     
 //Filter Bookings
@@ -91,7 +94,7 @@ $('#branch').change(updateTables);
 
 function updateTables() {
     bookings = allBookings.filter(function(a) { 
-        return a.currentBranchID == $('#branch').val(); });
+        return a.destination == $('#branch').val(); });
     clearTable("receiveToday");
     clearTable("receiveTomorrow");
     populateTables();
@@ -136,7 +139,6 @@ function populateTables() {
             addRow("receiveTomorrow", b);
         }
     }
-
 }
     
 function datesEqual(a,b) {
@@ -156,9 +158,8 @@ function addRow(tableID, b) {
     else {
         row.insertCell(0).innerHTML= b.description;
         row.insertCell(1).innerHTML= b.barcode;
-        row.insertCell(2).innerHTML= b.destination;
+        row.insertCell(2).innerHTML= branchList[b.destination];
     }
-    
     row.className += " row";
     
     //Make row selectable
@@ -168,13 +169,17 @@ function addRow(tableID, b) {
             selected = this;
             selected.classList.toggle('selected');
             if (b != null) {
-                document.getElementsByName("id")[0].value = b.id;
+                document.getElementsByName("id")[0].value = b.bookingID;
                 document.getElementsByName("shipped")[0].value = 1;
                 document.getElementsByName("received")[0].value = 1;
+                document.getElementsByName("kitID")[0].value = b.kitID;
+                document.getElementsByName("destination")[0].value = b.destination;
             } else {
                 document.getElementsByName("id")[0].value = "";
                 document.getElementsByName("shipped")[0].value = "";
                 document.getElementsByName("received")[0].value = "";
+                document.getElementsByName("kitID")[0].value = "";
+                document.getElementsByName("destination")[0].value = "";
             }
         }
 }
