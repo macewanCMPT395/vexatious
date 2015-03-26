@@ -42,10 +42,16 @@ class BookingController extends \BaseController {
     
     public function shipping()
 	{
-        
         $bookings = $this->getBookings();
         
 		return View::make('bookings/shipping' ,compact('bookings'));
+	}
+    
+    public function receiving()
+	{
+        $bookings = $this->getBookings();
+        
+		return View::make('bookings/receiving' ,compact('bookings'));
 	}
 
 
@@ -67,7 +73,6 @@ class BookingController extends \BaseController {
 	 */
 	public function store()
 	{
-		
 		$input = array_filter(Input::only($this->bookingFields));
 		//return Response::json($input);
 		//create the actual booking
@@ -149,16 +154,26 @@ class BookingController extends \BaseController {
 		//
 	}
 
-
 	/**
 	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
+	 * 
+     * @input form with fields id, shipped, received
+	 * @param  
 	 * @return Response
 	 */
-	public function update($id)
+	public function update()
 	{
-		//
+        if (Input::get('id') != "") {
+            $booking = Booking::find(Input::get('id'));
+            $booking->shipped = Input::get('shipped');
+            $booking->received = Input::get('received');
+            $booking->save();
+        }
+        
+        if (Input::get('form') == "ship")
+            return Redirect::route('shipping');
+        else
+            return Redirect::route('receiving');
 	}
 
 

@@ -149,6 +149,7 @@ function parseDate(date) {
 	{{ Form::select('type', HardwareType::lists('name', 'id')) }}
 	{{Form::close() }}
     </li>
+</ul>
 <div class="tabs">
     <ul class="tabs">
         <li>
@@ -157,7 +158,7 @@ function parseDate(date) {
               <div id="calendar"></div>
           </div>
         </li>
-</ul>
+
 </div>
 </div>
 

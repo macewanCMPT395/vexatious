@@ -4,18 +4,16 @@ body, html {
     height: 100%;
     width: 100%;
     margin: 0;
-    margin-left: auto;
-    margin-right: auto;
     -webkit-font-smoothing: antialiased;
     font-weight: 100;
     background: #ffffff;
     font-family: helvetica;
-    position: fixed;
+    /*position: fixed;*/
 }
 
 #Image {
     text-align: left;
-    width: 100%;
+    width: auto;
     padding-top: 10px;
     padding-left: 5%;
     position: relative;
@@ -24,7 +22,7 @@ body, html {
 
 #bar {
     height: 15px; 
-    background: #EEAC00; #Orange
+    background: #EEAC00; 
 }
 
 .cal {
@@ -101,7 +99,7 @@ a:active {
 
 #bar {
     height: 15px;
-    background: #FBBC2E; #orange
+    background: #FBBC2E; 
 }
 
 .navMenu a {
