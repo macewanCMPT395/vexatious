@@ -118,8 +118,6 @@ function populateTables() {
             (bookings[i].shipped == 0))
              shippingTomorrow.unshift(bookings[i]);
     }
-    
-    console.log(shippingToday.length + " "  + shippingTomorrow.length);
 
     if (shippingToday.length == 0)
         addRow("receiveToday", null);

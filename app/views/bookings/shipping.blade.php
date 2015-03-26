@@ -78,11 +78,7 @@ var selected;
     
 //Add Rows to table    
 var allBookings = {{ json_encode($bookings['bookings']); }};
-//Filter Bookings
-var bookings = allBookings.filter(function(a) {
-    return a.currentBranchID == $('#branch').val();
-});
-    
+var bookings;
 updateTables();
     
 $('#branch').change(updateTables);
@@ -107,15 +103,15 @@ function populateTables() {
         shippingTomorrow = [];
     
     for (var i = 0; i < bookings.length; i++) {
-    var shippingDate = new Date(bookings[i].shipping * 1000);
-    
-    //IF booking is due to be shipped today or is late
-    if ((datesEqual(today,shippingDate) || 
-        (shippingDate < today)) && 
-        (bookings[i].shipped == "0"))
-         shippingToday.unshift(bookings[i]);
-    if (datesEqual(tomorrow,shippingDate) && (bookings[i].shipped == "0"))
-         shippingTomorrow.unshift(bookings[i]);
+        var shippingDate = new Date(bookings[i].shipping * 1000);
+
+        //IF booking is due to be shipped today or is late
+        if ((datesEqual(today,shippingDate) || 
+            (shippingDate < today)) && 
+            (bookings[i].shipped == "0"))
+             shippingToday.unshift(bookings[i]);
+        if (datesEqual(tomorrow,shippingDate) && (bookings[i].shipped == "0"))
+             shippingTomorrow.unshift(bookings[i]);
     }
 
     if (shippingToday.length == 0)
