@@ -163,10 +163,12 @@ class BookingController extends \BaseController {
 	 */
 	public function update()
 	{
-        $booking = Booking::find(Input::get('id'));
-        $booking->shipped = Input::get('shipped');
-        $booking->received = Input::get('received');
-        $booking->save();
+        if (Input::get('id') != "") {
+            $booking = Booking::find(Input::get('id'));
+            $booking->shipped = Input::get('shipped');
+            $booking->received = Input::get('received');
+            $booking->save();
+        }
         
         if (Input::get('form') == "ship")
             return Redirect::route('shipping');

@@ -8,16 +8,21 @@
 @section('receivingli') class="active" @stop
 @section('content')
 <div class="form">
+{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
 <ul class="formFields">
     <li>
     {{ Form::label('branch', 'Receiving at') }}
 	{{ Form::select('branch', Branch::lists('name', 'id')); }}
     </li>
     <li id="submit">
+    {{ Form::hidden('form', 'received') }}
+    {{ Form::hidden('id', '') }}
+    {{ Form::hidden('shipped', '') }}
+    {{ Form::hidden('received', '') }}
     {{ Form::submit('Received') }}
-    {{Form::close() }}
     </li>
 </ul>
+{{Form::close() }}
 </div>
 <div id="todayTable">
 <div class="tableTitle">Today </div>
@@ -107,26 +112,30 @@ function populateTables() {
         var shippingDate = new Date(bookings[i].shipping * 1000);
         //IF a booking is shipped but not received
         if ((bookings[i].received == 0) && (bookings[i].shipped == 1))
+            shippingToday.unshift(bookings[i]);
         //IF a booking is expected tomorrow
-        if (datesEqual(tomorrow,shippingDate))
-             shippingToday.unshift(bookings[i]);
+        if (datesEqual(tomorrow,shippingDate) && 
+            (bookings[i].shipped == 0))
+             shippingTomorrow.unshift(bookings[i]);
     }
+    
+    console.log(shippingToday.length + " "  + shippingTomorrow.length);
 
     if (shippingToday.length == 0)
-        addRow("receiveToday", "Nothing to Receive", "", "");
+        addRow("receiveToday", null);
     else {   
         for (var i = 0; i < shippingToday.length; i++) {
             var b = shippingToday[i];
-            addRow("receiveToday", b.description, b.barcode,b.destination);
+            addRow("receiveToday", b);
         }
     }
 
     if (shippingTomorrow.length == 0)
-        addRow("receiveTomorrow", "Nothing to Receive", "", "");
+        addRow("receiveTomorrow", null);
     else {
         for (var i = 0; i < shippingTomorrow.length; i++) {
             var b = shippingTomorrow[i];
-            addRow("receiveTomorrow", b.description, b.barcode,b.destination);
+            addRow("receiveTomorrow", b);
         }
     }
 
@@ -138,25 +147,37 @@ function datesEqual(a,b) {
             (a.getDate() == b.getDate()));
 }
 
-function addRow(tableID, description, barcode, destinationID) {
-    
+function addRow(tableID, b) {
     var table = document.getElementById(tableID);
 
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
 
-    row.insertCell(0).innerHTML= description;
-    row.insertCell(1).innerHTML= barcode;
-    row.insertCell(2).innerHTML= destinationID;
+    if (b == null)
+        row.insertCell(0).innerHTML= "Nothing to Receive";
+    else {
+        row.insertCell(0).innerHTML= b.description;
+        row.insertCell(1).innerHTML= b.barcode;
+        row.insertCell(2).innerHTML= b.destination;
+    }
     
     row.className += " row";
     
-    //Make row clickable
+    //Make row selectable
     row.onclick = function() {
             if (selected != null)
                 selected.classList.toggle('selected');
             selected = this;
             selected.classList.toggle('selected');
+            if (b != null) {
+                document.getElementsByName("id")[0].value = b.id;
+                document.getElementsByName("shipped")[0].value = 1;
+                document.getElementsByName("received")[0].value = 1;
+            } else {
+                document.getElementsByName("id")[0].value = "";
+                document.getElementsByName("shipped")[0].value = "";
+                document.getElementsByName("received")[0].value = "";
+            }
         }
 }
 
