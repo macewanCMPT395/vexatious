@@ -22,10 +22,6 @@
     {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
     </li>
     <li>
-    {{ Form::label('barcode', 'Barcode') }}
-    {{ Form::text('barcode') }}
-    </li>
-    <li>
     {{ Form::label('damage', 'Damage') }}
     {{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
     </li>
