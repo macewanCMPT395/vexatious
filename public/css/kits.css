@@ -1,7 +1,7 @@
 #tableWrapper {
     margin: 20px auto 40px auto;
     width: 90%;
-    height: 76%;
+    height: 60%;
 }
 
 #tableRows {
@@ -118,4 +118,17 @@ select#damage {
     border: 2px solid purple;
     background-color: purple;
 
+}
+
+#buttons {
+    background-color: #6ab833;
+    padding-right: 4.5%;
+}
+
+#buttons li {
+    float: right;
+}
+
+#buttons a:hover {
+    color: #6ab833;
 }
