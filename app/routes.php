@@ -11,3 +11,5 @@ Route::get('/', ['uses' => 'SessionsController@create', 'as'=>'signIn']);
 Route::get('logout', ['uses'=>'SessionsController@destroy', 'as'=> 'logout']);
 Route::get('kitavailability/{type}/{start}/{end}', 
 		   ['uses' => 'BookingController@kitAvailability', 'as' => 'availability']);
+Route::get('checkForKit/{type}/{start}/{end}', 
+		   ['uses' => 'BookingController@getKitForDate', 'as' => 'check']);
