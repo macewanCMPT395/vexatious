@@ -14,11 +14,11 @@
     </li>
     <li>
     {{ Form::label('type', 'Type') }}
-    {{ Form::select('type', array('ipad' => 'iPad', 'zune' => 'Zune')) }}
+    {{ Form::select('type', HardwareType::lists('name', 'id')) }}
     </li>
     <li>
     {{ Form::label('branch', 'Branch') }}
-    {{ Form::select('type', array('dt' => 'Downtown', 'ut' => 'Uptown')) }}
+    {{ Form::select('branch', Branch::lists('name', 'id')); }}
     </li>
     <li>
     {{ Form::label('barcode', 'Barcode') }}
@@ -41,13 +41,13 @@
     <th>Description</th>
     <th>Kit Type</th>
     <th>Barcode</th>
-    <th>Current Branch ID</th>
+    <th>Current Branch</th>
     <th>Damage</th>
 </tr>
 </thead>
 </table>
 <div id="tableRows">
-<table class="kitsTable kitRows">
+<table id="kits" class="kitsTable kitRows">
 <tbody>
 	@for($i = 0; $i < 100; $i++)
        	@foreach ($kits as $kit)
@@ -67,15 +67,70 @@
 
 <script>
 //Make Table Rows selectable
-var rows = document.querySelectorAll(".kitRows tbody tr");
 var selected;
-for(var i = 0; i < rows.length; i++) {
-    rows[i].onclick = function() {
-        if (selected != null)
-            selected.classList.toggle('selected');
-        selected = this;
-        selected.classList.toggle('selected');
+//Add Rows to table    
+var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
+var allKits = {{ json_encode($kits); }};
+var kits;
+
+$('#branch').change(updateTable);
+$('#type').change(updateTable);
+
+updateTable();
+
+function updateTable() {
+    //Filter Kits
+    //Filter by type
+    kits = allKits.filter(function(a) {
+        return a.type == $('#type').val(); });
+    
+    clearTable("#kits");
+    populateTable();
+}
+    
+function populateTable() {
+    
+    if (kits.length == 0)
+        addRow("kits", null);
+    else{
+        for (var i = 0; i < kits.length; i++) {
+            addRow("kits", kits[i]);
+        }
     }
+}
+    
+function clearTable(tableID) {
+    $(tableID).empty();
+}
+
+function addRow(tableID, b) {
+    var table = document.getElementById(tableID);
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    if (b == null)
+        row.insertCell(0).innerHTML= "No Kits";
+    else {
+        row.insertCell(0).innerHTML= b.description;
+        row.insertCell(1).innerHTML= b.name;
+        row.insertCell(2).innerHTML= b.barcode;
+        row.insertCell(3).innerHTML= branchList[b.currentBranchID];
+        row.insertCell(4).innerHTML= "None";
+    }
+    
+    row.className += " row";
+    
+    //Make row selectable
+    row.onclick = function() {
+            if (selected != null)
+                selected.classList.toggle('selected');
+            selected = this;
+            selected.classList.toggle('selected');
+            if (b != null) {
+                document.getElementsByName("id")[0].value = b.bookingID;
+                document.getElementsByName("shipped")[0].value = 1;
+                document.getElementsByName("received")[0].value = 0;
+            }
+        }
 }
 </script>
 

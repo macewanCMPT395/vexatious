@@ -13,7 +13,7 @@ class KitController extends \BaseController {
 		$response = ["status" => "1"];
 		$kits = DB::table('kit')->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
 					->join('branch', 'currentBranchID', '=', 'branch.id') 
-					->get(['kit.id', 'kit.description', 'barcode', 'hardwareType.name', 'identifier']);
+					->get(['kit.id', 'kit.description', 'barcode', 'hardwareType.name', 'identifier', 'currentBranchID', 'type']);
 		if ($kits) {
 			$response = array(
 				'status' => 0,

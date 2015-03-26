@@ -5,21 +5,23 @@
 <script src='fullcalendar/lib/jquery.min.js'></script>
 <script src='fullcalendar/lib/moment.min.js'></script>
 @stop
-@section('shippingli') class="active" @stop
+@section('receivingli') class="active" @stop
 @section('content')
 <div class="form">
 {{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
 <ul class="formFields">
     <li>
-    {{ Form::label('branch', 'Shipping from') }}
+    {{ Form::label('branch', 'Receiving at') }}
 	{{ Form::select('branch', Branch::lists('name', 'id')); }}
     </li>
     <li id="submit">
-    {{ Form::hidden('form', 'ship') }}
+    {{ Form::hidden('form', 'received') }}
     {{ Form::hidden('id', '') }}
     {{ Form::hidden('shipped', '') }}
     {{ Form::hidden('received', '') }}
-    {{ Form::submit('Ship') }}
+    {{ Form::hidden('kitID', '') }}  
+    {{ Form::hidden('destination', '') }}
+    {{ Form::submit('Received') }}
     </li>
 </ul>
 {{Form::close() }}
@@ -37,7 +39,7 @@
 </thead>
 </table>
 <div class="tableRows">
-<table id="todayBookings" class="bookingsTable bookingRows">
+<table id="receiveToday" class="bookingsTable bookingRows">
 <tbody>
 </tbody>
 </table>
@@ -57,12 +59,13 @@
 </thead>
 </table>
 <div class="tableRows">
-<table id="tomorrowBookings" class="bookingsTable bookingRows">
+<table id="receiveTomorrow" class="bookingsTable bookingRows">
 <tbody>
 </tbody>
 </table>
 </div>
 </div>
+
 <script>
 //Set Table Dates
 var todayTitle = document.querySelector("#todayDate");
@@ -71,26 +74,29 @@ var tomorrowTitle = document.querySelector("#tomorrowDate");
 var today = new Date(moment());
 var tomorrow = new Date(moment(today).add(1,'days'));
     
+var selected;
+    
 todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
     
-var selected;
-    
 //Add Rows to table  
-var typeList = {{ json_encode(HardwareType::lists('name', 'id')) }};
 var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
 var allBookings = {{ json_encode($bookings['bookings']); }};
-var bookings;
+    
+//Filter Bookings
+var bookings = allBookings.filter(function(a) {
+    return a.destination == $('#branch').val();
+});
+    
 updateTables();
     
 $('#branch').change(updateTables);
 
 function updateTables() {
-    //Filter bookings
     bookings = allBookings.filter(function(a) { 
-        return a.currentBranchID == $('#branch').val(); });
-    clearTable("todayBookings");
-    clearTable("tomorrowBookings");
+        return a.destination == $('#branch').val(); });
+    clearTable("receiveToday");
+    clearTable("receiveTomorrow");
     populateTables();
 }
     
@@ -107,55 +113,53 @@ function populateTables() {
     
     for (var i = 0; i < bookings.length; i++) {
         var shippingDate = new Date(bookings[i].shipping * 1000);
-
-        //IF booking is due to be shipped today or is late
-        if ((datesEqual(today,shippingDate) || 
-            (shippingDate < today)) && 
-            (bookings[i].shipped == "0"))
-             shippingToday.unshift(bookings[i]);
-        if (datesEqual(tomorrow,shippingDate) && (bookings[i].shipped == "0"))
+        //IF a booking is shipped but not received
+        if ((bookings[i].received == 0) && (bookings[i].shipped == 1))
+            shippingToday.unshift(bookings[i]);
+        //IF a booking is expected tomorrow
+        if (datesEqual(tomorrow,shippingDate) && 
+            (bookings[i].shipped == 0))
              shippingTomorrow.unshift(bookings[i]);
     }
 
     if (shippingToday.length == 0)
-        addRow("todayBookings", null);
+        addRow("receiveToday", null);
     else {   
         for (var i = 0; i < shippingToday.length; i++) {
             var b = shippingToday[i];
-            addRow("todayBookings", b);
+            addRow("receiveToday", b);
         }
     }
 
     if (shippingTomorrow.length == 0)
-        addRow("tomorrowBookings", null);
+        addRow("receiveTomorrow", null);
     else {
         for (var i = 0; i < shippingTomorrow.length; i++) {
             var b = shippingTomorrow[i];
-            addRow("tomorrowBookings", b);
+            addRow("receiveTomorrow", b);
         }
     }
 }
-
+    
 function datesEqual(a,b) {
     return ((a.getMonth() == b.getMonth()) && 
             (a.getFullYear() == b.getFullYear()) && 
             (a.getDate() == b.getDate()));
 }
-    
+
 function addRow(tableID, b) {
     var table = document.getElementById(tableID);
 
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
-    console.log(b);
+
     if (b == null)
-        row.insertCell(0).innerHTML= "Nothing to Ship";
+        row.insertCell(0).innerHTML= "Nothing to Receive";
     else {
         row.insertCell(0).innerHTML= b.description;
         row.insertCell(1).innerHTML= b.barcode;
         row.insertCell(2).innerHTML= branchList[b.destination];
     }
-    
     row.className += " row";
     
     //Make row selectable
@@ -167,12 +171,15 @@ function addRow(tableID, b) {
             if (b != null) {
                 document.getElementsByName("id")[0].value = b.bookingID;
                 document.getElementsByName("shipped")[0].value = 1;
-                document.getElementsByName("received")[0].value = 0;
+                document.getElementsByName("received")[0].value = 1;
+                document.getElementsByName("kitID")[0].value = b.kitID;
+                document.getElementsByName("destination")[0].value = b.destination;
             } else {
                 document.getElementsByName("id")[0].value = "";
                 document.getElementsByName("shipped")[0].value = "";
                 document.getElementsByName("received")[0].value = "";
-                
+                document.getElementsByName("kitID")[0].value = "";
+                document.getElementsByName("destination")[0].value = "";
             }
         }
 }
