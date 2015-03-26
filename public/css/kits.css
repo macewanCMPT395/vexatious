@@ -86,10 +86,36 @@ input[type="submit"] {
 
 }
 
-#branch {
+select#branch {
     font-size: 16px;
+    color: white;
+    -webkit-appearance: initial;
+    -webkit-appearance: menulist-button;
+    width: 320px;
+    text-indent: 5px;
+    border: 2px solid purple;
+    background-color: purple;
 }
 
-#type {
+select#type {
     font-size: 16px;
+    color: white;
+    -webkit-appearance: initial;
+    -webkit-appearance: menulist-button;
+    width: 100px;
+    text-indent: 5px;
+    border: 2px solid purple;
+    background-color: purple;
+}
+
+select#damage {
+    font-size: 16px;
+    color: white;
+    -webkit-appearance: initial;
+    -webkit-appearance: menulist-button;
+    width: 100px;
+    text-indent: 5px;
+    border: 2px solid purple;
+    background-color: purple;
+
 }
