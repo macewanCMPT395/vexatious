@@ -62,9 +62,11 @@
     <li>
         {{HTML::linkRoute('bookings.index', 'Book Kit') }}
     </li>
-    <li>
+    @if(Auth::user()->role == 1)
+      <li>
         {{ HTML::linkRoute('kits.edit','Edit Kit') }}
-    </li>
+      </li>
+    @endif
 </ul>
 </div>
 <script>

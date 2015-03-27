@@ -73,70 +73,40 @@ $(document).ready(function() {
 		
 		var startDate = $(startSelector).val();
 		var endDate = $(endSelector).val();
-		
-		
-		
-		var url = "/checkForKit/" + kitType + "/" + startDate + "/" + endDate;
-		console.log(url);
-		$.get(url)
-			.done(function(data) {
-				//create container to hold our list
-				var htmlDisplay = document.createElement('div')
-				$(htmlDisplay).addClass('kitlist');
-				var title2 = '<h2>Between ' + startDate + ' and ' + endDate;
-			
-				if(data.status == 1) {
-					var title1 = '<h1>No ' + kitName + ' kits available';
-					$(htmlDisplay).append(title1).append(title2);
-					myLightBox.show($(htmlDisplay).html());
-					return;
-				}
-			
-
-			
-				//add some title to the container
-				var title1 = '<h1>Available ' + kitName + ' Kits</h1>';
-				$(htmlDisplay).append(title1).append(title2);
-			
-				//create and generate list			
-				var kitList = document.createElement('ul');
-
-				data.available.forEach(function(kit) {
-					//create list item
-					var kitStr = kit.barcode + ': ' + kit.description;
-					var listItem = document.createElement('li');
-					$(listItem).addClass('kitListItem').attr('id', kit.barcode).html(kitStr);
-						
-					//do a check for if a list item is clicked, then close lightbox
-					//and add kits barcode to selected kit field label
-					$('#lightBox').on('click','#' + kit.barcode, function() {
-						$('#kitCodeLabel').val($(this).attr('id'));
-						$('#kitCodeLabel').attr('data-selected', 'true');
-						myLightBox.close();
-						updateSelectButton();
-					});
-					
-					//add generated kit item to the kit list
-					$(kitList).append($(listItem));
-				});
-				//add kit list to our container
-				$(htmlDisplay).append($(kitList));
-				//and show the container in the lightbox
-				myLightBox.show($(htmlDisplay).html());
-			})
-			.fail(function(data) {
-				console.log(data);
-				alert(data);
-			});
-	});
+		populateTable(kitType,startDate,endDate);
+	}); 
 	
 	
 	//set initial state for our buttons
 	updateSelectButton();
 	updateSelectedKit();
-});
 
+function populateTable(kitType,startDate,endDate) {
+	 $('.availableKits.tbody').empty();
+	 var url = "/checkForKit/" + kitType + "/" + startDate + "/" + endDate;
+	 console.log(url);
+	 $.get(url)
+		.done(function(data) {
+				if(data.status == 1) {
+					return;
+				}
+
+	 data.available.forEach(function(kit) {
+	 	var cell1 = "<td>" + kit.barcode + "</td>";
+		var cell2 = "<td>" + kit.type + "</td>";
+		var cell3 = "<td>" + kit.description + "</td>";
+		var curRow = document.createElement('tr');
+		
+		$(curRow).append(cell1).append(cell2).append(cell3);
+		$('.availableKits').append($(curRow));
+		}); 		 
+		});    
+}
+});
 </script> 
+<table class="booking">
+    <tr>
+    <td id="selectors">
     <div class="bookingBox">
        {{ Form::open([ 'route' => 'bookings.store',
                         'id' => 'form-booking']
@@ -163,8 +133,8 @@ $(document).ready(function() {
                {{ Form::input('date', 'end') }}
        	      </li>
 	       <li>
-			{{ Form::button('Select Kit', ['id'=>'selectKitBtn']); }}
-			{{ Form::text('kitCode', 'No Kit Selected', ['id'=>'kitCodeLabel']); }}
+			{{ Form::button('Check Kit Availability', ['id'=>'selectKitBtn']); }}
+			{{ Form::hidden('kitCode', 'No Kit Selected', ['id'=>'kitCodeLabel']); }}
 	 	</li>
 		<li>
 		<!-- add the notification table and adder function here -->
@@ -177,4 +147,20 @@ $(document).ready(function() {
 
        {{ Form::close() }}
     </div>
+    </td>
+    <td>
+	<div id="headerLabel">Please select which kit you would like to book</div>
+	<table class="availableKits">	
+		<thead>
+		<th>Bar Code</th>
+		<th>Status</th>
+		<th>Description</th>
+		</thead>
+		<tbody>
+		</tbody>
+	</table> 
+    </td>
+    </tr>
+</table>
+		 
 @stop
