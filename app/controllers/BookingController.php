@@ -1,5 +1,21 @@
 <?php
 
+/*
+	booking->start: the date in which the booking event starts
+	booking->end: the last date for the booking event
+
+	booking->receiving: the date in which a branch will receive a booking 
+		booking->start -1 in most cases, unless that booking is for a monday,
+		booking->receiving will attempt to be set for the previous friday
+		if available
+		
+	booking->shipping: the date in which a branch must ship out their kit
+		this date isn't set unless there is another booking for this kit,
+		in that case, it will be set to the receiving date for the next booking.
+		Minimum of booking->end + 1
+*/
+
+
 class BookingController extends \BaseController {
 	protected $bookingFields = ['eventName', 'start', 'end', 'destination'];
 	
@@ -71,16 +87,26 @@ class BookingController extends \BaseController {
 		$newStart =  DateTime::createFromFormat('Y-m-d', $start);
 		$newEnd = DateTime::createFromFormat('Y-m-d', $end);
 		
+		//users booking ended friday, but there is a day after
+		//for shipping, so bump the shipping day to the following
+		//monday
+
 		
-		if(!$buffers) return [$newStart, $newEnd];
 		
-		//first, subtract a day from start date, and add a day to end date
-		$newStart->modify('-1 day');
-		$newEnd->modify('+1 day');
-	
+		if($buffers) {
+			//Get the booking dates including the shipping date
+			//first, subtract a day from start date, and add a day to end date
+			$newStart->modify('-1 day');
+			$newEnd->modify('+1 day');
+		}
+			//return [$newStart, $newEnd];
+		
+
+		
 		//get the day of week
 		$startDOW = $newStart->format('w');
 		$endDOW = $newEnd->format('w');
+
 		//user booked for monday, but receive day is sunday
 		//make receive day the previous friday
 		if($startDOW == 0) {
@@ -92,21 +118,18 @@ class BookingController extends \BaseController {
 			$newStart->modify('-1 day');
 		}
 		
-		//users booking ended friday, but there is a day after
-		//for shipping, so bump the shipping day to the following
-		//monday
 		if($endDOW == 6) {
 			$newEnd->modify('+2 day');	
 		} else if ($endDOW == 0) {
 			//can't end a booking on sunday, 
 			//just bump it to monday
 			$newEnd->modify('+1 day');
-		}
-		
-		
+		}		
 		//right, booking dates should be good now
 		return [$newStart, $newEnd];
 	}
+	
+	
 	
 	public function bookingToUnix($time) {
 		return [ mktime(23, 59, 59, $time[0]->format('m'), $time[0]->format('d'), $time[0]->format('Y')),
@@ -139,9 +162,9 @@ class BookingController extends \BaseController {
 		//then factor in shipping and receiving dates
 		$bookingDates = $this->createBookingTime(Input::get('start'), Input::get('end'), true);
 		$bookTimes = $this->bookingToUnix($bookingDates);
-        $booking->shipping = $bookTimes[0];
-		$booking->receiving = $bookTimes[1];
-		
+		//shipping time is set to a date before, as close as possible, to the start
+		//of the booking
+		$booking->shipping = $bookTimes[0];
 		
 		$kit = Kit::where('barcode', $kitCode)->first();
 		$booking->kitID = $kit->id;
@@ -268,14 +291,14 @@ class BookingController extends \BaseController {
 	}
 	
 	public function getKitForDate($type, $startDate, $endDate) {
-		$response = ["status"=> "1"];
+		$response = ["status"=> "1", "available"=>[]];
 		
 		$this->tempType = $type; //wat
 		
 		//first, try and find a kit that has yet to be booked yet
 		$free = DB::table('kit')->leftJoin('booking', 'kit.id','=', 'booking.kitID')
 				->where('kit.type', '=', $this->tempType)
-				->whereNull('booking.id')->get(['kit.id', 'kit.barcode', 'kit.description']);
+				->whereNull('booking.id')->distinct()->get(['kit.id', 'kit.barcode', 'kit.description']);
 		
 		
 	
@@ -285,21 +308,25 @@ class BookingController extends \BaseController {
 		$this->start = $bookingDates[0];
 		$this->end = $bookingDates[1];
 
-		$freeBooked = DB::table('booking')
+		//generate list of currently booked kits in this date range
+		$currentlyBooked = DB::table('booking')
 				->where(function($q) {
-					$q->where('receiving', '<', $this->start)->where('shipping', '<', $this->start);
+					$q->where('end', '>=', $this->start)->orWhere('shipping', '>=', $this->start);
 				})
-				->orWhere(function($q) {
-					$q->where('receiving', '>', $this->end)->where('shipping', '>', $this->end);	
+				->where(function($q) {
+					$q->where('end', '<=', $this->end)->orWhere('shipping', '<=', $this->end);	
 				})
+				->lists('booking.kitID');
+		
+		//then find one that isn't currentlyBooked
+		$freeBooked = DB::table('booking')
 				->join('kit', function($join){
 					$join->on('booking.kitID', '=', 'kit.id')
 						  ->on('kit.type', '=', $this->tempType);
 				})
 				->join('hardwareType', 'hardwareType.id', '=', $this->tempType)->distinct()
+				->whereNotIn('kit.id', $currentlyBooked)
 				->get(['kit.id', 'kit.barcode', 'kit.description']);
-		
-		//return dd(DB::getQueryLog());
 		
 		//merge both responses and return them
 		$available = array_merge($free, $freeBooked);
