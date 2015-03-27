@@ -13,3 +13,4 @@ Route::get('kitavailability/{type}/{start}/{end}',
 		   ['uses' => 'BookingController@kitAvailability', 'as' => 'availability']);
 Route::get('checkForKit/{type}/{start}/{end}', 
 		   ['uses' => 'BookingController@getKitForDate', 'as' => 'check']);
+Route::get('reportDamage',['uses'=>'PagesController@showReportDamage','as'=>'reportdamage']);

@@ -54,7 +54,21 @@
 </table>
 </div>
 </div>
-
+<div class="navMenu" id="buttons">
+<ul>
+    <li>
+	{{HTML::linkRoute('reportdamage', 'Report Damage') }}
+	</li>
+    <li>
+        {{HTML::linkRoute('bookings.index', 'Book Kit') }}
+    </li>
+    @if(Auth::user()->role == 1)
+      <li>
+        {{ HTML::linkRoute('kits.edit','Edit Kit') }}
+      </li>
+    @endif
+</ul>
+</div>
 <script>
 	
 $(document).ready(function() {

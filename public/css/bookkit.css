@@ -56,9 +56,9 @@ select#destination {
 .bookkit {
     list-style-type: none;
     margin-top: 5px;
-    width: 35%;
+    width: 98%;
     background-color: #eeeeee;
-    padding: 15px 0 5px 5%;
+    padding: 15px 0 5px 2%;
 }
 
 .bookkit li {
@@ -70,6 +70,23 @@ select#destination {
 
 }
  
+#selectKitBtn {
+    background-color:#d62f33;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    border:1px solid #ffffff;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:arial;
+    font-size:16px;
+    padding:6px 10px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #b23e35;
+    width: 50%;
+}
+
 input[type="submit"] {
     background-color:#d62f33;
     -moz-border-radius:4px;
@@ -103,4 +120,64 @@ input {
     background: rgba(255,255,255,0.5);
     margin: 0 0 5px 0;
     width: 60%;
+}
+
+.booking {
+ width: 100%;
+ overflow: hidden;
+}
+
+.booking tr {
+    vertical-align: top;
+    height: 30px;
+}
+
+#selectors {
+    width: 37%;
+}
+
+.availableKits {
+    margin: 0 0 10% 0;
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.availableKits th {
+    font-weight: normal;
+    padding: 5px 120px 5px 5px;
+    text-align: left;
+}
+
+.availableKits td {
+    padding: 10px 15px 3px 5px; 
+    font-size: 16px;
+    text-align: left;
+}
+
+.availableKits thead{
+    color: white;
+    background-color: grey;
+    font-size: 20px;
+    font-weight: 30;
+}
+
+.availableKits tbody tr {
+    background-color: #eeeeee;
+}
+
+.availableKits tbody tr:hover {
+      background: #dddddd;
+}
+
+#headerLabel {
+    margin-top: 10px;
+    color: #039CE0;
+    font-size: 20px;
+    float: left;
+}
+
+.selected {
+    background-color: #FBBC2E !important;
 }
