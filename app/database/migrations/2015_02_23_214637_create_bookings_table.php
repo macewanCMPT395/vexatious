@@ -18,7 +18,6 @@ class CreateBookingsTable extends Migration {
 			
 			$table->bigInteger('start');
 			$table->bigInteger('end');
-			$table->bigInteger('receiving');
 			$table->bigInteger('shipping');
 			
 			$table->bigInteger('destination');
