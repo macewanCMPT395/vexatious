@@ -20,7 +20,7 @@ webshims.formcfg = {
             dFormat: '-',
             dateSigns: '-',
             patterns: {
-                d: "dd-mm-yy"
+                d: "yy-mm-dd"
             }
         }
 };
@@ -74,7 +74,10 @@ $(document).ready(function() {
 		var startDate = $(startSelector).val();
 		var endDate = $(endSelector).val();
 		
+		
+		
 		var url = "/checkForKit/" + kitType + "/" + startDate + "/" + endDate;
+		console.log(url);
 		$.get(url)
 			.done(function(data) {
 				//create container to hold our list

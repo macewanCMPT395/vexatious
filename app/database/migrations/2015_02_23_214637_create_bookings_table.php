@@ -16,9 +16,10 @@ class CreateBookingsTable extends Migration {
 			$table->increments('id');		
 			$table->string('eventName');
 			
-			$table->date('start');
-			$table->date('end');
-			$table->date('shipping');
+			$table->bigInteger('start');
+			$table->bigInteger('end');
+			$table->bigInteger('receiving');
+			$table->bigInteger('shipping');
 			
 			$table->bigInteger('destination');
 			$table->foreign('destination')->references('id')->on('branch');

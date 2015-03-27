@@ -21,9 +21,6 @@
     {{ Form::label('damage', 'Damage') }}
     {{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
     </li>
-    <li>
-    {{ Form::submit('Filter') }}
-    </li>
     </ul>
     {{ Form::close() }}
 </div>
@@ -59,72 +56,112 @@
 </div>
 
 <script>
-//Make Table Rows selectable
-var selected;
-//Add Rows to table    
-var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
-var allKits = {{ json_encode($kits); }};
-var kits;
+	
+$(document).ready(function() {
+	//Make Table Rows selectable
+	var selected;
+	//Add Rows to table    
+	var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
+	var allKits = {{ json_encode($kits); }};
+	var allDamagedKits = {{ json_encode($kitDamage); }};
+	console.log(allDamagedKits);
+	var kits;
 
-$('#branch').change(updateTable);
-$('#type').change(updateTable);
+	//add "All" to type filter
+	$('#type').prepend('<option value="0">All</option>');
+	//add "Mine" to branch filter
+	$('#branch').prepend('<option value="0">All</option>');
 
-updateTable();
+	function filterBookings() {
+		//first, only grab the bookings for the current branch
+		var filterKits = allKits.filter(function(a) {
 
-function updateTable() {
-    //Filter Kits
-    //Filter by type
-    kits = allKits.filter(function(a) {
-        return a.type == $('#type').val(); });
-    
-    clearTable("#kits");
-    populateTable();
-}
-    
-function populateTable() {
-    
-    if (kits.length == 0)
-        addRow("kits", null);
-    else{
-        for (var i = 0; i < kits.length; i++) {
-            addRow("kits", kits[i]);
-        }
-    }
-}
-    
-function clearTable(tableID) {
-    $(tableID).empty();
-}
+			var branchAdd = ($('#branch').val() == 0 || a.currentBranchID == $('#branch').val());
+			var damaged = $('#damage').val();
+			//if we are sorting for damage, auto remove kits that have no damage
+			var isDamaged = $.grep(allDamagedKits, function(e){ return e.id == a.id; });
+			if (damaged == 'n' && isDamaged.length > 0) {
+				return false;
+			} else if (damaged == 'd' && isDamaged.length <= 0)
+				return false;
+			
+			if ($('#type').val() == 0) {
+				return branchAdd;
+			} else {
+				return branchAdd && a.type == $('#type').val();
+			}
+		});
 
-function addRow(tableID, b) {
-    var table = document.getElementById(tableID);
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-    if (b == null)
-        row.insertCell(0).innerHTML= "No Kits";
-    else {
-        row.insertCell(0).innerHTML= b.description;
-        row.insertCell(1).innerHTML= b.name;
-        row.insertCell(2).innerHTML= b.barcode;
-        row.insertCell(3).innerHTML= branchList[b.currentBranchID];
-        row.insertCell(4).innerHTML= "None";
-    }
-    
-    row.className += " row";
-    
-    //Make row selectable
-    row.onclick = function() {
-            if (selected != null)
-                selected.classList.toggle('selected');
-            selected = this;
-            selected.classList.toggle('selected');
-            if (b != null) {
-                document.getElementsByName("id")[0].value = b.bookingID;
-                document.getElementsByName("shipped")[0].value = 1;
-                document.getElementsByName("received")[0].value = 0;
-            }
-        }
-}
+
+		return filterKits;
+	}	
+
+	function updateTable() {
+		//Filter Kits
+		//Filter by type
+		kits = filterBookings();
+			//allKits.filter(function(a) {
+			//return a.type == $('#type').val(); });
+
+		clearTable("#kits");
+		populateTable();
+	}
+
+	function populateTable() {
+
+		if (kits.length == 0)
+			addRow("kits", null);
+		else{
+			for (var i = 0; i < kits.length; i++) {
+				addRow("kits", kits[i]);
+			}
+		}
+	}
+
+	function clearTable(tableID) {
+		$(tableID).empty();
+	}
+
+	function addRow(tableID, b) {
+		var table = document.getElementById(tableID);
+		var rowCount = table.rows.length;
+		var row = table.insertRow(rowCount);
+		if (b == null)
+			row.insertCell(0).innerHTML= "No Kits";
+		else {
+			row.insertCell(0).innerHTML= b.description;
+			row.insertCell(1).innerHTML= b.name;
+			row.insertCell(2).innerHTML= b.barcode;
+			row.insertCell(3).innerHTML= branchList[b.currentBranchID];
+			
+			
+			var isDamaged = $.grep(allDamagedKits, function(e){ return e.id == b.id; });
+			if (isDamaged.length > 0) row.insertCell(4).innerHTML= "Damaged";
+			else row.insertCell(4).innerHTML= "None";
+		}
+
+		row.className += " row";
+
+		//Make row selectable
+		row.onclick = function() {
+				if (selected != null)
+					selected.classList.toggle('selected');
+				selected = this;
+				selected.classList.toggle('selected');
+				if (b != null) {
+					document.getElementsByName("id")[0].value = b.bookingID;
+					document.getElementsByName("shipped")[0].value = 1;
+					document.getElementsByName("received")[0].value = 0;
+				}
+			}
+	}
+	
+	$('#branch').change(updateTable);
+	$('#type').change(updateTable);
+	$('#damage').change(updateTable);
+
+	updateTable();
+});
 </script>
 
 @stop

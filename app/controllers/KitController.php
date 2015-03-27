@@ -14,6 +14,15 @@ class KitController extends \BaseController {
 		$kits = DB::table('kit')->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
 					->join('branch', 'currentBranchID', '=', 'branch.id') 
 					->get(['kit.id', 'kit.description', 'barcode', 'hardwareType.name', 'identifier', 'currentBranchID', 'type']);
+		
+		$damagedStatus = DB::table('kit')->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
+							->join("kithardware", 'kithardware.kitID', '=', 'kit.id')
+							->join("hardware", "hardware.id", '=', 'kithardware.hardwareID')
+							->whereNotNull('hardware.damaged')
+							->groupBy('kit.id')
+							->get(['kit.id']);
+		
+		//return Response::json($damagedStatus);
 		if ($kits) {
 			$response = array(
 				'status' => 0,
@@ -22,7 +31,7 @@ class KitController extends \BaseController {
 		}
         
         //Pass kits to view
-        return View::make('kits/index')->with('kits', $kits);
+        return View::make('kits/index')->with('kits', $kits)->with('kitDamage', $damagedStatus);
 	}
 
 	/**
