@@ -92,11 +92,11 @@ var bookings;
 updateTables();
     
 $('#branch').change(updateTables);
-
 function updateTables() {
     //Filter bookings
     bookings = allBookings.filter(function(a) { 
         return a.currentBranchID == $('#branch').val(); });
+    console.log(bookings);
     clearTable("todayBookings");
     clearTable("tomorrowBookings");
     populateTables();
@@ -115,7 +115,8 @@ function populateTables() {
     
     for (var i = 0; i < bookings.length; i++) {
         var shippingDate = new Date(bookings[i].shipping * 1000);
-
+        var start = new Date(bookings[i].start * 1000);
+        console.log(start + " " +  shippingDate);
         //IF booking is due to be shipped today or is late
         if ((datesEqual(today,shippingDate) || 
             (shippingDate < today)) && 

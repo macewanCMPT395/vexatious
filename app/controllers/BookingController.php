@@ -136,13 +136,12 @@ class BookingController extends \BaseController {
 		$booking->start = $bookTimes[0];
 		$booking->end = $bookTimes[1];
 		
-		
-		
 		//then factor in shipping and receiving dates
 		$bookingDates = $this->createBookingTime(Input::get('start'), Input::get('end'), true);
 		$bookTimes = $this->bookingToUnix($bookingDates);
-		$booking->receiving = $bookTimes[0];
-		$booking->shipping = $bookTimes[1];
+        $booking->shipping = $bookTimes[0];
+		$booking->receiving = $bookTimes[1];
+		
 		
 		$kit = Kit::where('barcode', $kitCode)->first();
 		$booking->kitID = $kit->id;
