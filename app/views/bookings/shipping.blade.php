@@ -119,9 +119,9 @@ function populateTables() {
         console.log(start + " " +  shippingDate);
         //IF booking is due to be shipped today or is late
         if ((datesEqual(today,shippingDate) || 
-            (shippingDate < today)) && 
-            (bookings[i].shipped == "0"))
+            (shippingDate < today)) && (bookings[i].shipped == "0"))
              shippingToday.unshift(bookings[i]);
+		
         if (datesEqual(tomorrow,shippingDate) && (bookings[i].shipped == "0"))
              shippingTomorrow.unshift(bookings[i]);
     }

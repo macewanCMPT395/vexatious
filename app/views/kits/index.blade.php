@@ -69,8 +69,10 @@ $(document).ready(function() {
 
 	//add "All" to type filter
 	$('#type').prepend('<option value="0">All</option>');
+	$('#type').val(0);
 	//add "Mine" to branch filter
 	$('#branch').prepend('<option value="0">All</option>');
+	$('#branch').val(0);
 
 	function filterBookings() {
 		//first, only grab the bookings for the current branch

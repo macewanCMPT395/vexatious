@@ -55,7 +55,7 @@ $(document).ready(function() {
 				title: e.eventName,
 				start: new Date(e.start* 1000),
 				end: new Date(e.end * 1000),
-				tip: 'Destination: ' + e.identifier,
+				tip: 'Destination: ' + e.name,
 				color: '#7CC045',
 				allDay: false 
 			};
@@ -91,6 +91,7 @@ $(document).ready(function() {
         eventLimit: true, // allow "more" link when too many events
         events: filterBookings(),
         eventRender: function(event, element) {
+			$(element).find(".fc-time").hide();
             element.attr('title', event.tip);
         },
         dayClick: function(date, jsEvent, view) {

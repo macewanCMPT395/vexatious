@@ -11,23 +11,76 @@
 @section('content')
 
 <script> 
+//These must be set before document ready	
 //enable date picker for firefox
-webshims.setOptions('forms-ext', {types: 'date'});
-webshims.polyfill('forms forms-ext');
-	
 webshims.formcfg = {
-        en: {
-            dFormat: '-',
-            dateSigns: '-',
-            patterns: {
-                d: "yy-mm-dd"
-            }
-        }
+		en: {
+			dFormat: '-',
+			dateSigns: '-',
+			patterns: {
+				d: "yy-mm-dd"
+			}
+		}
 };
+
+webshim.setOptions('forms', {
+	addValidators: true
+});
+
+webshim.setOptions("forms-ext", {
+	replaceUI: 'auto',
+	types: 'date',
+	"date": {
+		"startView": 2,
+		"size":2,
+		"popover": {
+			"position": {
+				"at": "right bottom"
+			}
+		}
+	}
+});
+webshims.polyfill('forms forms-ext');
 webshims.activeLang('en');
 	
-
 $(document).ready(function() {
+	//kill chromes date picker
+   $('input[type=date]').on('click', function(event) {
+        event.preventDefault();
+    });
+	
+	var holidays = {{ json_encode(Holiday::lists('date')); }};
+	
+	
+	
+
+	
+	$('input.min-today').prop('min', function(){
+		var curDate = new Date();
+		//since bookings need to be made 2 days in advanced...
+		var day = curDate.getUTCDate() + 2;
+		curDate.setDate(day);
+		//if this falls on a saturday or sunday, black those out too
+		while(curDate.getUTCDay() == 6 || curDate.getUTCDay() == 0) {
+			curDate.setDate(++day);	
+		}
+		
+        return curDate.toJSON().split('T')[0];
+    });
+
+	$('.disable-weekends').on('validatevalue', function (e, data) {
+		var date = data.valueAsDate.toISOString().split('T')[0];
+
+		var isHoliday = holidays.filter(function(d) {
+			return d == date;
+		});
+
+		return (isHoliday.length > 0) 
+	});
+
+	
+	
+	
 	var hasStart = 0, hasEnd = 0, hasKit = 0;
 	
 	var myLightBox = LightBox.init();
@@ -156,11 +209,15 @@ $(document).ready(function() {
   	      </li>
 	      <li>
 		{{ Form::label('start', 'Start Date: ', ['id' => 'startDateLabel']) }}
-            	{{ Form::input('date', 'start') }}
+            	{{ Form::input('date', 'start', '',
+			  		['class'=>'disable-weekends min-today', 'placeholder'=>'yyyy-mm-dd', 'required'=> ""])
+			  	}}
 	      </li>
 	      <li>
                {{ Form::label('end', 'End Date: ', ['id' => 'endDateLabel']) }}
-               {{ Form::input('date', 'end') }}
+               {{ Form::input('date', 'end', '', 
+			  		['class'=>'min-today', 'placeholder'=>'yyyy-mm-dd', 'required' => ""]) 
+			  	}}
        	      </li>
 	       <li>
 			{{ Form::button('Select Kit', ['id'=>'selectKitBtn']); }}
