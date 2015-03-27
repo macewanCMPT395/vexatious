@@ -104,6 +104,7 @@ $('#branch').change(updateTables);
 function updateTables() {
     bookings = allBookings.filter(function(a) { 
         return a.destination == $('#branch').val(); });
+	
     clearTable("receiveToday");
     clearTable("receiveTomorrow");
     populateTables();
@@ -123,8 +124,8 @@ function populateTables() {
     for (var i = 0; i < bookings.length; i++) {
         var shippingDate = new Date(bookings[i].shipping * 1000);
         //IF a booking is shipped but not received
-        if ((bookings[i].received == 0) && (bookings[i].shipped == 1))
-            shippingToday.unshift(bookings[i]);
+        //if ((bookings[i].received == 0) && (bookings[i].shipped == 1))
+        shippingToday.unshift(bookings[i]);
         //IF a booking is expected tomorrow
         if (datesEqual(tomorrow,shippingDate) && 
             (bookings[i].shipped == 0))

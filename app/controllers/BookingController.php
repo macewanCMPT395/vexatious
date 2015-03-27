@@ -28,8 +28,10 @@ class BookingController extends \BaseController {
     public function getBookings() {
         $bookings = ["status" => "1", "bookings"=> []];
 		
-		$allBookings = DB::table('booking')->join('allBookings', 'allBookings.bookingID', '=', 'booking.id')
-						->join('users', 'allBookings.userID', '=', 'users.id')
+		//users associated with a booking will have to be listed in
+		//a more detail view for bookings, otherwise we'll get multiple bookings
+		//for each user involved in one booking
+		$allBookings = DB::table('booking')
 						->join('kit', 'booking.kitID', '=', 'kit.id')
 						->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
 						->join('branch', 'branch.id', '=', 'booking.destination')
@@ -53,6 +55,7 @@ class BookingController extends \BaseController {
 	{
         $bookings = $this->getBookings();
 		return View::make('bookings/index')->with('bookings', $bookings);
+				
 	}
 	
     public function shipping()
@@ -77,7 +80,7 @@ class BookingController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('bookings/bookkit');
+		return View::make('bookings/bookkit')->with('holidays', Holiday::all());
 	}
 
 
@@ -168,8 +171,19 @@ class BookingController extends \BaseController {
 		
 		$kit = Kit::where('barcode', $kitCode)->first();
 		$booking->kitID = $kit->id;
+		
+		//check if the kit needs to be shipped from homebase first
+		/*$noBookings = Kit::leftJoin('booking', 'kit.id', '=', 'booking.kitID')
+			->where('kit.id', '=', $kit->id)
+			->whereNull('booking.id')->distinct()->get(['kit.id']);
+		
+		//if the kit wasn't previously booked,
+		//set its shipping flag
+		if (count($noBookings) > 0)
+			$booking->shipped = true;*/
+		
 		$booking->shipped = false;
-		$booking->received = false;
+		$booking->received = false;		
 		$booking->save();
 	
 		$userID = Auth::user()->id;
@@ -210,7 +224,7 @@ class BookingController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$response = ["status" => "1"];
+		$response = ["status" => "1", "bookings" => []];
 		
 		
 		$bookings = DB::table('booking')->where('booking.id', '=', $id)
@@ -289,6 +303,7 @@ class BookingController extends \BaseController {
 		
 		return Redirect::route('/');
 	}
+	
 	
 	public function getKitForDate($type, $startDate, $endDate) {
 		$response = ["status"=> "1", "available"=>[]];

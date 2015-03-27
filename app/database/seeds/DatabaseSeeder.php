@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
+		$this->call('BranchSeeder');
 		$this->call('UserTableSeeder');
 		$this->call('HardwareTypeTableSeeder');
 		$this->call('HardwareTableSeeder');
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('NotificationMessageSeeder');
 		$this->call('KitHardwareTableSeeder');
 		$this->call('BookingSeeder');
-		$this->call('BranchSeeder');
+		
 	}
 
 }
@@ -119,30 +120,32 @@ class KitTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('kit')->delete();
+		$branch = Branch::where('identifier', '=', 'EPLMNA')->first();
+		echo ($branch->id);
 		
 		Kit::create(array(
 			"type" => 1,
-			"currentBranchID" => 1,
+			"currentBranchID" => $branch->id,
 			"barcode" => "1234567890123456",
 			"description" => "A test kit with one something"
 		));
 		
 		Kit::create(array(
 			"type" => 2,
-			"currentBranchID" => 3,
+			"currentBranchID" => $branch->id,
 			"barcode" => "1001001001001001",
 			"description" => "This kit contains 4 whatevers with their accessories."
 		));
 		
 		Kit::create(array(
 			"type" => 3,
-			"currentBranchID" => 2,
+			"currentBranchID" => $branch->id,
 			"barcode" => "NOTABARCODEWATEV",
 			"description" => "This kit contains 7 number 3 combos and a large fries."
 		));
 		Kit::create(array(
 			"type" => 1,
-			"currentBranchID" => 2,
+			"currentBranchID" => $branch->id,
 			"barcode" => "NEWESTBARCODE",
 			"description" => "This kit contains 7 number 3 combos and a large fries."
 		));
@@ -281,16 +284,27 @@ class BranchSeeder extends Seeder {
 			$branchAddress = $branchinfo['Address'];
 			$branchZip = $branchinfo['ZipCode'];
 			$branchLocation = $branchAddress." ".$branchZip;
+			
+			
 
 			Branch::create(array(
 				"identifier" => $branchID,
 				"name" => $branchName,
 				"location" => $branchLocation
 			));
-
+			
+			$holidays = $branchinfo["HolidayClosures"];
+			
+			foreach($holidays["HolidayClosure"] as $holiday) {
+				Holiday::create(array(
+					"date" => $holiday["HolidayDate"]
+				));
+			}
 		}
 
 	}
 
 }
+
+
 
