@@ -10,6 +10,6 @@ class UserBookings extends Eloquent {
 	public $timestamps = false;
 	
 	protected $fillable = array(
-		'userID', 'bookingID', 'kitID'
+		'userID', 'bookingID', 'kitID', 'creator'
 	);	
 }

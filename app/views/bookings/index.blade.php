@@ -53,11 +53,11 @@ $(document).ready(function() {
 		var newEvents = filterEvents.map(function(e) {
 			return {
 				title: e.eventName,
-				start: new Date(e.start * 1000),
+				start: new Date(e.start* 1000),
 				end: new Date(e.end * 1000),
 				tip: 'Destination: ' + e.identifier,
 				color: '#7CC045',
-				allDay: true 
+				allDay: false 
 			};
 		});
 	

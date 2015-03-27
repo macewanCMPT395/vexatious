@@ -195,9 +195,10 @@ class BookingSeeder extends Seeder {
 		//create the actual booking
 		$booking = Booking::create(array(
 			"eventName" => $eventName,
-			"start" => $start,//start time today
+			"start" => $start + (24*60^60),//start time today
 			"end"=> $end,//end date 2 days from now
-			"shipping" => $end,
+			"shipping" => $end + (24*60*60),
+			"receiving" => $start,
 			"destination" => $destination,
 			"received" => false,
 			"shipped" => false,
@@ -243,6 +244,8 @@ class BookingSeeder extends Seeder {
 		DB::table('booking')->delete();
         DB::table('allBookings')->delete();
 		DB::table('notifications')->delete();
+	/*$this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 
+							 	$this->daysFromNow(4), 1, 1, 1);
         $this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 
 							 	$this->daysFromNow(3), 1, 1, 1);
 		$this->createBooking("Test Event Number 3", $this->daysFromNow(-2), 
@@ -250,7 +253,7 @@ class BookingSeeder extends Seeder {
 		
 		$this->createBooking("Test Event Number 4", $this->daysFromNow(2), 
 							 	$this->daysFromNow(3), 2, 2, 1);		
-		
+	*/	
 	}
     
         
