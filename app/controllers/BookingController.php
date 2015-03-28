@@ -15,6 +15,7 @@
 		Minimum of booking->end + 1
 */
 
+use Illuminate\Support\MessageBag;
 
 class BookingController extends \BaseController {
 	protected $bookingFields = ['eventName', 'start', 'end', 'destination'];
@@ -149,6 +150,20 @@ class BookingController extends \BaseController {
 	{
 		if(!Auth::check()) return Redirect::back();
 		
+		$startDate = Input::get('start');
+		$endDate = Input::get('end');
+		
+		//make sure we aren't booking over a holiday
+		$holidays = Holiday::lists('date');
+		foreach($holidays as $day) {
+			if($day == $startDate || $day == $endDate){
+				
+				$errors = new MessageBag(['holidayError'=>"Bookings are unavailable on holidays."]);
+				return Redirect::back()->withErrors($errors)->withInput(Input::all());	
+			}
+		}
+		
+		
 		$kitCode = Input::get('kitCode');
 		$input = array_filter(Input::only($this->bookingFields));
 		//return Response::json($input);
@@ -157,13 +172,13 @@ class BookingController extends \BaseController {
 		$booking->fill($input);
 		
 		//actual booking dates
-		$bookingDates = $this->createBookingTime(Input::get('start'), Input::get('end'), false);
+		$bookingDates = $this->createBookingTime($startDate, $endDate, false);
 		$bookTimes = $this->bookingToUnix($bookingDates);
 		$booking->start = $bookTimes[0];
 		$booking->end = $bookTimes[1];
 		
 		//then factor in shipping and receiving dates
-		$bookingDates = $this->createBookingTime(Input::get('start'), Input::get('end'), true);
+		$bookingDates = $this->createBookingTime($startDate, $endDate, true);
 		$bookTimes = $this->bookingToUnix($bookingDates);
 		//shipping time is set to a date before, as close as possible, to the start
 		//of the booking

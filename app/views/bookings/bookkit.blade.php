@@ -52,30 +52,39 @@ $(document).ready(function() {
 	var holidays = {{ json_encode(Holiday::lists('date')); }};
 	
 	
-	
-
-	
 	$('input.min-today').prop('min', function(){
 		var curDate = new Date();
 		//since bookings need to be made 2 days in advanced...
-		var day = curDate.getUTCDate() + 2;
-		curDate.setDate(day);
+		var day = curDate.getUTCDate();
+		//curDate.setDate(day);
+	
+		//if current day is friday, can't make a booking
+		//for monday
+		if (curDate.getUTCDay() == 5) {
+			console.log("its friday!");
+			day += 4;	
+			curDate.setDate(day);
+		} else {
+			//otherwise
+			day += 2;//can only make a booking
+			curDate.setDate(day);
+		}
 		//if this falls on a saturday or sunday, black those out too
 		while(curDate.getUTCDay() == 6 || curDate.getUTCDay() == 0) {
 			curDate.setDate(++day);	
 		}
 		
         return curDate.toJSON().split('T')[0];
-    });
-
-	$('.disable-weekends').on('validatevalue', function (e, data) {
+    }).on('validatevalue', function (e, data) {
 		var date = data.valueAsDate.toISOString().split('T')[0];
 
 		var isHoliday = holidays.filter(function(d) {
 			return d == date;
 		});
-
-		return (isHoliday.length > 0) 
+		var day = data.valueAsDate.getUTCDay();
+	
+		return (isHoliday.length > 0 || day == 6 || day == 0)
+		return false;
 	});
 
 	
@@ -198,7 +207,11 @@ function populateTable(kitType,startDate,endDate) {
 		</li>
 		<li>
 		<div class="bookingButtons"> {{ Form::submit('Create Booking') }}</div>
-		<div id="bookingErrorMsg"></div>
+		<div id="bookingErrorMsg">
+			{{ 
+				$errors->first('holidayError');
+			}}
+		</div>
 		</li>
        		</ul>
 
