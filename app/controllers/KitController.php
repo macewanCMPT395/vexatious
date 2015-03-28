@@ -82,10 +82,15 @@ class KitController extends \BaseController {
 						->join('kithardware', 'kithardware.kitID', '=', $id)
 						->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
 						->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
-						->get();
+						->first(['kit.barcode', 'kit.currentBranchID', 'kit.description', 'kit.type']);
         
+		$devices = DB::table('kithardware')->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
+				->where('kithardware.kitID', '=', $id)
+				->get(['hardware.id', 'hardware.damaged', 'assetTag', 'description']);
+		
+		//return Response::json([$kit, $devices]);
         //Pass kits to view
-		return View::make('browsekits' ,compact('kits'));
+		return View::make('browsekits')->with('kits', $kit)->with('devices', $devices);
 	}
 
 
