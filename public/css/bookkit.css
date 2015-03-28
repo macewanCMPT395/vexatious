@@ -105,6 +105,16 @@ input[type="submit"] {
 
 }
 
+input[type="submit"]:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+#selectKitBtn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
 input {
      border: 2px solid purple;
     -webkit-box-shadow:
