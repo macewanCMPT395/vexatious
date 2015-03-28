@@ -10,15 +10,15 @@
      	<div class="inputs">
 	<div>
 		{{ Form::label('kitNumber', 'Bar Code:') }}
-    		{{ Form::Input('string','KitNumber') }}
+    		{{ Form::Input('string','KitNumber', $kits->barcode) }}
 	</div>
 	<div>
 		{{ Form::label('currentBranch', 'Current Branch:') }}
-		{{ Form::Input('string', 'CurrentBranch') }}
+		{{ Form::Input('string', 'CurrentBranch',$kits->currentBranch) }}
 	</div>
 	<div>
 		{{ Form::label('description', 'Description:') }}
-		{{ Form::Input('string', 'description') }}
+		{{ Form::Input('string', 'description', $kits->description) }}
 	</div>
 	</div>
 	<div>
