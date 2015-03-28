@@ -89,9 +89,16 @@ class KitController extends \BaseController {
 				->where('kithardware.kitID', '=', $id) 
 				->get(['hardware.id', 'hardware.damaged', 'assetTag', 'description','name']);
 		
+		$device = Hardware::where('hardware.id', '=', $id)
+                                ->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
+                                ->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
+                                ->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
+                                ->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',
+                                                 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
+
 		//return Response::json([$kit, $devices]);
         //Pass kits to view
-		return View::make('kits.edit')->with('kits', $kit)->with('devices', $devices);
+		return View::make('kits.edit')->with('kits', $kit)->with('devices', $devices)->with('hardware', $device);
 	}
 
 

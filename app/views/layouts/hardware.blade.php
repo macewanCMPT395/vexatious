@@ -1,15 +1,9 @@
-@extends('layouts.header')
-@section('headerScript')
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
 {{ HTML::style('css/hardware.css') }}
-@stop
-
-@section('content')
-
 <div class="hw-Title">
-	<p>{{$hardware->name}} - {{$hardware->assetTag}}</p>
+	<p>{{$device->name}} - {{$hardware->assetTag}}</p>
 	{{Form::open(['route' => ['hardware.destroy', $hardware->id], 'method'=>'delete']) }}
-	{{Form::submit('Remove Device From System') }}
+	{{Form::submit('Remove Device From System',['id'=>'removeBtn']) }}
 	{{Form::close() }}
 </div>
 
@@ -63,8 +57,3 @@
 		@endif
 	</div>
 </div>
-
-
-
-
-@stop

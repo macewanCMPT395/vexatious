@@ -43,6 +43,9 @@
 	</div>		       
 {{ Form::close() }}
 </div>
+<div id="hardware">
+@include('layouts.hardware')
+</div>
 
 
 @stop

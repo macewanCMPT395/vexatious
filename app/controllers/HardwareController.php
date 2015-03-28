@@ -80,7 +80,7 @@ class HardwareController extends \BaseController {
 				->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
 				->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
 				->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
-				->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name', 
+				->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',  
 						 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
 		//return Response::json($device);
 		return View::make('hardware/show')->with('hardware', $device);
