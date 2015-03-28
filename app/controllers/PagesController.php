@@ -1,7 +1,12 @@
 <?php
 
 class PagesController extends BaseController {
-
+	
+    public function __construct()
+    {
+        $this->beforeFilter('auth');
+    }
+	
 	public function home()
 	{
         //Get all bookings

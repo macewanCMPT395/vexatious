@@ -11,6 +11,12 @@ When creating a new device, should be able to
 **/
 class HardwareController extends \BaseController {
 	protected $fields = ['type', 'assetTag', 'damaged'];
+	
+    public function __construct()
+    {
+        $this->beforeFilter('auth');
+    }
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -47,8 +53,7 @@ class HardwareController extends \BaseController {
 	 */
 	public function store()
 	{
-		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
+		if (!Auth::user()->isAdmin()) return Redirect::back();
 		
 		//add a new device
         $device = new Hardware;
@@ -90,8 +95,7 @@ class HardwareController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
+		if (!Auth::user()->isAdmin()) return Redirect::back();
 
 	}
 

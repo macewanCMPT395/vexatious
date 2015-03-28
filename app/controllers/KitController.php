@@ -3,6 +3,10 @@
 class KitController extends \BaseController {
 	protected $fields = ['type', 'currentBranchID', 'barcode', 'description']; 
 	
+    public function __construct()
+    {
+        $this->beforeFilter('auth');
+    }	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -130,8 +134,7 @@ class KitController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
+		if (!Auth::user()->isAdmin()) return Redirect::back();
 		$kit::find($id);
 		if($kit) $kit->destroy();
 		
