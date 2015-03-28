@@ -30,7 +30,7 @@ class BookingController extends \BaseController {
 	 * @return Response
 	 */
     public function getBookings() {
-        $bookings = ["status" => "1", "bookings"=> []];
+        $bookings = ["status" => "1", "bookings"=> [], "creators" => []];
 		
 		//users associated with a booking will have to be listed in
 		//a more detail view for bookings, otherwise we'll get multiple bookings
