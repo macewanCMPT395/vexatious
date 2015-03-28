@@ -16,22 +16,17 @@ var strDate = $(this).data('date');
 $("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
 });
 
-var selectedDay;
-var currentDate = new Date();
-currentDate = currentDate.getUTCDate() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getFullYear();
-var date = new Date();
-var endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-endDate = endDate.getUTCDate() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getFullYear();
+
 $(document).ready(function() {
 	
 	var userName = "{{ Auth::user()->firstName.' '.Auth::user()->lastName; }}";
 	
-	
-	
 	//add "All" to type filter
 	$('#type').prepend('<option value="0">All</option>');
+	$('#type').val(0);
 	//add "Mine" to branch filter
 	$('#branch').prepend('<option value="0">' + userName + '</option>');
+	$('#branch').val(0);
 	
 	//LOAD Bookings into events array
 	var bookings = {{ json_encode($bookings['bookings']); }};
@@ -129,12 +124,6 @@ $(document).ready(function() {
 	//$(".fc-day[data-date='2015-03-01']").css('background-color', '#AAAAAA');
 });
     
-function selectDay(day){
-    if (selectedDay != null)
-        selectedDay.css('background-color', 'white');
-    selectedDay = day;
-    selectedDay.css('background-color', '#FBBC2E');
-}
     
 function parseDate(date) {
    /* var day = date.substring(0,2);
