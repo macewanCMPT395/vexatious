@@ -41,7 +41,7 @@
 <tbody>
 	@for($i = 0; $i < 100; $i++)
        	@foreach ($kits as $kit)
-        <tr>
+        <tr id="{{$kit->barcode}}">
             <td>{{$kit->description}}</td>
             <td>{{$kit->name}}</td>
             <td>{{$kit->barcode}}</td>
@@ -56,12 +56,9 @@
 </div>
 <div class="navMenu" id="buttons">
 <ul>
-    <li>
-	{{HTML::linkRoute('reportdamage', 'Report Damage') }}
+	<li>
+	{{HTML::linkRoute('kits.show', 'View Kit') }} 
 	</li>
-    <li>
-        {{HTML::linkRoute('bookings.index', 'Book Kit') }}
-    </li>
     @if(Auth::user()->role == 1)
       <li>
         {{ HTML::linkRoute('kits.edit','Edit Kit') }}

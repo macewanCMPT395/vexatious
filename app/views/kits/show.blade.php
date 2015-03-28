@@ -48,7 +48,7 @@
 <tbody>
     @for ($i = 0; $i < 100; $i++) 
         @foreach ($kits as $kit)
-        <tr>
+        <tr id="{{$kit->id}}">
             <td>{{$kit->description}}</td>
             <td>{{$kit->type}}</td>
             <td>{{$kit->currentBranchID}}</td>

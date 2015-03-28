@@ -144,7 +144,7 @@ $(document).ready(function() {
 	updateSelectedKit();
 
 function populateTable(kitType,startDate,endDate) {
-	 $('.availableKits.tbody').empty();
+	 $('.availableKits tbody tr').remove();
 	 var url = "/checkForKit/" + kitType + "/" + startDate + "/" + endDate;
 	 console.log(url);
 	 $.get(url)
