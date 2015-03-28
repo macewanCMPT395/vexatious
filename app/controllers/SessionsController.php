@@ -18,8 +18,7 @@ class SessionsController extends BaseController {
 
 	public function store() {
 		$email = Input::get('email');
-		$password = Input::get('password');	
-		$errors = new MessageBag;
+		$password = Input::get('password');
 		if (Auth::attempt(Input::only('email', 'password'))) {
 			//successful authentication
 			$response = array(

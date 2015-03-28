@@ -105,6 +105,10 @@ input[type="submit"] {
 
 }
 
+#selectKitBtn:disabled {
+    background-color: blue;
+}
+
 input {
      border: 2px solid purple;
     -webkit-box-shadow:

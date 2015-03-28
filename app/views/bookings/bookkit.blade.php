@@ -159,7 +159,11 @@ function populateTable(kitType,startDate,endDate) {
 		var cell3 = "<td>" + kit.description + "</td>";
 		var curRow = document.createElement('tr');
 		
-		$(curRow).append(cell1).append(cell2).append(cell3);
+		$(curRow).append(cell1).append(cell2).append(cell3).attr('id',kit.barcode);
+		$('.availableKits').on('click',"#" + kit.barcode, function() { $('#kitCodeLabel').val(kit.barcode).attr("data-selected","true");
+						     		  	       $('.selected').each(function() { $(this).removeClass('selected');});
+									       $(this).addClass('selected');
+									       updateSelectButton();});
 		$('.availableKits').append($(curRow));
 		}); 		 
 		});    
