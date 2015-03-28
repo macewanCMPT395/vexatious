@@ -8,73 +8,73 @@
 @section('content')
 
 <table class="layout">
-<tr>
-<td colspan="2">
-<div class="form">
-{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
-<ul class="formFields">
-    <li>
-    {{ Form::label('branch', 'Receiving at') }}
-	{{ Form::select('branch', Branch::lists('name', 'id')); }}
-    </li>
-    <li id="submit">
-    {{ Form::hidden('form', 'received') }}
-    {{ Form::hidden('id', '') }}
-    {{ Form::hidden('shipped', '') }}
-    {{ Form::hidden('received', '') }}
-    {{ Form::hidden('kitID', '') }}  
-    {{ Form::hidden('destination', '') }}
-    {{ Form::submit('Received') }}
-    </li>
-</ul>
-{{Form::close() }}
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<div id="todayTable">
-<div class="tableTitle">Today </div>
-<div id="todayDate"> [Today's Date] </div>
-<table class="bookingsTable">
-<thead>
-<tr>
-    <th>Description</th>
-    <th>Barcode</th>
-    <th>Destination Branch</th>
-</tr>
-</thead>
-</table>
-<div class="tableRows">
-<table id="receiveToday" class="bookingsTable bookingRows">
-<tbody>
-</tbody>
-</table>
-</div>
-</div>
-</td>
-<td>
-<div id="tomorrowTable">
-<div class="tableTitle">Tomorrow </div>
-<div id="tomorrowDate"> [Tomorrow's Date] </div>
-<table class="bookingsTable">
-<thead>
-<tr>
-    <th>Description</th>
-    <th>Barcode</td>
-    <th>Destination Branch</th>
-</tr>
-</thead>
-</table>
-<div class="tableRows">
-<table id="receiveTomorrow" class="bookingsTable bookingRows">
-<tbody>
-</tbody>
-</table>
-</div>
-</div>
-</td></tr>
-</table>
+	<tr>
+		<td colspan="2">
+			<div class="form">
+				{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
+				<ul class="formFields">
+    			<li>
+					{{ Form::label('branch', 'Receiving at') }}
+					{{ Form::select('branch', Branch::lists('name', 'id')); }}
+    			</li>
+    			<li id="submit">
+					{{ Form::hidden('form', 'received') }}
+					{{ Form::hidden('id', '') }}
+					{{ Form::hidden('shipped', '') }}
+					{{ Form::hidden('received', '') }}
+					{{ Form::hidden('kitID', '') }}  
+					{{ Form::hidden('destination', '') }}
+					{{ Form::submit('Received') }}
+				</li>
+				</ul>
+				{{Form::close() }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="innerTable">
+			<div id="todayTable">
+				<div class="tableTitle">Today </div>
+				<div id="todayDate"> [Today's Date] </div>
+				<table class="bookingsTable">
+					<thead>
+						<tr>
+    					<th>Description</th>
+    					<th>Barcode</th>
+    					<th>Destination Branch</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="tableRows">
+					<table id="receiveToday" class="bookingsTable bookingRows">
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</td>
+		<td class="innerTable">
+			<div id="tomorrowTable">
+				<div class="tableTitle">Tomorrow </div>
+				<div id="tomorrowDate"> [Tomorrow's Date] </div>
+				<table class="bookingsTable">
+					<thead>
+						<tr>
+							<th>Description</th>
+							<th>Barcode</td>
+						<th>Destination Branch</th>
+						</tr>
+					</thead>
+				</table>
+			<div class="tableRows">
+				<table id="receiveTomorrow" class="bookingsTable bookingRows">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+	</div>
+	</td></tr>
+	</table>
 <script>
 //Set Table Dates
 var todayTitle = document.querySelector("#todayDate");
