@@ -2,71 +2,10 @@
 @section('headerScript')
 {{ HTML::style('css/kits.css') }}
 <script src='fullcalendar/lib/jquery.min.js'></script>
-@stop
-@section('browsekitsli') class="active" @stop
-@section('content')
-<div>
-    {{ Form::open(['method' => 'get', 'route' => 'kits.index']) }}
-    <div class="title"></div>
-    <ul class="kitFilters">
-    <li>
-    {{ Form::label('type', 'Type') }}
-    {{ Form::select('type', HardwareType::lists('name', 'id')) }}
-    </li>
-    <li>
-    {{ Form::label('branch', 'Branch') }}
-    {{ Form::select('branch', Branch::lists('name', 'id')); }}
-    </li>
-    <li>
-    {{ Form::label('damage', 'Damage') }}
-    {{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
-    </li>
-    </ul>
-    {{ Form::close() }}
-</div>
-<div id="tableWrapper">
-<table class="kitsTable">
-<thead>
-<tr>
-    <th>Description</th>
-    <th>Kit Type</th>
-    <th>Barcode</th>
-    <th>Current Branch</th>
-    <th>Damage</th>
-</tr>
-</thead>
-</table>
-<div id="tableRows">
-<table id="kits" class="kitsTable kitRows">
-<tbody>
-	@for($i = 0; $i < 100; $i++)
-       	@foreach ($kits as $kit)
-        <tr id="{{$kit->barcode}}">
-            <td>{{$kit->description}}</td>
-            <td>{{$kit->name}}</td>
-            <td>{{$kit->barcode}}</td>
-            <td>{{$kit->identifier}}</td>
-            <td>None</td>
-        </tr>
-        @endforeach
-	@endfor
-</tbody>
-</table>
-</div>
-</div>
-<div class="navMenu" id="buttons">
-<ul>
-	<li>
-	{{HTML::linkRoute('kits.show', 'View Kit') }} 
-	</li>
-    @if(Auth::user()->role == 1)
-      <li>
-        {{ HTML::linkRoute('kits.edit','Edit Kit') }}
-      </li>
-    @endif
-</ul>
-</div>
 <script>
+	
+var ViewEditKit = "{{ route('kits.edit'); }}";
+	
 	
 $(document).ready(function() {
 	//Make Table Rows selectable
@@ -123,51 +62,57 @@ $(document).ready(function() {
 	function populateTable() {
 
 		if (kits.length == 0)
-			addRow("kits", null);
+			addRow("#kits", null);
 		else{
 			for (var i = 0; i < kits.length; i++) {
-				addRow("kits", kits[i]);
+				addRow("#kits", kits[i]);
 			}
+			$('#kits tr').first().toggleClass('selected');
+			$('.editRoute').attr('href', ViewEditKit.replace('%7Bkits%7D', $('.selected').attr('id')));
 		}
 	}
 
 	function clearTable(tableID) {
 		$(tableID).empty();
+		$('.editRoute').attr('href', '#');
 	}
-
-	function addRow(tableID, b) {
-		var table = document.getElementById(tableID);
-		var rowCount = table.rows.length;
-		var row = table.insertRow(rowCount);
-		if (b == null)
-			row.insertCell(0).innerHTML= "No Kits";
-		else {
-			row.insertCell(0).innerHTML= b.description;
-			row.insertCell(1).innerHTML= b.name;
-			row.insertCell(2).innerHTML= b.barcode;
-			row.insertCell(3).innerHTML= branchList[b.currentBranchID];
+	
+	function addRow(tableID, kit) {
+		var row = document.createElement('tr');
+		
+		if (kit == null) {
+			var cell = $(document.createElement('td')).text("No Kits");	
+			$(row).append(cell);
+			$(tableID).append($(row));
+		} else {
+			$(row).append($(document.createElement('td')).text(kit.description));
+			$(row).append($(document.createElement('td')).text(kit.name));
+			$(row).append($(document.createElement('td')).text(kit.barcode));
+			$(row).append($(document.createElement('td')).text(branchList[kit.currentBranchID]));
 			
-			
-			var isDamaged = $.grep(allDamagedKits, function(e){ return e.id == b.id; });
-			if (isDamaged.length > 0) row.insertCell(4).innerHTML= "Damaged";
-			else row.insertCell(4).innerHTML= "None";
-		}
-
-		row.className += " row";
-
-		//Make row selectable
-		row.onclick = function() {
-				if (selected != null)
-					selected.classList.toggle('selected');
-				selected = this;
-				selected.classList.toggle('selected');
-				if (b != null) {
-					document.getElementsByName("id")[0].value = b.bookingID;
-					document.getElementsByName("shipped")[0].value = 1;
-					document.getElementsByName("received")[0].value = 0;
-				}
+			var isDamaged = $.grep(allDamagedKits, function(e){ return e.id == kit.id; });
+			if (isDamaged.length > 0) {
+				$(row).append($(document.createElement('td')).text("Has Damage"));
+			} else {
+				$(row).append($(document.createElement('td')).text("None"));
 			}
+			
+			$(row).attr('id',  kit.id);
+			$(tableID).append($(row));
+			
+			$(tableID).on('click', '#' + kit.id, function() {
+				$('.selected').each(function() {
+					$(this).toggleClass('selected');
+				});
+				$(this).toggleClass('selected');
+				$('.editRoute').attr('href', ViewEditKit.replace('%7Bkits%7D', $(this).attr('id')));
+			});
+			
+		}
 	}
+	
+	
+	
 	
 	$('#branch').change(updateTable);
 	$('#type').change(updateTable);
@@ -176,5 +121,58 @@ $(document).ready(function() {
 	updateTable();
 });
 </script>
+@stop
+@section('browsekitsli') class="active" @stop
+@section('content')
+
+<div>
+    {{ Form::open(['method' => 'get', 'route' => 'kits.index']) }}
+    <div class="title"></div>
+    <ul class="kitFilters">
+    <li>
+    {{ Form::label('type', 'Type') }}
+    {{ Form::select('type', HardwareType::lists('name', 'id')) }}
+    </li>
+    <li>
+    {{ Form::label('branch', 'Branch') }}
+    {{ Form::select('branch', Branch::lists('name', 'id')); }}
+    </li>
+    <li>
+    {{ Form::label('damage', 'Damage') }}
+    {{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
+    </li>
+    </ul>
+    {{ Form::close() }}
+</div>
+<div id="tableWrapper">
+	<table class="kitsTable">
+		<thead>
+			<tr>
+			<th>Description</th>
+			<th>Kit Type</th>
+			<th>Barcode</th>
+			<th>Current Branch</th>
+			<th>Damage</th>
+			</tr>
+	</thead>
+	</table>
+	<div id="tableRows">
+		<table id="kits" class="kitsTable kitRows">
+			<tbody></tbody>
+		</table>
+	</div>
+</div>
+
+<div class="navMenu" id="buttons">
+<ul>
+
+    @if(Auth::user()->role == 1)
+      <li>
+       	<a href="#" class="editRoute">View/Edit Kit</a>
+      </li>
+    @endif
+</ul>
+</div>
+
 
 @stop
