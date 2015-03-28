@@ -39,16 +39,21 @@ class BookingController extends \BaseController {
 						->join('kit', 'booking.kitID', '=', 'kit.id')
 						->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
 						->join('branch', 'branch.id', '=', 'booking.destination')
-						->get();
+						->get(['booking.id as bookingID', 'eventName','branch.name', 'start', 'end', 
+							   'hardwareType.name as hname','kit.type', 'branch.id',
+							  'destination', 'kit.barcode']);
 		
-
+		$bookingCreators = DB::table('allBookings')
+							->join('users', 'allBookings.userID', '=', 'users.id')
+							->where('allBookings.creator', '>', '0')
+							->get(['allBookings.bookingID', 'users.firstName', 'users.lastName']);
 		if ($allBookings) {
 			//unset($bookings->password);
 			foreach ($allBookings as &$book) {
 				unset($book->password);
 				unset($book->email);
 			}
-			$bookings = ["status" => "0", "bookings" => $allBookings];
+			$bookings = ["status" => "0", "bookings" => $allBookings, "creators" => $bookingCreators];
 			
 		}
         

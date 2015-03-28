@@ -35,6 +35,7 @@ $(document).ready(function() {
 	
 	//LOAD Bookings into events array
 	var bookings = {{ json_encode($bookings['bookings']); }};
+	var creators = {{ json_encode($bookings['creators']); }};
 				  
 				  
 	function filterBookings() {
@@ -55,7 +56,19 @@ $(document).ready(function() {
 				title: e.eventName,
 				start: new Date(e.start* 1000),
 				end: new Date(e.end * 1000),
-				tip: 'Destination: ' + e.name,
+				tip: function() {
+					var creator = creators.filter(function(c) {
+						return (c.bookingID == e.bookingID)
+					})[0];
+					
+					
+					var str = 'Kit: ' + e.hname + '\n' +
+							  'Barcode: ' + e.barcode + '\n' +
+							  'Destination: ' + e.name + '\n' +
+							  'Creator: ' + creator.firstName + ' ' + creator.lastName;
+					
+					return str;
+				},
 				color: '#7CC045',
 				allDay: false 
 			};
