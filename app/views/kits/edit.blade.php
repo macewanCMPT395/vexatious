@@ -9,16 +9,16 @@
      {{ Form::open(['method' => 'post', 'route' => 'kits.edit']) }}
      	<div class="inputs">
 	<div>
-		{{ Form::label('kitNumber', 'Kit Number:') }}
-    		{{ Form::Input('string','KitNumber') }}
+		{{ Form::label('kitNumber', 'Bar Code:') }}
+    		{{ Form::text('KitNumber', $kits->barcode) }}
 	</div>
 	<div>
 		{{ Form::label('currentBranch', 'Current Branch:') }}
-		{{ Form::Input('string', 'CurrentBranch') }}
+		{{ Form::select('CurrentBranch',Branch::lists("name","id"), $kits->currentBranchID, ['id'=>'CurrentBranch'] ) }}
 	</div>
 	<div>
 		{{ Form::label('description', 'Description:') }}
-		{{ Form::Input('string', 'description') }}
+		{{ Form::Input('string', 'description', $kits->description) }}
 	</div>
 	</div>
 	<div>
@@ -29,6 +29,12 @@
 			<th>Damaged?</th>
 		<thead>
 		<tbody>
+			@foreach($devices as $device)
+					  <tr>
+						<td>{{ $device->name }}</td>
+						<td>{{ $device->damaged }}</td>
+					</tr>
+			@endforeach
 		</tbody>
 	</table>
 	</div>
@@ -37,4 +43,9 @@
 	</div>		       
 {{ Form::close() }}
 </div>
+<div id="hardware">
+@include('layouts.hardware')
+</div>
+
+
 @stop
