@@ -105,8 +105,14 @@ input[type="submit"] {
 
 }
 
+input[type="submit"]:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
 #selectKitBtn:disabled {
-    background-color: blue;
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 input {
