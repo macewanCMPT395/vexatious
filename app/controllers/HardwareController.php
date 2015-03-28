@@ -71,8 +71,14 @@ class HardwareController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$device = Hardware::find($id);
-		return Response::json($device);
+		$device = Hardware::where('hardware.id', '=', $id)
+				->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
+				->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
+				->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
+				->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name', 
+						 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
+		//return Response::json($device);
+		return View::make('hardware/show')->with('hardware', $device);
 	}
 
 
@@ -98,21 +104,35 @@ class HardwareController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
+		//$user = Auth::user();
+		//if (!$user || !$user->isAdmin()) return Redirect::back();
 		
-		$response = ["status" => "1"];
+		//$response = ["status" => "1"];
 		$device = Hardware::find($id);
 		if($device) {
-			$input = array_filter(Input::only($this->fields));
-			$device->fill($input);
+			//$input = array_filter(Input::only($this->fields));
+			//$device->fill($input);
+			$clearDamage = Input::get('clear');
+			if($clearDamage) {
+				$device->damaged = null;
+			} else {
+				$newDamage = trim(Input::get('damaged'));
+				
+				if ($device->damaged == null) $device->damaged = $newDamage;
+				else {
+					$device->damaged = $device->damaged."\n".$newDamage;	
+				}
+			}
+			
+			
+			
+			
 			$device->save();
-			$response = ["status" => "0", "device" => $device];
+			//$response = ["status" => "0", "device" => $device];
 		}
-		
-		return Response::json($response);
+		//return Response::json($response);
+		return Redirect::route('hardware.show', ['id'=>$id]);
 	}
-
 
 	/**
 	 * Remove the specified resource from storage.
@@ -122,13 +142,14 @@ class HardwareController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
+		//$user = Auth::user();
+		//if (!$user || !$user->isAdmin()) return Redirect::back();
 		
 		$device = Hardware::find($id);
 		
 		if($device) $device->delete();
 		
+		return Redirect::route('hardware.index');
 	}
 
 
