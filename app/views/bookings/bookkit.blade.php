@@ -61,7 +61,6 @@ $(document).ready(function() {
 		//if current day is friday, can't make a booking
 		//for monday
 		if (curDate.getUTCDay() == 5) {
-			console.log("its friday!");
 			day += 4;	
 			curDate.setDate(day);
 		} else {
@@ -70,8 +69,9 @@ $(document).ready(function() {
 			curDate.setDate(day);
 		}
 		//if this falls on a saturday or sunday, black those out too
-		while(curDate.getUTCDay() == 6 || curDate.getUTCDay() == 0) {
+		while(curDate.getUTCDay() == 6 || curDate.getUTCDay() == 0 || curDate.getUTCDay() == 1) {
 			curDate.setDate(++day);	
+			day = curDate.getUTCDate();
 		}
 		
         return curDate.toJSON().split('T')[0];

@@ -1,75 +1,74 @@
-@extends('layouts.admin')
+@extends('layouts.header')
 @section('headerScript')
 {{ HTML::style('css/shipping.css') }}
-<script src='fullcalendar/lib/jquery.min.js'></script>
-<script src='fullcalendar/lib/moment.min.js'></script>
+{{ HTML::script('fullcalendar/lib/jquery.min.js') }}
+{{ HTML::script('fullcalendar/lib/moment.min.js') }}
 @stop
 @section('shippingli') class="active" @stop
 @section('content')
 <table class="layout">
-<tr>
-<td colspan="2"	>
-<div class="form">
-{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
-<ul class="formFields">
-    <li>
-    {{ Form::label('branch', 'Shipping from') }}
-	{{ Form::select('branch', Branch::lists('name', 'id')); }}
-    </li>
-    <li id="submit">
-    {{ Form::hidden('form', 'ship') }}
-    {{ Form::hidden('id', '') }}
-    {{ Form::hidden('shipped', '') }}
-    {{ Form::hidden('received', '') }}
-    {{ Form::submit('Ship') }}
-    </li>
-</ul>
-{{Form::close() }}
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<div id="todayTable">
-<div class="tableTitle">Today </div>
-<div id="todayDate"> [Today's Date] </div>
-<table class="bookingsTable">
-<thead>
-<tr>
-    <th>Description</th>
-    <th>Barcode</th>
-    <th>Destination Branch</th>
-</tr>
-</thead>
-</table>
-<div class="tableRows">
-<table id="todayBookings" class="bookingsTable bookingRows">
-<tbody>
-</tbody>
-</table>
-</div>
-</div>
-</td>
-<td>
-<div id="tomorrowTable">
-<div class="tableTitle">Tomorrow </div>
-<div id="tomorrowDate"> [Tomorrow's Date] </div>
-<table class="bookingsTable">
-<thead>
-<tr>
-    <th>Description</th>
-    <th>Barcode</th>
-    <th>Destination Branch</th>
-</thead>
-</table>
-<div class="tableRows">
-<table id="tomorrowBookings" class="bookingsTable bookingRows">
-<tbody>
-</tbody>
-</table>
-</div>
-</div>
-</td></tr>
+	<!--Branch selector and ship button-->
+	<tr>
+		<td class="form" colspan="2"	>
+			{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
+			<ul class="formFields">
+				<li>
+					{{ Form::label('branch', 'Shipping from') }}
+					{{ Form::select('branch', Branch::lists('name', 'id')); }}
+				</li>
+				<li id="submit">
+					{{ Form::hidden('form', 'ship') }} {{ Form::hidden('id', '') }} {{ Form::hidden('shipped', '') }} {{ Form::hidden('received', '') }}
+					{{ Form::submit('Ship') }}
+				</li>
+			</ul>
+			{{Form::close() }}
+		</td>
+	</tr>
+	<tr>
+	<!--Next row tables-->
+	<td class="innerTable">
+		<div id="todayTable">
+			<div class="tableTitle">Today </div>
+			<div id="todayDate"> [Today's Date] </div>
+			<table class="bookingsTable">
+				<thead>
+				<tr>
+					<th>Description</th>
+					<th>Barcode</th>
+					<th>Destination Branch</th>
+				</tr>
+				</thead>
+			</table>
+			<div class="tableRows">
+				<table id="todayBookings" class="bookingsTable bookingRows">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</td>
+		
+	<td class="innerTable">
+		<div id="tomorrowTable">
+			<div class="tableTitle">Tomorrow </div>
+			<div id="tomorrowDate"> [Tomorrow's Date] </div>
+			<table class="bookingsTable">
+				<thead>
+					<tr>
+						<th>Description</th>
+						<th>Barcode</th>
+						<th>Destination Branch</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="tableRows">
+				<table id="tomorrowBookings" class="bookingsTable bookingRows">
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</td>
 </table>
 <script>
 //Set Table Dates
