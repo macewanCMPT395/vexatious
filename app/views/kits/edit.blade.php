@@ -9,7 +9,7 @@
      {{ Form::open(['method' => 'post', 'route' => 'kits.edit']) }}
      	<div class="inputs">
 	<div>
-		{{ Form::label('kitNumber', 'Kit Number:') }}
+		{{ Form::label('kitNumber', 'Bar Code:') }}
     		{{ Form::Input('string','KitNumber') }}
 	</div>
 	<div>

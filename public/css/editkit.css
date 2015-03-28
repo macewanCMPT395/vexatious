@@ -1,3 +1,9 @@
+#kitInfo {
+    text-align: left;
+    margin-top: 10px;
+    padding-top: 15px;
+    background-color: #eeeeee;
+}
 input[type="submit"] {
     background-color:#d62f33;
     -moz-border-radius:4px;
@@ -30,7 +36,7 @@ input {
     padding: 5px;
     background: rgba(255,255,255,0.5);
     margin: 0 0 5px 0;
-    width: 60%;
+    width: 40%;
 }
 
 #assetTable {
@@ -38,6 +44,7 @@ input {
     height: 50%;
     width: 50%;
     border-collapse: collapse;
+    border: 1px solid #eeeeee;
 }
 
 #assetTable th {
