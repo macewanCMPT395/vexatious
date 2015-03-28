@@ -112,6 +112,11 @@ class HardwareTableSeeder extends Seeder {
 			"assetTag" => "adfadfadf",
 			"damaged" => null
 		));	
+		Hardware::create(array(
+			"hardwareTypeID" => 2,
+			"assetTag" => "xboxasset",
+			"damaged" => null
+		));	
 	}
 }
 

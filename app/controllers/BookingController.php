@@ -19,7 +19,10 @@ use Illuminate\Support\MessageBag;
 
 class BookingController extends \BaseController {
 	protected $bookingFields = ['eventName', 'start', 'end', 'destination'];
-	
+    public function __construct()
+    {
+        $this->beforeFilter('auth');
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -148,7 +151,6 @@ class BookingController extends \BaseController {
 	 */
 	public function store()
 	{
-		if(!Auth::check()) return Redirect::back();
 		
 		$startDate = Input::get('start');
 		$endDate = Input::get('end');
