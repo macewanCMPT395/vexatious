@@ -10,11 +10,11 @@
      	<div class="inputs">
 	<div>
 		{{ Form::label('kitNumber', 'Bar Code:') }}
-    		{{ Form::Input('string','KitNumber', $kits->barcode) }}
+    		{{ Form::text('KitNumber', $kits->barcode) }}
 	</div>
 	<div>
 		{{ Form::label('currentBranch', 'Current Branch:') }}
-		{{ Form::Input('string', 'CurrentBranch',$kits->currentBranch) }}
+		{{ Form::select('CurrentBranch',Branch::lists("name","id"), $kits->currentBranchID, ['id'=>'CurrentBranch'] ) }}
 	</div>
 	<div>
 		{{ Form::label('description', 'Description:') }}
@@ -29,6 +29,12 @@
 			<th>Damaged?</th>
 		<thead>
 		<tbody>
+			@foreach($devices as $device)
+					  <tr>
+						<td>{{ $device->name }}</td>
+						<td>{{ $device->damaged }}</td>
+					</tr>
+			@endforeach
 		</tbody>
 	</table>
 	</div>
@@ -37,4 +43,6 @@
 	</div>		       
 {{ Form::close() }}
 </div>
+
+
 @stop

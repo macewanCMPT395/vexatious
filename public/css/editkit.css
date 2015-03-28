@@ -4,6 +4,7 @@
     padding-top: 15px;
     background-color: #eeeeee;
 }
+
 input[type="submit"] {
     background-color:#d62f33;
     -moz-border-radius:4px;
@@ -59,4 +60,15 @@ label {
 
 #assetTable tr {
     background-color: #f9f9f9;
+}
+
+select#CurrentBranch {
+    font-size: 16px;
+    color: white;
+    -webkit-appearance: initial;
+    -webkit-appearance: menulist-button;
+    width: 320px;
+    text-indent: 5px;
+    border: 2px solid purple;
+    background-color: purple;
 }
