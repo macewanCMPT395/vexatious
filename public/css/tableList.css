@@ -26,6 +26,7 @@
 }
 /* Define the default color for all the table rows */
 .table-rows-table tr{
+	text-align: left;
     background: #eeeeee;
 }
 /* Define the hover highlight color for the table row */ 

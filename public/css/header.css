@@ -103,10 +103,20 @@ body, html {
 }
 
 .navMenu.footer li {
-    float: right;
+	text-decoration-line: underline;
+    display: inline-block;
 	padding-right:70px;
+	float: right;
 }
 
 .navMenu.footer a:hover {
     color: #6ab833;
+}
+
+#navMessage.navMenu.footer  li{
+	float: left;
+}
+
+.navMenu li:disabled {
+    cursor: not-allowed;
 }

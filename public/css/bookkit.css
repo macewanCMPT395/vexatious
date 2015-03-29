@@ -89,6 +89,7 @@ select#destination {
 }
 
 input[type="submit"] {
+	visibility: hidden;
     background-color:#d62f33;
     -moz-border-radius:4px;
     -webkit-border-radius:4px;
@@ -147,48 +148,10 @@ input {
     width: 37%;
 }
 
-.availableKits {
-    margin: 0 0 10% 0;
-    width: 100%;
-    height: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-}
-
-.availableKits th {
-    font-weight: normal;
-    padding: 5px 120px 5px 5px;
-    text-align: left;
-}
-
-.availableKits td {
-    padding: 10px 15px 3px 5px; 
-    font-size: 16px;
-    text-align: left;
-}
-
-.availableKits thead{
-    color: white;
-    background-color: grey;
-    font-size: 20px;
-    font-weight: 30;
-}
-
-.availableKits tbody tr {
-    background-color: #eeeeee;
-}
-
-.availableKits tbody tr:hover {
-      background: #dddddd;
-}
 
 #headerLabel {
     margin-top: 10px;
     color: #039CE0;
     font-size: 20px;
-    float: left;
-}
-
-.selected {
-    background-color: #FBBC2E !important;
+    display:inline-block;
 }
