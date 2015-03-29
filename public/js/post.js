@@ -20,7 +20,7 @@ function postOverride(postButton, method,fields, error, success) {
 	fields["_method"] = method;
 	
 	console.log($(postButton).prop('action'));
-	$.post($(postButton).prop('action'), fields)
+	$.post($(postButton).prop('action'), fields, null, 'json')
 		.done(function(data) {
 			console.log("done!");
 			if(data.status == 1){

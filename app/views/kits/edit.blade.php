@@ -21,10 +21,11 @@ $(document).ready(function() {
 	
 	var kitDevices = {{json_encode($devices);}}
 
+	console.log("{{ route('hardware.show'); }}");
 
 	var HWForm = HardwareForm.init({
 		devices: kitDevices,
-		hwInfoRoute: "{{ route('hardware.get'); }}",
+		hwInfoRoute: "{{ route('hardware.show'); }}",
 		kitInfoRoute: "{{ route('kits.edit'); }}"
 	});
 	
@@ -97,7 +98,7 @@ $(document).ready(function() {
 					@if($device->damaged)
 						<td>Damaged</td>
 					@else
-					  <td>None</td>
+					  <td>Good</td>
 					@endif
 				</tr>
 				@endforeach

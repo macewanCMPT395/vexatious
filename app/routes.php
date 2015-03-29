@@ -1,8 +1,6 @@
 <?php
 Route::resource('sessions', 'SessionsController');
 Route::resource('users', 'UsersController');
-
-Route::get('/hardware/{id}/get', ['uses'=>'HardwareController@get', 'as'=>'hardware.get']);
 Route::resource('hardware', 'HardwareController');
 
 Route::resource('hardwaretype', 'HardwareTypeController');

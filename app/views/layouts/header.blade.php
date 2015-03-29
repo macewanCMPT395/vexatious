@@ -19,6 +19,8 @@
     {{ HTML::linkRoute('receiving', 'Receiving') }} </li>
 <li @yield('browsekitsli')> 
     {{ HTML::linkRoute('kits.index', 'Browse Kits') }} </li>
+<li @yield('browsehardwareli')> 
+    {{ HTML::linkRoute('hardware.index', 'Browse Assets') }} </li>
 @if(Auth::user()->role == 1)
 <!--li @yield('editkitsli')> 
     {{ HTML::linkRoute('kits.edit', 'Edit Kits') }}</li-->

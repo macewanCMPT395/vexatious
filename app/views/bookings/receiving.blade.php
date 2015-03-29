@@ -1,36 +1,31 @@
 @extends('layouts.admin')
 @section('headerScript')
 {{ HTML::style('css/shipping.css') }}
-<script src='fullcalendar/lib/jquery.min.js'></script>
-<script src='fullcalendar/lib/moment.min.js'></script>
+{{ HTML::style('css/tableFilter.css') }}
+{{ HTML::script('fullcalendar/lib/jquery.min.js') }}
+{{ HTML::script('fullcalendar/lib/moment.min.js') }}
+
 @stop
 @section('receivingli') class="active" @stop
 @section('content')
-
+<ul class="TableFilter-Bar">
+	{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
+	<li>
+	{{ Form::label('branch', 'Receiving at') }}
+	{{ Form::select('branch', Branch::lists('name', 'id')); }}
+	</li>
+	<li>
+	{{ Form::hidden('form', 'received') }}
+	{{ Form::hidden('id', '') }}
+	{{ Form::hidden('shipped', '') }}
+	{{ Form::hidden('received', '') }}
+	{{ Form::hidden('kitID', '') }}  
+	{{ Form::hidden('destination', '') }}
+	{{ Form::submit('Received') }}
+	</li>
+	{{Form::close() }}
+</ul>
 <table class="layout">
-	<tr>
-		<td colspan="2">
-			<div class="form">
-				{{ Form::open(['method' => 'put', 'route' => 'bookings.update']) }}
-				<ul class="formFields">
-    			<li>
-					{{ Form::label('branch', 'Receiving at') }}
-					{{ Form::select('branch', Branch::lists('name', 'id')); }}
-    			</li>
-    			<li id="submit">
-					{{ Form::hidden('form', 'received') }}
-					{{ Form::hidden('id', '') }}
-					{{ Form::hidden('shipped', '') }}
-					{{ Form::hidden('received', '') }}
-					{{ Form::hidden('kitID', '') }}  
-					{{ Form::hidden('destination', '') }}
-					{{ Form::submit('Received') }}
-				</li>
-				</ul>
-				{{Form::close() }}
-			</div>
-		</td>
-	</tr>
 	<tr>
 		<td class="innerTable">
 			<div id="todayTable">

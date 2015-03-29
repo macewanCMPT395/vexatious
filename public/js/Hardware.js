@@ -10,32 +10,32 @@ var HardwareForm = (function() {
 
     function _init() {
         return {
+			hwListRoute: "",
 			hwInfoRoute: "",
 			kitInfoRoute: "",
-			devices: "",
 			
-			_postDone: '',
+			_postDone: function(){},
 			postDone: function(v) {
 				instance._postDone = function(){
 					v();
 				};
 			},
 			
-			_postStart: '',
+			_postStart: function(){},
 			postStart: function(v) {
 				instance._postStart = function() {
 					v();
 				};
 			},
 			
-			_getStart: '',
+			_getStart: function(){},
 			getStart: function(v) {
 				instance._getStart = function() {
 					v();
 				};
 			},
 			
-			_getDone: '',
+			_getDone: function(){},
 			getDone: function(v) {
 				instance._getDone = function() {
 					v();
@@ -44,9 +44,10 @@ var HardwareForm = (function() {
 			
 			//fill the hardware form
 			fill: function(hwID) {
-				var url = instance.hwInfoRoute.replace('%7Bid%7D', hwID);
+				var url = instance.hwInfoRoute.replace('%7Bhardware%7D', hwID);
+				console.log(url);
 				instance._getStart();
-				$.get(url).done(function(response) {
+				$.get(url, {"_method": "get"}, null, 'json').done(function(response) {
 					instance._getDone();
 					//make sure we got a list
 					if(response.status == 1) {
@@ -63,7 +64,7 @@ var HardwareForm = (function() {
 					var device = response.device;
 
 					//set title
-					$('#hw-title-text').text(device.name + ' [' + device.assetTag + ']');
+					$('#hw-title-text').text(device.name + ' [asset: ' + device.assetTag + ']');
 
 					//set description
 					$('#hw-description .hw-box-text')
@@ -112,6 +113,7 @@ var HardwareForm = (function() {
 							instance._postDone();
 						},
 						function(resp) {
+						console.log(resp);
 							instance._postDone();
 							instance.fill(resp.device.id);
 							$('#damaged').val("");
@@ -120,6 +122,23 @@ var HardwareForm = (function() {
 
 					return false;
 				});
+			},
+			
+			//get a listing of all the hardware in the system
+			list: function(error, done) {
+				var url = instance.hwInfoRoute;
+				$.get(url, {"_method": "get"}, null, 'json').done(function(response) {
+					instance._getDone();
+					
+					//make sure we got a list
+					if(response.status == 1) {
+						if(error)error();				
+						return;
+					}
+					if(done)done(response.devices);
+				});	
+				
+			
 			}
         }
     }

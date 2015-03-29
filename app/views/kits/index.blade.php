@@ -1,21 +1,31 @@
 @extends('layouts.admin')
 @section('headerScript')
 {{ HTML::style('css/kits.css') }}
-<script src='fullcalendar/lib/jquery.min.js'></script>
+{{ HTML::style('css/tableList.css') }}
+{{ HTML::style('css/tableFilter.css') }}
+{{ HTML::script('fullcalendar/lib/jquery.min.js') }}
 <script>
 	
 var ViewEditKit = "{{ route('kits.edit'); }}";
+function initTable() {
+	//add in our table headers into the table layout
+	//add headers
+	$('#kitListing .table-static-header-row')
+		.append($('<td></td>').text('Description'))
+		.append($('<td></td>').text('Kit Type'))
+		.append($('<td></td>').text('Barcode'))
+		.append($('<td></td>').text('Current Branch'))
+		.append($('<td></td>').text('Condition'));
+}
 	
 	
 $(document).ready(function() {
-	//Make Table Rows selectable
-	var selected;
+	initTable();
+	
 	//Add Rows to table    
 	var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
 	var allKits = {{ json_encode($kits); }};
 	var allDamagedKits = {{ json_encode($kitDamage); }};
-	console.log(allDamagedKits);
-	var kits;
 
 	//add "All" to type filter
 	$('#type').prepend('<option value="0">All</option>');
@@ -24,7 +34,7 @@ $(document).ready(function() {
 	$('#branch').prepend('<option value="0">All</option>');
 	$('#branch').val(0);
 
-	function filterBookings() {
+	function filterKits() {
 		//first, only grab the bookings for the current branch
 		var filterKits = allKits.filter(function(a) {
 
@@ -48,76 +58,61 @@ $(document).ready(function() {
 		return filterKits;
 	}	
 
-	function updateTable() {
-		//Filter Kits
-		//Filter by type
-		kits = filterBookings();
-			//allKits.filter(function(a) {
-			//return a.type == $('#type').val(); });
-
-		clearTable("#kits");
-		populateTable();
-	}
-
-	function populateTable() {
-
-		if (kits.length == 0)
-			addRow("#kits", null);
-		else{
-			for (var i = 0; i < kits.length; i++) {
-				addRow("#kits", kits[i]);
-			}
-			$('#kits tr').first().toggleClass('selected');
-			$('.editRoute').attr('href', ViewEditKit.replace('%7Bkits%7D', $('.selected').attr('id')));
+	function populateTable(kitList){
+		var table = $('#kitListing .table-rows-table');
+		if(kitList.length == 0) {
+			var row = document.createElement('tr');
+			$(row).append($('<td></td>').text("No Kits found"));
+			table.append($(row));
+			$('.editRoute').attr('href', '#');
+			return;
 		}
-	}
-
-	function clearTable(tableID) {
-		$(tableID).empty();
-		$('.editRoute').attr('href', '#');
-	}
-	
-	function addRow(tableID, kit) {
-		var row = document.createElement('tr');
 		
-		if (kit == null) {
-			var cell = $(document.createElement('td')).text("No Kits");	
-			$(row).append(cell);
-			$(tableID).append($(row));
-		} else {
-			$(row).append($(document.createElement('td')).text(kit.description));
-			$(row).append($(document.createElement('td')).text(kit.name));
-			$(row).append($(document.createElement('td')).text(kit.barcode));
-			$(row).append($(document.createElement('td')).text(branchList[kit.currentBranchID]));
+		
+		kitList.forEach(function(kit) {
+			var row = document.createElement('tr');
+			$(row).attr('id', kit.id);
+
+
+			//add asset tag
+			$(row).append($('<td></td>').text(kit.description));
+			//add name
+			$(row).append($('<td></td>').text(kit.name));
+			$(row).append($('<td></td>').text(kit.barcode));
+			$(row).append($('<td></td>').text(branchList[kit.currentBranchID]));
 			
 			var isDamaged = $.grep(allDamagedKits, function(e){ return e.id == kit.id; });
 			if (isDamaged.length > 0) {
-				$(row).append($(document.createElement('td')).text("Has Damage"));
+				$(row).append($('<td></td>').text("Damaged"));
 			} else {
-				$(row).append($(document.createElement('td')).text("None"));
+				$(row).append($('<td></td>').text("Good"));
 			}
-			
-			$(row).attr('id',  kit.id);
-			$(tableID).append($(row));
-			
-			$(tableID).on('click', '#' + kit.id, function() {
+
+			table.append($(row));
+			table.on('click', '#' + kit.id, function() {
 				$('.selected').each(function() {
 					$(this).toggleClass('selected');
 				});
 				$(this).toggleClass('selected');
 				$('.editRoute').attr('href', ViewEditKit.replace('%7Bkits%7D', $(this).attr('id')));
 			});
-			
-		}
+		});	
+		$('#kitListing .table-rows-table tr').first().toggleClass('selected');
+		$('.editRoute').attr('href', ViewEditKit.replace('%7Bkits%7D', $('.selected').attr('id')));
+	}				  
+				  
+				  
+	function updateTable() {
+		var kits = filterKits();
+		$('#kitListing .table-rows-table').empty();
+		populateTable(kits);
 	}
-	
-	
-	
-	
+
+
 	$('#branch').change(updateTable);
 	$('#type').change(updateTable);
 	$('#damage').change(updateTable);
-
+	
 	updateTable();
 });
 </script>
@@ -125,52 +120,37 @@ $(document).ready(function() {
 @section('browsekitsli') class="active" @stop
 @section('content')
 
-<div>
-    {{ Form::open(['method' => 'get', 'route' => 'kits.index']) }}
-    <div class="title"></div>
-    <ul class="kitFilters">
-    <li>
-    {{ Form::label('type', 'Type') }}
-    {{ Form::select('type', HardwareType::lists('name', 'id')) }}
-    </li>
-    <li>
-    {{ Form::label('branch', 'Branch') }}
-    {{ Form::select('branch', Branch::lists('name', 'id')); }}
-    </li>
-    <li>
-    {{ Form::label('damage', 'Damage') }}
-    {{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
-    </li>
-    </ul>
-    {{ Form::close() }}
-</div>
-<div id="tableWrapper">
-	<table class="kitsTable">
-		<thead>
-			<tr>
-			<th>Description</th>
-			<th>Kit Type</th>
-			<th>Barcode</th>
-			<th>Current Branch</th>
-			<th>Damage</th>
-			</tr>
-	</thead>
-	</table>
-	<div id="tableRows">
-		<table id="kits" class="kitsTable kitRows">
-			<tbody></tbody>
-		</table>
-	</div>
+<ul class="TableFilter-Bar">
+	<li>
+	{{ Form::label('type', 'Type') }}
+	{{ Form::select('type', HardwareType::lists('name', 'id')) }}
+	</li>
+	<li class="TableFilter-Content">
+	{{ Form::label('branch', 'Branch') }}
+	{{ Form::select('branch', Branch::lists('name', 'id')); }}
+	</li>
+	<li class="TableFilter-Content">
+	{{ Form::label('damage', 'Damage') }}
+	{{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
+	</li>
+</ul>
+
+<div id="kitListing">
+	@include('layouts.tableList')
 </div>
 
-<div class="navMenu" id="buttons">
+<div class="navMenu footer">
 <ul>
 
     @if(Auth::user()->role == 1)
       <li>
        	<a href="#" class="editRoute">View/Edit Kit</a>
       </li>
-    @endif
+    @else
+	   <li>
+       	<a href="#" class="editRoute">View Kit</a>
+      </li>
+	@endif
 </ul>
 </div>
 
