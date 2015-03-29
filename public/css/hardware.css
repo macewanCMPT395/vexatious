@@ -2,3 +2,55 @@
 	color: blue;
 	
 }
+
+select#inKit {
+    font-size: 16px;
+    color: white;
+    -webkit-appearance: initial;
+    -webkit-appearance: menulist-button;
+    width: 100px;
+    text-indent: 5px;
+    border: 2px solid purple;
+    background-color: purple;
+}
+
+select#type {
+    font-size: 16px;
+    color: white;
+    -webkit-appearance: initial;
+    -webkit-appearance: menulist-button;
+    width: 150px;
+    text-indent: 5px;
+    border: 2px solid purple;
+    background-color: purple;
+}
+
+select#damage {
+    font-size: 16px;
+    color: white;
+    -webkit-appearance: initial;
+    -webkit-appearance: menulist-button;
+    width: 125px;
+    text-indent: 5px;
+    border: 2px solid purple;
+    background-color: purple;
+
+}
+
+.deviceFilters {
+    height: auto;
+    line-height: 34px;
+    font-size: 20px;
+    text-align: center;
+    background: #eeeeee;
+    list-style-type: none;
+    margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.deviceFilters li{
+    display: inline;
+    padding-left: 6px;
+    white-space: nowrap;
+}

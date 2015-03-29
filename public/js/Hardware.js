@@ -10,9 +10,9 @@ var HardwareForm = (function() {
 
     function _init() {
         return {
+			hwListRoute: "",
 			hwInfoRoute: "",
 			kitInfoRoute: "",
-			devices: "",
 			
 			_postDone: function(){},
 			postDone: function(v) {
@@ -64,7 +64,7 @@ var HardwareForm = (function() {
 					var device = response.device;
 
 					//set title
-					$('#hw-title-text').text(device.name + ' [' + device.assetTag + ']');
+					$('#hw-title-text').text(device.name + ' [asset: ' + device.assetTag + ']');
 
 					//set description
 					$('#hw-description .hw-box-text')
@@ -122,6 +122,23 @@ var HardwareForm = (function() {
 
 					return false;
 				});
+			},
+			
+			//get a listing of all the hardware in the system
+			list: function(error, done) {
+				var url = instance.hwInfoRoute;
+				$.get(url, {"_method": "get"}, null, 'json').done(function(response) {
+					instance._getDone();
+					
+					//make sure we got a list
+					if(response.status == 1) {
+						if(error)error();				
+						return;
+					}
+					if(done)done(response.devices);
+				});	
+				
+			
 			}
         }
     }

@@ -98,7 +98,7 @@ $(document).ready(function() {
 					@if($device->damaged)
 						<td>Damaged</td>
 					@else
-					  <td>None</td>
+					  <td>Good</td>
 					@endif
 				</tr>
 				@endforeach

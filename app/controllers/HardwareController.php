@@ -24,12 +24,20 @@ class HardwareController extends \BaseController {
 	 */
 	public function index()
 	{
-		$devices = Hardware::all();
+		
+		$devices = Hardware::join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
+				->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
+				->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
+				->get(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',  
+						 'hardwareType.description', 'kit.id as kitID', 'kit.barcode', 
+					   'hardware.hardwareTypeID as type']);
+		
+		//$devices = Hardware::all();
 		if(Request::wantsJson()) {
 			if($devices) return Response::json(["status"=>"0", "devices"=>$devices]);
 			return Response::json(["status"=>"1", "devices"=>[]]);
 		}
-		return View::make('devices.index', ['devices' => devices]);
+		return View::make('hardware.index')->with('devices', $devices);
 	}
 
 
