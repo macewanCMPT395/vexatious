@@ -79,9 +79,9 @@ class KitController extends \BaseController {
 		
 		
 		$kit = DB::table('kit')->where('kit.id', '=', $id)
-						->join('kithardware', 'kithardware.kitID', '=', $id)
-						->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
-						->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
+						->leftJoin('kithardware', 'kithardware.kitID', '=', $id)
+						->leftJoin('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
+						->leftJoin('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
 						->first(['kit.barcode', 'kit.currentBranchID', 'kit.description', 'kit.type']);
         
 		$devices = DB::table('kithardware')->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
@@ -89,16 +89,21 @@ class KitController extends \BaseController {
 				->where('kithardware.kitID', '=', $id) 
 				->get(['hardware.id', 'hardware.damaged', 'assetTag', 'description','name']);
 		
-		$device = Hardware::where('hardware.id', '=', $id)
-                                ->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
-                                ->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
-                                ->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
-                                ->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',
-                                                 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
-
+		$device = [];
+		
+		if (count($devices) > 0) {
+		
+			$device = Hardware::where('hardware.id', '=', $id)
+									->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
+									->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
+									->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
+									->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',
+													 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
+		}
 		//return Response::json([$kit, $devices]);
         //Pass kits to view
-		return View::make('kits.edit')->with('kits', $kit)->with('devices', $devices)->with('hardware', $device);
+		return View::make('kits.edit')->with('kits', $kit)->with('devices', $devices)
+				->with('hardware', $device);
 	}
 
 
