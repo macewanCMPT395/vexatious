@@ -25,13 +25,11 @@ class HardwareController extends \BaseController {
 	public function index()
 	{
 		$devices = Hardware::all();
-		//return View::make('devices.index', ['devices' => devices]);
-		$response = array(
-			'status' => 0,
-			'devices' =>  $devices
-		);
-		
-		return Response::json($response);
+		if(Request::wantsJson()) {
+			if($devices) return Response::json(["status"=>"0", "devices"=>$devices]);
+			return Response::json(["status"=>"1", "devices"=>[]]);
+		}
+		return View::make('devices.index', ['devices' => devices]);
 	}
 
 
@@ -61,11 +59,10 @@ class HardwareController extends \BaseController {
 		$device->fill($input);	
         $device->save();
 
-		$response = array(
-			'status' => 0,
-			'devices' => $device
-		);
-		return Response::json($response);     
+		if(Request::wantsJson()) {
+			return Response::json(["status"=>"0", "device"=>$device]);
+		}
+		return Redirect::back();     
 	}
 
 	/**
@@ -73,33 +70,23 @@ class HardwareController extends \BaseController {
 	 *
 	 * @param  int  $id
 	 * @return Response
-	 */
-	public function get($id) {
-		$response = ["status"=>"1", 'device'=> []];
-		
-		$device = Hardware::where('hardware.id', '=', $id)
-				->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
-				->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
-				->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
-				->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',  
-						 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
-		
-		if($device) {
-			$response = ["status"=>"0", "device"=>$device];	
-		}
-		
-		return Response::json($response);
-	}
-	
-	
+	 */	
 	public function show($id)
 	{
+		
 		$device = Hardware::where('hardware.id', '=', $id)
 				->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
 				->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
 				->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
 				->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',  
 						 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
+		
+		//handle json request types
+		if(Request::wantsJson()) {
+			if($device)return Response::json(["status"=>"0", "device"=>$device]);
+			return Response::json(["status"=>"1", "device"=>[]]);
+		}
+		
 		//return Response::json($device);
 		return View::make('hardware/show')->with('hardware', $device);
 	}
@@ -114,7 +101,6 @@ class HardwareController extends \BaseController {
 	public function edit($id)
 	{
 		if (!Auth::user()->isAdmin()) return Redirect::back();
-
 	}
 
 
@@ -146,15 +132,14 @@ class HardwareController extends \BaseController {
 				}
 			}
 			
-			
-			
-			
 			$device->save();
-			//$response = ["status" => "0", "device" => $device];
 		}
-		
-		$returnType = Input::get('respType');
-		if(!strcmp($returnType, "json")) return Response::json(["status"=>"0", "device"=>$device]);
+	
+		//handle json request types
+		if(Request::wantsJson()) {
+			if($device)return Response::json(["status"=>"0", "device"=>$device]);
+			return Response::json(["status"=>"1", "device"=>[]]);
+		}
 		return Redirect::route('hardware.show', ['id'=>$id]);
 	}
 
