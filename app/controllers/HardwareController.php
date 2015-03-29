@@ -74,6 +74,24 @@ class HardwareController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function get($id) {
+		$response = ["status"=>"1", 'device'=> []];
+		
+		$device = Hardware::where('hardware.id', '=', $id)
+				->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
+				->leftJoin('kithardware', 'hardware.id', '=', 'kithardware.hardwareID')
+				->leftJoin('kit', 'kithardware.kitID', '=', 'kit.id')
+				->first(['hardware.id', 'assetTag', 'damaged', 'hardwareType.name',  
+						 'hardwareType.description', 'kit.id as kitID', 'kit.barcode']);
+		
+		if($device) {
+			$response = ["status"=>"0", "device"=>$device];	
+		}
+		
+		return Response::json($response);
+	}
+	
+	
 	public function show($id)
 	{
 		$device = Hardware::where('hardware.id', '=', $id)
@@ -134,7 +152,9 @@ class HardwareController extends \BaseController {
 			$device->save();
 			//$response = ["status" => "0", "device" => $device];
 		}
-		//return Response::json($response);
+		
+		$returnType = Input::get('respType');
+		if(!strcmp($returnType, "json")) return Response::json(["status"=>"0", "device"=>$device]);
 		return Redirect::route('hardware.show', ['id'=>$id]);
 	}
 
