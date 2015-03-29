@@ -32,41 +32,6 @@
     font-weight: 600;
 }
 
-.kitsTable{
-    table-layout: fixed;
-    width:100%; 
-    border-collapse:collapse; 
-}
-.kitsTable th{ 
-    padding:7px; 
-    text-align: left;
-    background: #666666;
-    color: #ffffff;
-}
-.kitsTable td{ 
-    padding:7px; 
-}
-/* Define the default color for all the table rows */
-.kitsTable tr{
-    background: #eeeeee;
-}
-/* Define the hover highlight color for the table row */
-.kitsTable tbody tr:hover {
-      background: #dddddd;
-}
-
-.selected {
-    background-color: #FBBC2E !important;
-}
-
-th, td {
-    width: 200px;
-}
-
-.highlight {
-    background: #ffffff;
-    
-}
 
 input[type="submit"] {
     background-color:#d62f33;
@@ -120,15 +85,3 @@ select#damage {
 
 }
 
-#buttons {
-    background-color: #6ab833;
-    padding-right: 4.5%;
-}
-
-#buttons li {
-    float: right;
-}
-
-#buttons a:hover {
-    color: #6ab833;
-}

@@ -19,45 +19,33 @@ body, html {
     background: #ffffff;
 }
 
-/*.cal {
-    width: 300px;
-    height:200px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -150px;
-    margin-top: -100px;
-}*/
-
-a {
+.navMenu a {
     text-decoration:none;
     color: #FFFFFF;
 }
 
-a:link {
+.navMenu a:link {
     text-decoration: none;
     color: #FFFFFF;
  }
 
-a:visited {
+.navMenu a:visited {
   text-decoration: none;
   color: #FFFFFF;
  }
 
-a:hover {
+.navMenu a:hover {
     text-decoration: none;
     color: #FFFFFF;
  }
 
-a:active {
+.navMenu a:active {
     text-decoration: none;
     color: #FFFFFF;
  }
 
-.navMenu {
-    padding-left: 70px;
-    padding-right: 70px;
-    width: width;
+.navMenu, .navMenu.footer {
+    width: 100%;
     height: 36px;
     font-size: 20px;
     line-height: 38px;
@@ -67,13 +55,13 @@ a:active {
     background-color: #FBBC2E;
 }
 
-.navMenu ul {
+.navMenu ul, .navMenu.footer ul {
     height: auto;
     padding: 0px 0px;
     margin: 0px;
 }
 
-.navMenu li { 
+.navMenu li, .navMenu.footer li { 
     box-sizing: border-box;
     display: block;
     height: auto;
@@ -83,17 +71,13 @@ a:active {
     position: relative;
 }
 
-#logout{
+.navMenu #logout{
     float: right;
+	padding-right:70px;
 }
 
 .active a {
     background: #039CE0;
-}
-
-#bar {
-    height: 15px;
-    background: #FBBC2E; 
 }
 
 .navMenu a {
@@ -104,4 +88,25 @@ a:active {
 .navMenu a:hover {
     color: #FBBC2E;
     background-color: #FFF;
+}
+
+
+
+/*
+	Footer nave bar
+*/
+.navMenu.footer {
+	position: fixed;
+	bottom: 2%;
+    background-color: #6ab833;
+    padding-right: 4.5%;
+}
+
+.navMenu.footer li {
+    float: right;
+	padding-right:70px;
+}
+
+.navMenu.footer a:hover {
+    color: #6ab833;
 }

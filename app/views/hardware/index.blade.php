@@ -129,4 +129,11 @@ $(document).ready(function() {
 <div id="hardwareListing">
 	@include('layouts.tableList')
 </div>
+<div class="navMenu footer">
+<ul>
+   <li>
+	<a href="#" class="editRoute">View Asset</a>
+  </li>
+</ul>
+</div>
 @stop
