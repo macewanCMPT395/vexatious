@@ -2,6 +2,7 @@
 @section('headerScript')
 {{ HTML::style('css/kits.css') }}
 {{ HTML::style('css/tableList.css') }}
+{{ HTML::style('css/tableFilter.css') }}
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
 <script>
 	
@@ -119,48 +120,24 @@ $(document).ready(function() {
 @section('browsekitsli') class="active" @stop
 @section('content')
 
-<div>
-    {{ Form::open(['method' => 'get', 'route' => 'kits.index']) }}
-    <div class="title"></div>
-    <ul class="kitFilters">
-    <li>
-    {{ Form::label('type', 'Type') }}
-    {{ Form::select('type', HardwareType::lists('name', 'id')) }}
-    </li>
-    <li>
-    {{ Form::label('branch', 'Branch') }}
-    {{ Form::select('branch', Branch::lists('name', 'id')); }}
-    </li>
-    <li>
-    {{ Form::label('damage', 'Damage') }}
-    {{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
-    </li>
-    </ul>
-    {{ Form::close() }}
-</div>
-<!--div id="tableWrapper">
-	<table class="kitsTable">
-		<thead>
-			<tr>
-			<th>Description</th>
-			<th>Kit Type</th>
-			<th>Barcode</th>
-			<th>Current Branch</th>
-			<th>Condition</th>
-			</tr>
-	</thead>
-	</table>
-	<div id="tableRows">
-		<table id="kits" class="kitsTable kitRows">
-			<tbody></tbody>
-		</table>
-	</div>
-</div-->
+<ul class="TableFilter-Bar">
+	<li>
+	{{ Form::label('type', 'Type') }}
+	{{ Form::select('type', HardwareType::lists('name', 'id')) }}
+	</li>
+	<li class="TableFilter-Content">
+	{{ Form::label('branch', 'Branch') }}
+	{{ Form::select('branch', Branch::lists('name', 'id')); }}
+	</li>
+	<li class="TableFilter-Content">
+	{{ Form::label('damage', 'Damage') }}
+	{{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
+	</li>
+</ul>
+
 <div id="kitListing">
 	@include('layouts.tableList')
 </div>
-
-
 
 <div class="navMenu footer">
 <ul>

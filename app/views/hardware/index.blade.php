@@ -6,6 +6,7 @@
 {{ HTML::script('js/post.js') }}
 {{ HTML::style('css/hardware.css') }}
 {{ HTML::style('css/tableList.css') }}
+{{ HTML::style('css/tableFilter.css') }}
 <script>
 function initTable() {
 	//add in our table headers into the table layout
@@ -110,22 +111,20 @@ $(document).ready(function() {
 @stop
 @section('browsehardwareli') class="active" @stop
 @section('content')
-<div>
-    <ul class="deviceFilters">
-    <li>
-    {{ Form::label('type', 'Type') }}
-    {{ Form::select('type', HardwareType::lists('name', 'id')) }}
-    </li>
-    <li>
-    {{ Form::label('damage', 'Damage') }}
-    {{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
-    </li>
-    <li>
-    {{ Form::label('inKit', 'In Kit') }}
-    {{ Form::select('inKit', ['1'=>'Yes', '2'=>'No'], 1); }}
-    </li>
-    </ul>
-</div>
+<ul class="TableFilter-Bar">
+	<li>
+	{{ Form::label('type', 'Type') }}
+	{{ Form::select('type', HardwareType::lists('name', 'id')) }}
+	</li>
+	<li>
+	{{ Form::label('damage', 'Damage') }}
+	{{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
+	</li>
+	<li>
+	{{ Form::label('inKit', 'In Kit') }}
+	{{ Form::select('inKit', ['1'=>'Yes', '2'=>'No'], 1); }}
+	</li>
+</ul>
 <div id="hardwareListing">
 	@include('layouts.tableList')
 </div>
