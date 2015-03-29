@@ -63,6 +63,12 @@ class BookingController extends \BaseController {
 	public function index()
 	{
         $bookings = $this->getBookings();
+		//handle json request types
+		if(Request::wantsJson()) {
+			if ($bookings)
+				return Response::json(["status" => "0", "bookings" => $bookings]);
+			return Response::json(["status"=>"1", "bookings"=>[]]);
+		}
 		return View::make('bookings/index')->with('bookings', $bookings);
 				
 	}
@@ -70,14 +76,24 @@ class BookingController extends \BaseController {
     public function shipping()
 	{
         $bookings = $this->getBookings();
-        
+ 		//handle json request types
+		if(Request::wantsJson()) {
+			if ($bookings)
+				return Response::json(["status" => "0", "bookings" => $bookings]);
+			return Response::json(["status"=>"1", "bookings"=>[]]);
+		}       
 		return View::make('bookings/shipping' ,compact('bookings'));
 	}
     
     public function receiving()
 	{
         $bookings = $this->getBookings();
-        
+ 		//handle json request types
+		if(Request::wantsJson()) {
+			if ($bookings)
+				return Response::json(["status" => "0", "bookings" => $bookings]);
+			return Response::json(["status"=>"1", "bookings"=>[]]);
+		}     
 		return View::make('bookings/receiving' ,compact('bookings'));
 	}
 
@@ -233,7 +249,10 @@ class BookingController extends \BaseController {
 			"msgID" => 2
 		));	
 		
-		
+		//handle json request types
+		if(Request::wantsJson()) {
+			return Response::json(["status" => "0", "booking" => $booking]);
+		}		
 		return Redirect::route('bookings.index');
 	}
 
@@ -260,11 +279,17 @@ class BookingController extends \BaseController {
 			foreach ($bookings as &$book) {
 				unset($book->password);
 				unset($book->email);
-			}
-			$response = ["status" => "0", "bookings" => $bookings];
-			
+			}			
 		}
-		return Response::json($response);
+
+		//handle json request types
+		if(Request::wantsJson()) {
+			if ($bookings)
+				return Response::json(["status" => "0", "bookings" => $bookings]);
+			return Response::json(["status"=>"1", "bookings"=>[]]);
+		}
+		
+		return View::make('bookings/show')->with('bookings', $bookings);
 	}
 
 
@@ -276,7 +301,7 @@ class BookingController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		return $this->show($id);
 	}
 
 	/**
@@ -286,25 +311,43 @@ class BookingController extends \BaseController {
 	 * @param  
 	 * @return Response
 	 */
-	public function update()
+	public function update($id)
 	{
-        if (Input::get('id') != "") {
-            $booking = Booking::find(Input::get('id'));
-            $booking->shipped = Input::get('shipped');
-            $booking->received = Input::get('received');
-            $booking->save();
-        }
-        
-        if (Input::get('form') == "ship")
-            return Redirect::route('shipping');
-        else {
-            if (Input::get('id') != "") {
-                $kit = Kit::find(Input::get('kitID'));
-                $kit->currentBranchID = Input::get('destination');
-                $kit->save();
-            }
-            return Redirect::route('receiving'); 
-        }
+		$booking = Booking::find($id);
+		if($booking) {
+			$booking->shipped = Input::get('shipped');
+			$booking->received = Input::get('received');
+			$booking->eventName = Input::get('eventName');
+			$booking->save();
+
+			$dest = Input::get('destination');
+			if($dest) {
+				$kit = Kit::find(Input::get('kitID'));
+				if($kit){
+					$kit->currentBranchID = $dest;
+					$kit->save();
+				}
+			}
+			
+			//check for user updates
+			$num = 1;
+			while(Input::get('hidden_'.$num)) {
+				$userID = Input::get('hidden_'.$num);
+				UserBookings::create(array(
+					"userID" => $userID,
+					"bookingID" => $id,
+					"creator"=> "0"
+				));		
+			}
+		}
+		
+		//handle json request types
+		if(Request::wantsJson()) {
+			if ($booking)
+				return Response::json(["status" => "0", "booking" => $booking]);
+			return Response::json(["status"=>"1", "booking"=>[]]);
+		}
+		return Redirect::back();
 	}
 
 
@@ -373,31 +416,4 @@ class BookingController extends \BaseController {
 		
 		return Response::json($response);
 	}
-
-	
-	
-	public function kitAvailability($type, $startDate, $endDate) {
-		$start = strtotime($startDate);
-		$end = strtotime($endDate);
-		
-		//return Response::json(['start date' => $start, 'end date' => $end]);
-		$this->tempType = $type; //wat
-		
-		$availability = DB::table('booking')
-				->whereBetween('start', [$start,$end])
-				->orWhereBetween('end', [$start, $end])
-				->join('kit', function($join){
-					$join->on('booking.kitID', '=', 'kit.id')
-						  ->on('kit.type', '=', $this->tempType);
-				
-				})
-				->join('hardwareType', 'hardwareType.id', '=', $type)
-				->groupby('kitID')
-				->get(['start',DB::raw('count(*) as count')]);
-		
-		$total = DB::table('kit')->count();//get total number of kits for specific type
-		$total = $total * 3;		
-		return Response::json(['available'=>$availability,'count'=>$total]);
-	}
-
 }

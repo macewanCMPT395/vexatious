@@ -70,6 +70,12 @@
 	</div>
 	</td></tr>
 	</table>
+<ul class="navMenu footer">
+  <li>
+	<a href="#" id="createBooking">Received Kit</a>
+  </li>
+</ul> 
+
 <script>
 //Set Table Dates
 var todayTitle = document.querySelector("#todayDate");
