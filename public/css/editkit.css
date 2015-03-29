@@ -101,9 +101,3 @@ select#CurrentBranch {
 #assetTable tbody tr:hover {
       background: #dddddd;
 }
-
-.loadingImg {
-	position: absolute;
-	right: 20%;
-	top: 20%;
-}

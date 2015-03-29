@@ -13,6 +13,7 @@ var HardwareForm = (function() {
 			hwListRoute: "",
 			hwInfoRoute: "",
 			kitInfoRoute: "",
+			hwUpdateRoute: "",
 			
 			_postDone: function(){},
 			postDone: function(v) {
@@ -95,8 +96,9 @@ var HardwareForm = (function() {
 
 
 					//update post URLS
-					var action = $('#form-booking').attr("action");
-					$('#form-booking').attr("action", action.replace('%23', device.kitID));
+					//var action = $('#form-booking').attr("action");
+					$('#form-booking').attr("action", 
+											instance.hwUpdateRoute.replace('%23', device.id));
 				});
 			},
 
@@ -154,6 +156,8 @@ var HardwareForm = (function() {
                         instance[key] = values[key];
                 }
 
+				
+				instance.hwUpdateRoute = $('#form-booking').attr("action");
             }
             return instance;
         }

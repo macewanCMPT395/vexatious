@@ -1,11 +1,13 @@
 @extends('layouts.header')
 @section('headerScript')
-{{ HTML::style('css/editkit.css') }}
+
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
 {{ HTML::script('js/Hardware.js') }}
 {{ HTML::script('js/post.js') }}
 
 {{ HTML::style('css/hardware.css') }}
+{{ HTML::style('css/editkit.css') }}
+{{ HTML::style('css/loadingScreen.css') }}
 
 
 <script>
@@ -120,9 +122,7 @@ $(document).ready(function() {
 	<div id="hardware">
 		@include('layouts.hardware')
 	</div>
-	<div class="loadingImg">
-		<img src="/images/loading_spinner.gif"/>
-	</div>
+	@include('layouts.loadingScreen')
 
 @endif
 </div>
