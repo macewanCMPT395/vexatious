@@ -8,6 +8,10 @@
 {{ HTML::style('css/tableList.css') }}
 {{ HTML::style('css/tableFilter.css') }}
 <script>
+	
+var ViewEditDevice = "{{ route('hardware.show'); }}";
+	
+	
 function initTable() {
 	//add in our table headers into the table layout
 	//add headers
@@ -87,8 +91,16 @@ $(document).ready(function() {
 		
 
 			table.append($(row));
+			table.on('click', '#' + device.id, function() {
+				$('.selected').each(function() {
+					$(this).toggleClass('selected');
+				});
+				$(this).toggleClass('selected');
+				$('.editRoute').attr('href', ViewEditDevice.replace('%7Bhardware%7D', $(this).attr('id')));
+			});
 		});	
-
+		$('#hardwareListing .table-rows-table tr').first().toggleClass('selected');
+		$('.editRoute').attr('href', ViewEditDevice.replace('%7Bhardware%7D', $('.selected').attr('id')));
 	}				  
 				  
 				  

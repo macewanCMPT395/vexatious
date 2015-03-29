@@ -5,6 +5,7 @@
 {{ HTML::script('js/Hardware.js') }}
 {{ HTML::script('js/post.js') }}
 {{ HTML::style('css/hardware.css') }}
+{{ HTML::style('css/loadingScreen.css') }}
 <script>
 	
 $(document).ready(function() {
@@ -34,8 +35,5 @@ $(document).ready(function() {
 
 @section('content')
 	@include('layouts.hardware')
-
-	<div class="loadingImg">
-		<img src="/images/loading_spinner.gif"/>
-	</div>
+	@include('layouts.loadingScreen')
 @stop

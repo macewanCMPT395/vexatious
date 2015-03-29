@@ -8,6 +8,7 @@
 {{ HTML::style('css/bookkit.css') }}
 {{ HTML::style('css/lightbox.css') }}
 {{ HTML::style('css/tableList.css') }}
+{{ HTML::style('css/loadingScreen.css') }}
 @stop
 @section('bookkitli') class="active" @stop
 @section('content')
@@ -206,11 +207,13 @@ $(document).ready(function() {
 	function checkAvailability(kitType,startDate,endDate) {
 		var url = "/checkForKit/" + kitType + "/" + startDate + "/" + endDate;
 	 	console.log(url);
+		$('.loadingImg').show();
 	 	$.get(url).done(function(data) {
 			//if(data.status == 1) {
 			//	return;
 			//}
 		 	populateTable(data.available);
+			$('.loadingImg').hide();
 		});    
 	}
 	//override our form button with the one in the footer nav
@@ -292,4 +295,7 @@ $(document).ready(function() {
 	<a href="#" id="createBooking">Create Booking</a>
   </li>
 </ul> 
+
+@include('layouts.loadingScreen')
+
 @stop
