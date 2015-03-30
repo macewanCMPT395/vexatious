@@ -265,31 +265,50 @@ class BookingController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$response = ["status" => "1", "bookings" => []];
+//		$response = ["status" => "1", "bookings" => []];
 		
 		
-		$bookings = DB::table('booking')->where('booking.id', '=', $id)
-						->join('allBookings', 'allBookings.bookingID', '=', $id)
+#		$bookings = DB::table('booking')->where('booking.id', '=', $id)
+#						->join('allBookings', 'allBookings.bookingID', '=', $id)
+#						->join('users', 'allBookings.userID', '=', 'users.id')
+#						->join('kit', 'booking.kitID', '=', 'kit.id')
+#						->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
+#						->get(['booking.id', 'booking.eventName', 'users.id as userID', 'users.firstName',
+#						'users.lastName', 'booking.start', 'booking.end', 'kit.id as kitID', 'kit.barcode']);
+
+		$booking = Booking::find($id);
+//		$booking = DB::table('booking')->where('booking.id', '=', $id)->first();
+		$users = DB::table('allBookings')->where('allBookings.bookingID', '=', $id)
 						->join('users', 'allBookings.userID', '=', 'users.id')
+						->get();
+		$kitInfo = Booking::find($id)
 						->join('kit', 'booking.kitID', '=', 'kit.id')
 						->join('hardwareType', 'hardwareType.id', '=', 'kit.type')
-						->get();
+						->first();
 		
-		if ($bookings) {
-			foreach ($bookings as &$book) {
-				unset($book->password);
-				unset($book->email);
+		if ($users) {
+			foreach ($users as &$user) {
+				unset($user->password);
+#				unset($user->email);
 			}			
 		}
 
 		//handle json request types
 		if(Request::wantsJson()) {
-			if ($bookings)
-				return Response::json(["status" => "0", "bookings" => $bookings]);
-			return Response::json(["status"=>"1", "bookings"=>[]]);
+			if($booking && $users && $kitInfo)
+			{
+
+				return Response::json(["status" => "0", "booking" => $booking, "users"=>$users, "kit"=>$kitInfo]);
+
+			}
+			return Response::json(["status" => "1", "booking"=>[], "users"=>[], "kit"=>[]]);
+
+//			if ($bookings)
+//				return Response::json(["status" => "0", "bookings" => $bookings]);
+//			return Response::json(["status"=>"1", "bookings"=>[]]);
 		}
-		
-		return View::make('bookings/show')->with('bookings', $bookings);
+		return View::make('bookings/edit')->with('booking', $booking)->with('users', $users)->with('kit', $kitInfo);	
+//		return View::make('bookings/edit')->with('bookings', $booking);
 	}
 
 
@@ -315,8 +334,12 @@ class BookingController extends \BaseController {
 	{
 		$booking = Booking::find($id);
 		if($booking) {
-			$booking->shipped = Input::get('shipped');
-			$booking->received = Input::get('received');
+			$shipped = Input::get('shipped');
+			if($shipped) $booking->shipped = $shipped;
+
+			$recieved = Input::get('recieved');
+			if($recieved) $booking->received = $recieved;
+
 			$booking->eventName = Input::get('eventName');
 			$booking->save();
 
@@ -331,6 +354,7 @@ class BookingController extends \BaseController {
 			
 			//check for user updates
 			$num = 1;
+//			return Response::json(Input::get('hidden_1'));
 			while(Input::get('hidden_'.$num)) {
 				$userID = Input::get('hidden_'.$num);
 				UserBookings::create(array(
@@ -338,6 +362,7 @@ class BookingController extends \BaseController {
 					"bookingID" => $id,
 					"creator"=> "0"
 				));		
+				$num ++;
 			}
 		}
 		

@@ -1,15 +1,23 @@
+@extends('layouts.header')
+@section('headerScript')
+{{ HTML::script('fullcalendar/lib/jquery.min.js') }}
+@stop
+
+<?php
+	$num = 1;
+?>
+
 @section('content')
 
-{{ HTML::script('fullcalendar/lib/jquery.min.js') }}
 
 	<div class="EditBookingDiv">
-	{{ Form::open(['method' => 'PUT',
+	{{ Form::open(['method' => 'put',
 	               'id' => 'form-edit_booking',
-                       'route' => ['booking.update', $bookings->id]
+                       'route' => ['bookings.update', $booking->id]
 	])}}
 		<div class="EventNameDiv">
 		{{ Form::label('_eventlbl', 'Edit Event Name: ') }}
-		{{ Form::text('eventName') }}
+		{{ Form::text('eventName', $booking->eventName) }}
 		</div>
 
 		<div class="NotificationLabelDiv">
@@ -31,23 +39,29 @@
 		</center>
 		</div>
 		<div id="EmployeeNotifyDiv">
+		@foreach($users as $user)
+			{{ Form::text('user_'.$num, $user->email.' | '.$user->firstName.' '.$user->lastName, ['data-user-id' => $user->id, 'size' => '35', 'id' => 'user_'.$user->id, 'class' => 'userbox']) }}
+		@endforeach
 		</div>
 		<div class="SubmitCancelDiv">
 			<center>
 			{{ Form::submit('Confirm') }}
-			{{ Form::button('Go Back', array('id' => 'cancelbtn')) }}
 			</center>
 		</div>
 		</div>
 	{{ Form::close() }}
 	</div>
 	<div class="DeleteBookingDiv">
+	<br/>
+	<br/>
+	<center>
 	{{ Form::open(['method' => 'DELETE',
-	               'route' => ['booking.destroy', $booking->id],
+	               'route' => ['bookings.destroy', $booking->id],
 	               'id' => 'form-delete_booking'
 			
 	])}}
 	{{ Form:: submit('Delete') }}
+	</center>
 	</div>
 
 <script type="text/javascript">
@@ -56,7 +70,8 @@ $(document).ready(function() {
 	$("#EmployeeBox").selectedIndex = 0;
 
 	var useridstr = "user_";
-	var hiddenidstr = "hidden_";
+	var hiddenidstr = "hidden_"
+	var num = {{ $num }};
 
 	$("#EmployeeBox option").each(function() {
 
@@ -79,10 +94,18 @@ $(document).ready(function() {
 				$(this).remove();
 				console.log(hiddenidstr + val);
 				$("#" + hiddenidstr + val).remove();
+				num --;
 
 			});
 
 		}
+
+	});
+
+	$(".userbox").each(function(){
+
+		var id = $(this).attr('data-user-id');
+		$('#EmployeeBox option[value="'+id+'"]').remove();
 
 	});
 
@@ -110,9 +133,12 @@ $(document).ready(function() {
 				.attr("id", useridstr + $("#EmployeeBox option:selected").val())
 				.attr("size", "35");
 
+
 			hiddenselect.id = hiddenidstr + $("#EmployeeBox option:selected").val();
 			hiddenselect.value = $("#EmployeeBox").val();
+			hiddenselect.name = hiddenidstr + num;
 
+			num ++;
 			$("#EmployeeBox option:selected").remove();
 
 			$("#EmployeeNotifyDiv").append(userbox);
@@ -124,4 +150,5 @@ $(document).ready(function() {
 
 });
 </script>
+@stop
 
