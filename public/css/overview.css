@@ -6,6 +6,7 @@
     margin-top: 5px;
     padding-left: 30px;
     background: #eeeeee;
+    
 }
 
 select#branch {
@@ -178,8 +179,4 @@ input {
     color: #039CE0;
     font-size: 20px;
     float: left;
-}
-
-.selected {
-    background-color: #FBBC2E !important;
 }
