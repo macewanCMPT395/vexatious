@@ -38,6 +38,14 @@ class UserTableSeeder extends Seeder {
 						  'role' => User::ADMIN_ROLE 
 						  ));
 		
+	User::create(array('email' => 'janedoe@somemail.com',
+						  'branchID' => '2',
+						  'password' => 'test',
+						  'firstName' => "Jane",
+						  'lastName' => "Doe",
+						  'role' => User::ADMIN_ROLE
+						  ));
+
 		//non-admin user
         User::create(array('email' => 'bar@foo.com', 
 						  'branchID' => '1',
@@ -46,6 +54,23 @@ class UserTableSeeder extends Seeder {
 						  'lastName' => "barfoo",
 						  'role' => 0 
 						  ));
+
+	User::create(array('email' => 'johndoe@somemail.com',
+						  'branchID' => '3',
+						  'password' => 'test',
+						  'firstName' => "John",
+						  'lastName' => "Doe",
+						  'role' => 0
+						  ));
+
+	User::create(array('email' => 'jjohn@somemail.com',
+						  'branchID' => '5',
+						  'password' => 'test',
+						  'firstName' => "Jim",
+						  'lastName' => "John",
+						  'role' => 0
+						  ));
+
     }
 
 }
@@ -117,6 +142,86 @@ class HardwareTableSeeder extends Seeder {
 			"assetTag" => "xboxasset",
 			"damaged" => null
 		));	
+
+		Hardware::create(array(
+			"hardwareTypeID" => 2,
+			"assetTag" => "xboxasset2",
+			"damaged" => null
+		));	
+
+		Hardware::create(array(
+			"hardwareTypeID" => 3,
+			"assetTag" => "ps3asset",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 3,
+			"assetTag" => "ps3asset2",
+			"damaged" => "Broken WiFi adapter"
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 4,
+			"assetTag" => "arduinoasset",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 4,
+			"assetTag" => "arduinoasset2",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 4,
+			"assetTag" => "arduinoasset3",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 5,
+			"assetTag" => "piasset",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 5,
+			"assetTag" => "piasset2",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 5,
+			"assetTag" => "piasset3",
+			"damaged" => "Bent GPIO pins"
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 5,
+			"assetTag" => "piasset4",
+			"damaged" => null
+		));
+
+
+		Hardware::create(array(
+			"hardwareTypeID" => 6,
+			"assetTag" => "macbookasset",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 6,
+			"assetTag" => "macbookasset2",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 6,
+			"assetTag" => "macbookasset3",
+			"damaged" => null
+		));
+
 	}
 }
 
@@ -139,21 +244,58 @@ class KitTableSeeder extends Seeder {
 			"type" => 2,
 			"currentBranchID" => $branch->id,
 			"barcode" => "1001001001001001",
-			"description" => "This kit contains 4 whatevers with their accessories."
+			"description" => "This kit contains 2 xbox360's."
 		));
 		
 		Kit::create(array(
 			"type" => 3,
 			"currentBranchID" => $branch->id,
-			"barcode" => "NOTABARCODEWATEV",
-			"description" => "This kit contains 7 number 3 combos and a large fries."
+			"barcode" => "0375739583749265",
+			"description" => "This kit contains 2 ps3's."
 		));
+
 		Kit::create(array(
-			"type" => 1,
+			"type" => 4,
 			"currentBranchID" => $branch->id,
-			"barcode" => "NEWESTBARCODE",
-			"description" => "This kit contains 7 number 3 combos and a large fries."
+			"barcode" => "9834102645373829",
+			"description" => "This kit contains 3 arduinos."
 		));
+
+		Kit::create(array(
+			"type" => 5,
+			"currentBranchID" => $branch->id,
+			"barcode" => "8989264719390405",
+			"description" => "This kit contains 2 raspberry pi's."
+		));
+
+		Kit::create(array(
+			"type" => 5,
+			"currentBranchID" => $branch->id,
+			"barcode" => "5176384920472927",
+			"description" => "This kit contains 2 raspberry pi's."
+		));
+
+		Kit::create(array(
+			"type" => 6,
+			"currentBranchID" => $branch->id,
+			"barcode" => "9876345678655342",
+			"description" => "This kit contains 1 macbook."
+		));
+
+		Kit::create(array(
+			"type" => 6,
+			"currentBranchID" => $branch->id,
+			"barcode" => "1015284947392739",
+			"description" => "This kit contains 1 macbook."
+		));
+
+		Kit::create(array(
+			"type" => 6,
+			"currentBranchID" => $branch->id,
+			"barcode" => "3765294727342311",
+			"description" => "This kit contains 1 macbook."
+		));
+
 	}
 }
 
@@ -175,6 +317,77 @@ class KitHardwareTableSeeder extends Seeder {
 			"kitID" => 1,
 			"hardwareID" => 3
 		));
+
+		KitHardware::create(array(
+			"kitID" => 2,
+			"hardwareID" => 4
+		));
+
+		KitHardware::create(array(
+			"kitID" => 2,
+			"hardwareID" => 4
+		));
+
+		KitHardware::create(array(
+			"kitID" => 3,
+			"hardwareID" => 6
+		));
+
+		KitHardware::create(array(
+			"kitID" => 3,
+			"hardwareID" => 7
+		));
+
+		KitHardware::create(array(
+			"kitID" => 4,
+			"hardwareID" => 8
+		));
+
+		KitHardware::create(array(
+			"kitID" => 4,
+			"hardwareID" => 9
+		));
+
+		KitHardware::create(array(
+			"kitID" => 4,
+			"hardwareID" => 10
+		));
+
+		KitHardware::create(array(
+			"kitID" => 5,
+			"hardwareID" => 11
+		));
+
+		KitHardware::create(array(
+			"kitID" => 5,
+			"hardwareID" => 12
+		));
+
+		KitHardware::create(array(
+			"kitID" => 6,
+			"hardwareID" => 13
+		));
+
+		KitHardware::create(array(
+			"kitID" => 6,
+			"hardwareID" => 14
+		));
+
+		KitHardware::create(array(
+			"kitID" => 7,
+			"hardwareID" => 15
+		));
+
+		KitHardware::create(array(
+			"kitID" => 8,
+			"hardwareID" => 16
+		));
+
+		KitHardware::create(array(
+			"kitID" => 9,
+			"hardwareID" => 17
+		));
+
 	}
 }
 
@@ -206,7 +419,7 @@ class BookingSeeder extends Seeder {
 			"start" => $start + (24*60^60),//start time today
 			"end"=> $end,//end date 2 days from now
 			"shipping" => $end + (24*60*60),
-			"receiving" => $start,
+#			"receiving" => $start,
 			"destination" => $destination,
 			"received" => false,
 			"shipped" => false,
@@ -252,6 +465,9 @@ class BookingSeeder extends Seeder {
 		DB::table('booking')->delete();
         DB::table('allBookings')->delete();
 		DB::table('notifications')->delete();
+	$this->createBooking("Ipad Event", 1427760000, 1427846400, 5, 1, 1);
+	$this->createBooking("Macbook Event", 1427846400, 1428364800, 1, 7, 1);
+	$this->createBooking("PS3 Event", 1427846400, 1428364800, 1, 3, 1);
 	/*$this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 
 							 	$this->daysFromNow(4), 1, 1, 1);
         $this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 
