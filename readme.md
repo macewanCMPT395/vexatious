@@ -1,3 +1,16 @@
+##Installation
+
+To install this project:
+   -Clone the repository using "git clone https://github.com/macewanCMPT395/vexatious.git"
+   -change into the directory using "cd vexatious"
+   -run "composer install" and then "./refreshDB.sh" on the command line
+   -Then start the local hosting using "php artisan serve"
+   -Enjoy the beauty of the website
+ 
+The website will then be available in your browser at the url localhost:8000.
+To host the site outside your virtual machine run "php artisan serve --host 0.0.0.0"
+You can then access the site outside your VM by searching for the IP address at port 8000 in your browser. 
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
