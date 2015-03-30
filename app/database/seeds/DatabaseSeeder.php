@@ -468,6 +468,8 @@ class BookingSeeder extends Seeder {
 	$this->createBooking("Ipad Event", 1427760000, 1427846400, 5, 1, 1);
 	$this->createBooking("Macbook Event", 1427846400, 1428364800, 1, 7, 1);
 	$this->createBooking("PS3 Event", 1427846400, 1428364800, 1, 3, 1);
+	$this->createBooking("XBOX360 Event", 1428710400, 1428883200, 1, 2, 1);
+	$this->createBooking("Arduino Event", 1430956800, 1431129600, 1, 4, 1);
 	/*$this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 
 							 	$this->daysFromNow(4), 1, 1, 1);
         $this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 
