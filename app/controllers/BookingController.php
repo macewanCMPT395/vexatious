@@ -395,7 +395,7 @@ class BookingController extends \BaseController {
 		//then remove the booking itself
 		Booking::find($id)->delete();
 		
-		return Redirect::route('/');
+		return Redirect::route('bookings.index');
 	}
 	
 	
