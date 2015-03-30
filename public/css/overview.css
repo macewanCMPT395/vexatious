@@ -180,3 +180,7 @@ input {
     font-size: 20px;
     float: left;
 }
+
+.fc-day-grid-event { 
+    cursor: pointer;
+}
