@@ -16,6 +16,8 @@ var strDate = $(this).data('date');
 $("td.fc-day").filter("[data-date='" + strDate + "']").addClass('fc-highlight')
 });
 
+var bookingsRoute = "{{route('bookings.edit')}}";
+	
 
 $(document).ready(function() {
 	
@@ -65,7 +67,8 @@ $(document).ready(function() {
 					return str;
 				},
 				color: '#7CC045',
-				allDay: false 
+				allDay: false,
+				bookingID: e.bookingID
 			};
 		});
 	
@@ -101,6 +104,10 @@ $(document).ready(function() {
         eventRender: function(event, element) {
 			$(element).find(".fc-time").hide();
             element.attr('title', event.tip);
+			
+			element.click(function() {
+				window.location.href = bookingsRoute.replace("%7Bbookings%7D", event.bookingID);
+			});
         },
         dayClick: function(date, jsEvent, view) {
             //CHECK if day can be selected
