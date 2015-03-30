@@ -271,9 +271,8 @@ $(document).ready(function() {
 			<li>
 			<div class="bookingButtons"> {{ Form::submit('Create Booking') }}</div>
 			<div id="bookingErrorMsg">
-				{{ 
-					$errors->first('holidayError');
-				}}
+				{{ $errors->first('holidayError'); }}
+				{{ $errors->first('eventNameError'); }}
 			</div>
 			</li>
 				</ul>

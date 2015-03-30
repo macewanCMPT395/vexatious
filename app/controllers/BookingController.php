@@ -172,6 +172,10 @@ class BookingController extends \BaseController {
 	 */
 	public function store()
 	{
+		if(!Input::get('eventName')) {
+				$errors = new MessageBag(['eventNameError'=>"An event name is required to create the booking."]);
+				return Redirect::back()->withErrors($errors)->withInput(Input::all());				
+		}
 		
 		$startDate = Input::get('start');
 		$endDate = Input::get('end');
