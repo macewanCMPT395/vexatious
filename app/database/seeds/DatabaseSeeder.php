@@ -129,96 +129,96 @@ class HardwareTableSeeder extends Seeder {
 		));
 		Hardware::create(array(
 			"hardwareTypeID" => 1,
-			"assetTag" => "789101112",
+			"assetTag" => "789101",
 			"damaged" => "Cracked screen"
 		));	
 		Hardware::create(array(
 			"hardwareTypeID" => 1,
-			"assetTag" => "adfadfadf",
+			"assetTag" => "454012",
 			"damaged" => null
 		));	
 		Hardware::create(array(
 			"hardwareTypeID" => 2,
-			"assetTag" => "xboxasset",
+			"assetTag" => "103616",
 			"damaged" => null
 		));	
 
 		Hardware::create(array(
 			"hardwareTypeID" => 2,
-			"assetTag" => "xboxasset2",
+			"assetTag" => "103617",
 			"damaged" => null
 		));	
 
 		Hardware::create(array(
 			"hardwareTypeID" => 3,
-			"assetTag" => "ps3asset",
+			"assetTag" => "421555",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 3,
-			"assetTag" => "ps3asset2",
+			"assetTag" => "421559",
 			"damaged" => "Broken WiFi adapter"
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 4,
-			"assetTag" => "arduinoasset",
+			"assetTag" => "634702",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 4,
-			"assetTag" => "arduinoasset2",
+			"assetTag" => "617369",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 4,
-			"assetTag" => "arduinoasset3",
+			"assetTag" => "636772",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 5,
-			"assetTag" => "piasset",
+			"assetTag" => "819918",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 5,
-			"assetTag" => "piasset2",
+			"assetTag" => "819567",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 5,
-			"assetTag" => "piasset3",
+			"assetTag" => "098714",
 			"damaged" => "Bent GPIO pins"
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 5,
-			"assetTag" => "piasset4",
+			"assetTag" => "700204",
 			"damaged" => null
 		));
 
 
 		Hardware::create(array(
 			"hardwareTypeID" => 6,
-			"assetTag" => "macbookasset",
+			"assetTag" => "314505",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 6,
-			"assetTag" => "macbookasset2",
+			"assetTag" => "411107",
 			"damaged" => null
 		));
 
 		Hardware::create(array(
 			"hardwareTypeID" => 6,
-			"assetTag" => "macbookasset3",
+			"assetTag" => "210987",
 			"damaged" => null
 		));
 
