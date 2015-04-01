@@ -3,83 +3,28 @@ body {
 }
 
 .tableTitle {
-    display: inline-block;
-    margin: 15px 0% 5px 0%;
     font-size: 25px;
+    display: inline;
 }
 
 #tomorrowDate, #todayDate {
-    display: inline-block;
-    margin: 20px 0% 5px 3%;
     font-size: 20px;
     color: grey;
+    margin-left: 10px;
+    display: inline;
 }
 
 #todayTable, #tomorrowTable {
-    text-align: left;
-    height: 400px;
+    display: inline-block;
+    width: 45%;
+    margin-left: 1%;
 }
 
-#todayTable {
-    padding-left: 5%;
-    padding-right: 2%;
-}
-
-#tomorrowTable {
-    padding-left: 2%;
-    padding-right: 5%;
-}
-
-.tableRows {
-    overflow :scroll;
-    border: 1px solid #eeeeee;
-    background: #f9f9f9;
-    height: 70%;
-}
-
-.bookingsTable{
-    table-layout: fixed;
-    width:100%;
-    border-collapse:collapse;
-}
-.bookingsTable th{
-    padding:7px;
-    text-align: left;
-    background: #666666;
-    color: #ffffff;
-}
-.bookingsTable td{
-    padding:7px;
-}
-/* Define the default color for all the table rows */
-.bookingsTable tr{
-    background: #eeeeee;
-}
-/* Define the hover highlight color for the table row */
-.bookingsTable tbody tr:hover {
-      background: #dddddd;
-}
-
-.selected {
-    background-color: #FBBC2E !important;
-}
-
-
-table.layout {
+.table-wrapper {
+    margin: 0;
     width: 100%;
-    height: 100%;
-    display: table;
-    border: none;
-    border-collapse: collapse;
-}
-table.layout td {
-    vertical-align: top;
 }
 
-.highlight {
-    background: #ffffff;
-}
-
-.innerTable {
-    height: 100%;
+.table-static-header td {
+    width: 33%;
 }
