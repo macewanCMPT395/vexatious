@@ -5,6 +5,7 @@ To install this project:
    2. Change into the directory using "cd vexatious"
    3. Run the ./build.sh program to install dependecies and fill the database
 
+-To host the site locally run "php artisan serve"
 - The website will then be available in your browser at the url localhost:8000
 - To host the site outside your virtual machine run remoteServe script
 - You can then access the site outside your VM by searching for the IP address at port 8000 in your browser. 
