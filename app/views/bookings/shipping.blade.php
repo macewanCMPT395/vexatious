@@ -73,14 +73,13 @@ var allBookings = {{ json_encode($bookings['bookings']); }};
 var todaysBookings;
 var tomorrowsBookings;
 updateTables();
-
 function getShipping() {
 	 var currentBranch = $('#branch').val();
 	 todaysBookings = allBookings.filter(function(a) {
-		  return (a.destination == currentBranch); });
+		  return (a.currentBranchID == currentBranch); });
 	
 	tomorrowsBookings = allBookings.filter(function(a) {
-		  return (a.destination == currentBranch); });	
+		  return (a.currentBranchID == currentBranch); });	
 }
 
 $('#branch').change(updateTables);
@@ -98,7 +97,9 @@ function populateTables() {
     todaysBookings.forEach(function(booking) {
     	     var row = document.createElement('tr');
 	     $(row).attr('id',booking.id);
-	     $(row).append($('<td></td>').text(booking.start));
+	     $(row).append($('<td></td>').text(booking.barcode))
+		   .append($('<td></td>').text(booking.hname))
+                   .append($('<td></td>').text(branchList[booking.destination]));
 	     todaysTable.append($(row));
 	     
 	  todaysTable.on('click', '#'+booking.id, function() {
@@ -113,7 +114,9 @@ function populateTables() {
     tomorrowsBookings.forEach(function(booking) {
     	     var row = document.createElement('tr');
 	     $(row).attr('id',booking.id);
-	     $(row).append($('<td></td>').text(booking.start));
+	     $(row).append($('<td></td>').text(booking.barcode))
+		   .append($('<td></td>').text(booking.hname))
+                   .append($('<td></td>').text(branchList[booking.destination]));
 	     tomorrowsTable.append($(row));
     
 	tomorrowsTable.on('click', '#'+booking.id, function() {
