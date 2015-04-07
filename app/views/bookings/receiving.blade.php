@@ -62,7 +62,8 @@ $(".navMenu.footer").css('bottom','-10%');
 todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
     
-//Add Rows to table  
+//Add Rows to table
+var typeList = {{ json_encode(HardwareType::lists('name', 'id')) }};  
 var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
 var allBookings = {{ json_encode($bookings['bookings']); }};
 var todaysBookings;
@@ -72,10 +73,11 @@ var tomorrowsBookings;
 $('.table-static-header-row')
        .append($('<td></td>').text('BarCode'))
        .append($('<td></td>').text('Type'))
-       .append($('<td></td>').text('Destination'));
+       .append($('<td></td>').text('Coming From'));
 
 updateTables();
-    
+console.log(typeList);
+console.log(allBookings);    
 $('#branch').change(updateTables);
 
 function updateTables() {
@@ -104,7 +106,9 @@ function populateTables() {
     } else {
     todaysBookings.forEach(function(booking) {
              var row = document.createElement('tr');
-             $(row).append($('<td></td>').text(booking.start));
+             $(row).append($('<td></td>').text(booking.barcode))
+		   .append($('<td></td>').text(booking.hname))
+		   .append($('<td></td>').text(branchList[booking.currentBranchID]));
              $(row).attr('id',booking.id);
 	     todaysTable.append($(row));
 	     
@@ -126,7 +130,9 @@ function populateTables() {
     } else {
     tomorrowsBookings.forEach(function(booking) {
              var row = document.createElement('tr');
-             $(row).append($('<td></td>').text(booking.start));
+             $(row).append($('<td></td>').text(booking.barcode))
+		   .append($('<td></td>').text(booking.hname))
+		   .append($('<td></td>').text(branchList[booking.currentBranchID]));
              $(row).attr('id',booking.id);
 	     tomorrowsTable.append($(row));
              
@@ -140,12 +146,6 @@ function populateTables() {
      
 	     });
     }
-}
-    
-function datesEqual(a,b) {
-    return ((a.getMonth() == b.getMonth()) && 
-            (a.getFullYear() == b.getFullYear()) && 
-            (a.getDate() == b.getDate()));
 }
 
 </script>
