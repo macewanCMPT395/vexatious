@@ -41,7 +41,7 @@ class BookingController extends \BaseController {
 						->join('branch', 'branch.id', '=', 'booking.destination')
 						->get(['booking.id as bookingID', 'eventName','branch.name', 'start', 'end', 
 							   'hardwareType.name as hname','kit.type', 'branch.id',
-							  'destination', 'kit.barcode']);
+							  'destination', 'kit.barcode','kit.currentBranchID']);
 		
 		$bookingCreators = DB::table('allBookings')
 							->join('users', 'allBookings.userID', '=', 'users.id')

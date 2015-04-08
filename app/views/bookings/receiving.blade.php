@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('headerScript')
+{{ HTML::style('css/tableList.css') }}
 {{ HTML::style('css/shipping.css') }}
 {{ HTML::style('css/tableFilter.css') }}
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
@@ -25,51 +26,23 @@
 	</li>
 	{{Form::close() }}
 </ul>
-<table class="layout">
-	<tr>
-		<td class="innerTable">
-			<div id="todayTable">
-				<div class="tableTitle">Today </div>
-				<div id="todayDate"> [Today's Date] </div>
-				<table class="bookingsTable">
-					<thead>
-						<tr>
-    					<th>Description</th>
-    					<th>Barcode</th>
-    					<th>Destination Branch</th>
-						</tr>
-					</thead>
-				</table>
-				<div class="tableRows">
-					<table id="receiveToday" class="bookingsTable bookingRows">
-						<tbody>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</td>
-		<td class="innerTable">
-			<div id="tomorrowTable">
-				<div class="tableTitle">Tomorrow </div>
-				<div id="tomorrowDate"> [Tomorrow's Date] </div>
-				<table class="bookingsTable">
-					<thead>
-						<tr>
-							<th>Description</th>
-							<th>Barcode</td>
-						<th>Destination Branch</th>
-						</tr>
-					</thead>
-				</table>
-			<div class="tableRows">
-				<table id="receiveTomorrow" class="bookingsTable bookingRows">
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-	</div>
-	</td></tr>
-	</table>
+<div>
+     <div id="todayTable">
+        <div class="tableTitle">Today </div>
+        <div id="todayDate"> [Today's Date] </div>
+        <div>
+             @include('layouts.tableList')
+             </div>
+     </div>
+     <div id="tomorrowTable">
+        <div class="tableTitle">Tomorrow </div>
+        <div id="tomorrowDate"> [Tomorrow's Date] </div>
+        <div>
+             @include('layouts.tableList')
+        </div>
+        </div>
+</div>
+
 <ul class="navMenu footer">
   <li>
 	<a href="#" id="createBooking">Received Kit</a>
@@ -83,116 +56,96 @@ var tomorrowTitle = document.querySelector("#tomorrowDate");
     
 var today = new Date(moment());
 var tomorrow = new Date(moment(today).add(1,'days'));
-    
-var selected;
+
+$(".navMenu.footer").css('bottom','-10%');
     
 todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
     
-//Add Rows to table  
+//Add Rows to table
+var typeList = {{ json_encode(HardwareType::lists('name', 'id')) }};  
 var branchList = {{ json_encode(Branch::lists('name', 'id')) }};
 var allBookings = {{ json_encode($bookings['bookings']); }};
-    
-//Filter Bookings
-var bookings = allBookings.filter(function(a) {
-    return a.destination == $('#branch').val();
-});
-    
+var todaysBookings;
+var tomorrowsBookings;
+
+//Set the headers for both tables
+$('.table-static-header-row')
+       .append($('<td></td>').text('BarCode'))
+       .append($('<td></td>').text('Type'))
+       .append($('<td></td>').text('Coming From'));
+
 updateTables();
-    
+console.log(typeList);
+console.log(allBookings);    
 $('#branch').change(updateTables);
 
 function updateTables() {
-    bookings = allBookings.filter(function(a) { 
-        return a.destination == $('#branch').val(); });
-	
-    clearTable("receiveToday");
-    clearTable("receiveTomorrow");
+    getShipping();
     populateTables();
 }
-    
-function clearTable(tableID) {
-    var numRows = document.getElementById(tableID).rows.length;
-    for (var i = 0; i < numRows; i++) {
-        document.getElementById(tableID).deleteRow(i);
-    }
+
+function getShipping() {
+         var currentBranch = $('#branch').val();
+         todaysBookings = allBookings.filter(function(a) {
+                  return (a.destination == currentBranch); });
+
+        tomorrowsBookings = allBookings.filter(function(a) {
+                  return (a.destination == currentBranch); });
 }
     
 function populateTables() {
-    var shippingToday = [],
-        shippingTomorrow = [];
-    
-    for (var i = 0; i < bookings.length; i++) {
-        var shippingDate = new Date(bookings[i].shipping * 1000);
-        //IF a booking is shipped but not received
-        //if ((bookings[i].received == 0) && (bookings[i].shipped == 1))
-        shippingToday.unshift(bookings[i]);
-        //IF a booking is expected tomorrow
-        if (datesEqual(tomorrow,shippingDate) && 
-            (bookings[i].shipped == 0))
-             shippingTomorrow.unshift(bookings[i]);
+    var todaysTable = $('#todayTable .table-rows-table');
+    var tomorrowsTable = $('#tomorrowTable .table-rows-table');
+    todaysTable.empty();
+    tomorrowsTable.empty();
+    if (todaysBookings.length == 0) {
+       var row = document.createElement('tr');
+                        $(row).append($('<td></td>').text("No Kits Coming In"));
+                        todaysTable.append($(row));
+    } else {
+    todaysBookings.forEach(function(booking) {
+             var row = document.createElement('tr');
+             $(row).append($('<td></td>').text(booking.barcode))
+		   .append($('<td></td>').text(booking.hname))
+		   .append($('<td></td>').text(branchList[booking.currentBranchID]));
+             $(row).attr('id',booking.id);
+	     todaysTable.append($(row));
+	     
+	todaysTable.on('click', '#'+booking.id, function() {
+                                $('.selected').each(function() {
+                                   $(this).removeClass('selected');
+                                });
+                                $(this).addClass('selected');
+                                $(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
+                                });
+
+             });
     }
 
-    if (shippingToday.length == 0)
-        addRow("receiveToday", null);
-    else {   
-        for (var i = 0; i < shippingToday.length; i++) {
-            var b = shippingToday[i];
-            addRow("receiveToday", b);
-        }
+    if (tomorrowsBookings.length == 0) {
+       var row = document.createElement('tr');
+                        $(row).append($('<td></td>').text("No Kits To Coming In"));
+                        tomorrowsTable.append($(row));
+    } else {
+    tomorrowsBookings.forEach(function(booking) {
+             var row = document.createElement('tr');
+             $(row).append($('<td></td>').text(booking.barcode))
+		   .append($('<td></td>').text(booking.hname))
+		   .append($('<td></td>').text(branchList[booking.currentBranchID]));
+             $(row).attr('id',booking.id);
+	     tomorrowsTable.append($(row));
+             
+	tomorrowsTable.on('click', '#'+booking.id, function() {
+                                $('.selected').each(function() {
+                                   $(this).removeClass('selected');
+                                });
+                                $(this).addClass('selected');
+                                $(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
+                                });
+     
+	     });
     }
-
-    if (shippingTomorrow.length == 0)
-        addRow("receiveTomorrow", null);
-    else {
-        for (var i = 0; i < shippingTomorrow.length; i++) {
-            var b = shippingTomorrow[i];
-            addRow("receiveTomorrow", b);
-        }
-    }
-}
-    
-function datesEqual(a,b) {
-    return ((a.getMonth() == b.getMonth()) && 
-            (a.getFullYear() == b.getFullYear()) && 
-            (a.getDate() == b.getDate()));
-}
-
-function addRow(tableID, b) {
-    var table = document.getElementById(tableID);
-
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-
-    if (b == null)
-        row.insertCell(0).innerHTML= "Nothing to Receive";
-    else {
-        row.insertCell(0).innerHTML= b.description;
-        row.insertCell(1).innerHTML= b.barcode;
-        row.insertCell(2).innerHTML= branchList[b.destination];
-    }
-    row.className += " row";
-    
-    //Make row selectable
-    row.onclick = function() {
-            if (selected != null)
-                selected.classList.toggle('selected');
-            selected = this;
-            selected.classList.toggle('selected');
-            if (b != null) {
-                document.getElementsByName("id")[0].value = b.bookingID;
-                document.getElementsByName("shipped")[0].value = 1;
-                document.getElementsByName("received")[0].value = 1;
-                document.getElementsByName("kitID")[0].value = b.kitID;
-                document.getElementsByName("destination")[0].value = b.destination;
-            } else {
-                document.getElementsByName("id")[0].value = "";
-                document.getElementsByName("shipped")[0].value = "";
-                document.getElementsByName("received")[0].value = "";
-                document.getElementsByName("kitID")[0].value = "";
-                document.getElementsByName("destination")[0].value = "";
-            }
-        }
 }
 
 </script>
