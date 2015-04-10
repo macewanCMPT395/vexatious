@@ -39,7 +39,7 @@
 	
 		<div class="buttons">
 		<div class="SubmitCancelDiv">
-			{{ Form::submit('Confirm') }}
+			{{ Form::submit('Confirm', ['id' => 'submitButton']) }}
 		</div>
 	{{ Form::close() }}
 	<div class="DeleteBookingDiv">
@@ -48,7 +48,7 @@
 	               'id' => 'form-delete_booking'
 			
 	])}}
-	{{ Form:: submit('Delete') }}
+	{{ Form:: submit('Delete Event') }}
 	</div>
 	</div>
 </div>
@@ -75,12 +75,15 @@ function createEmployeeInput(employeeID, num) {
 	
 	var optionBoxSelect = $('#EmployeeBox [value="' + employeeID + '"]');
 	
-	var parentBox = $(document.createElement("div")).attr("id", divID);
+	var parentBox = $(document.createElement("div"))
+						.addClass("EmployeeSelected")
+						.attr("id", divID);
 	var hiddenselect = $(document.createElement("input"))
 							.attr("type", "hidden")
-							.attr("id", hiddenidstr + employeeID)
+							//.attr("", hiddenidstr + employeeID)
+							.addClass(hiddenidstr)
 							.attr("value", employeeID)
-							.attr("name", hiddenidstr + num)
+							//.attr("name", hiddenidstr + num)
 							.appendTo(parentBox);
 	var emailtext = $(optionBoxSelect).text();
 
@@ -125,11 +128,31 @@ $(document).ready(function() {
 	var associated = {{ json_encode($users); }};
 	$("#EmployeeBox").selectedIndex = 0;
 
+	
+	$('#submitButton').on('click', function(e) {
+		e.preventDefault();
+		console.log("test");
+		var count = 1;
+		$('.'+ hiddenidstr).each(function() {
+			$(this).attr('name', hiddenidstr + count);
+			count++;
+			//console.log($(this));
+		});
+		
+		
+		$('#form-edit_booking').submit();
+	});
+	
+	
+	
 	var num = populateBookees(associated);
 	console.log("num " + num);
 	
 	
 	onUserClick(function(user) {
+		//an event must have a user associated with it
+		if(num - 1 <= 1) return;
+		
 		$("<option></option>").attr("value", user.id).text(user.text).appendTo("#EmployeeBox");
 		$('#' + useridstr + user.id).remove();
 		num--;
