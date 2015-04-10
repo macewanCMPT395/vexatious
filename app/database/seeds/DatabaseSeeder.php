@@ -236,63 +236,63 @@ class KitTableSeeder extends Seeder {
 		Kit::create(array(
 			"type" => 1,
 			"currentBranchID" => $branch->id,
-			"barcode" => "1234567890123456",
+			"barcode" => "3122167890123456",
 			"description" => "A test kit with one something"
 		));
 		
 		Kit::create(array(
 			"type" => 2,
 			"currentBranchID" => $branch->id,
-			"barcode" => "1001001001001001",
+			"barcode" => "312211001001001",
 			"description" => "This kit contains 2 xbox360's."
 		));
 		
 		Kit::create(array(
 			"type" => 3,
 			"currentBranchID" => $branch->id,
-			"barcode" => "0375739583749265",
+			"barcode" => "3122139583749265",
 			"description" => "This kit contains 2 ps3's."
 		));
 
 		Kit::create(array(
 			"type" => 4,
 			"currentBranchID" => $branch->id,
-			"barcode" => "9834102645373829",
+			"barcode" => "3122102645373829",
 			"description" => "This kit contains 3 arduinos."
 		));
 
 		Kit::create(array(
 			"type" => 5,
 			"currentBranchID" => $branch->id,
-			"barcode" => "8989264719390405",
+			"barcode" => "3122164719390405",
 			"description" => "This kit contains 2 raspberry pi's."
 		));
 
 		Kit::create(array(
 			"type" => 5,
 			"currentBranchID" => $branch->id,
-			"barcode" => "5176384920472927",
+			"barcode" => "3122184920472927",
 			"description" => "This kit contains 2 raspberry pi's."
 		));
 
 		Kit::create(array(
 			"type" => 6,
 			"currentBranchID" => $branch->id,
-			"barcode" => "9876345678655342",
+			"barcode" => "3122145678655342",
 			"description" => "This kit contains 1 macbook."
 		));
 
 		Kit::create(array(
 			"type" => 6,
 			"currentBranchID" => $branch->id,
-			"barcode" => "1015284947392739",
+			"barcode" => "3122184947392739",
 			"description" => "This kit contains 1 macbook."
 		));
 
 		Kit::create(array(
 			"type" => 6,
 			"currentBranchID" => $branch->id,
-			"barcode" => "3765294727342311",
+			"barcode" => "3122194727342311",
 			"description" => "This kit contains 1 macbook."
 		));
 

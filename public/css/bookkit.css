@@ -132,6 +132,7 @@ input {
     background: rgba(255,255,255,0.5);
     margin: 0 0 5px 0;
     width: 60%;
+    font-size: 18px;
 }
 
 .booking {

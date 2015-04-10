@@ -71,21 +71,20 @@ $(document).ready(function() {
 <div class="sideBySide">
 <div id="kitInfo">
      {{ Form::open(['method' => 'post', 'route' => 'kits.edit']) }}
-     	<div class="inputs">
-	<div>
+	<ul>
+	<li>
 		{{ Form::label('kitNumber', 'Bar Code:') }}
     		{{ Form::text('KitNumber', $kits->barcode) }}
-	</div>
-	<div>
+	</li>
+	<li>
 		{{ Form::label('currentBranch', 'Current Branch:') }}
 		{{ Form::select('CurrentBranch',Branch::lists("name","id"), $kits->currentBranchID, ['id'=>'CurrentBranch'] ) }}
-	</div>
-	<div>
+	</li>
+	<li>
 		{{ Form::label('description', 'Description:') }}
 		{{ Form::Input('string', 'description', $kits->description) }}
-	</div>
-	</div>
-	<div>
+	</li>
+	<li>
 	{{ Form::label('assetTable','Items within this kit') }}
 	<table id="assetTable">
 		<thead>
@@ -112,10 +111,11 @@ $(document).ready(function() {
 			@endif
 		</tbody>
 	</table>
-	</div>
-	<div>
+	</li>
+	<li>
 	{{ Form::Submit('Apply Changes') }}
-	</div>		       
+	</li>
+	</ul>		       
 {{ Form::close() }}
 </div>
 @if(count($devices) > 0)
@@ -126,6 +126,5 @@ $(document).ready(function() {
 
 @endif
 </div>
-
 
 @stop
