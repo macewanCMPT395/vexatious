@@ -359,6 +359,9 @@ class BookingController extends \BaseController {
 			//check for user updates
 			$num = 1;
 //			return Response::json(Input::get('hidden_1'));
+			
+			
+			$userSyncList = [];
 			while(Input::get('hidden_'.$num)) {
 				$userID = Input::get('hidden_'.$num);
 				UserBookings::create(array(
@@ -366,8 +369,24 @@ class BookingController extends \BaseController {
 					"bookingID" => $id,
 					"creator"=> "0"
 				));		
+				
+				array_push($userSyncList, $userID);
 				$num ++;
 			}
+			
+			//hopefully this will work
+			if (count($userSyncList) > 0) {
+				$users = UserBookings::find($id)->get(['userID']);
+				
+				foreach($users as $user) {
+					//user isn't in the sync list, delete their booking
+					if(!in_array($user, $userSyncList)) {
+						UserBookings::find($id)->where('userID', '=', $user)->delete();
+					}
+					
+				}
+			}
+			
 		}
 		
 		//handle json request types
