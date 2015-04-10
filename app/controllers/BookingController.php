@@ -41,7 +41,8 @@ class BookingController extends \BaseController {
 						->join('branch', 'branch.id', '=', 'booking.destination')
 						->get(['booking.id as bookingID', 'eventName','branch.name', 'start', 'end', 
 							   'hardwareType.name as hname','kit.type', 'branch.id',
-							  'destination', 'kit.barcode','kit.currentBranchID', 'shipping']);
+							  'destination', 'kit.barcode','kit.currentBranchID', 'shipping', 
+							   'shipped', 'received']);
 		
 		$bookingCreators = DB::table('allBookings')
 							->join('users', 'allBookings.userID', '=', 'users.id')
@@ -338,22 +339,23 @@ class BookingController extends \BaseController {
 		$booking = Booking::find($id);
 		if($booking) {
 			$shipped = Input::get('shipped');
-			if($shipped) $booking->shipped = $shipped;
-
-			$recieved = Input::get('recieved');
-			if($recieved) $booking->received = $recieved;
-
-			$booking->eventName = Input::get('eventName');
-			$booking->save();
-
-			$dest = Input::get('destination');
-			if($dest) {
-				$kit = Kit::find(Input::get('kitID'));
-				if($kit){
-					$kit->currentBranchID = $dest;
+			if($shipped != null) $booking->shipped = $shipped;
+			
+			$received = Input::get('received');
+			if($received == 1) {
+				$booking->received = $received;
+				
+				$kit = Kit::find($booking->kitID);
+				if($kit) {
+					$kit->currentBranchID = $booking->destination;	
 					$kit->save();
 				}
 			}
+		
+			$event = Input::get('eventName');
+			if($event != null) $booking->eventName = $event;
+			
+			$booking->save();
 			
 			//check for user updates
 			$num = 1;
