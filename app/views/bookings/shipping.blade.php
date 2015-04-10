@@ -73,13 +73,33 @@ var allBookings = {{ json_encode($bookings['bookings']); }};
 var todaysBookings;
 var tomorrowsBookings;
 updateTables();
+	
+console.log(allBookings);
 function getShipping() {
 	 var currentBranch = $('#branch').val();
+	var day = 24*60*60*1000;
 	 todaysBookings = allBookings.filter(function(a) {
-		  return (a.currentBranchID == currentBranch); });
+		 
+		var today = new Date();
+		var shipStart = new Date((a.shipping * 1000) - day);
+		 console.log("ship end: ");
+		 console.log(shipStart);
+		 console.log("today: ");
+		 console.log(today);
+		return (a.currentBranchID == currentBranch &&
+				shipStart.getFullYear() == today.getFullYear() &&
+				shipStart.getMonth() == today.getMonth() &&
+				shipStart.getUTCDate() == today.getUTCDate()); 
+	 });
 	
 	tomorrowsBookings = allBookings.filter(function(a) {
-		  return (a.currentBranchID == currentBranch); });	
+		var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+		var shipStart = new Date((a.shipping * 1000) - day);
+		return (a.currentBranchID == currentBranch &&
+				shipStart.getFullYear() == tomorrow.getFullYear() &&
+				shipStart.getMonth() == tomorrow.getMonth() &&
+				shipStart.getUTCDate() == tomorrow.getUTCDate()); 
+	});	
 }
 
 $('#branch').change(updateTables);
@@ -94,39 +114,53 @@ function populateTables() {
     var tomorrowsTable = $('#tomorrowTable .table-rows-table');
     todaysTable.empty();
     tomorrowsTable.empty();
-    todaysBookings.forEach(function(booking) {
-    	     var row = document.createElement('tr');
-	     $(row).attr('id',booking.id);
-	     $(row).append($('<td></td>').text(booking.barcode))
-		   .append($('<td></td>').text(booking.hname))
-                   .append($('<td></td>').text(branchList[booking.destination]));
-	     todaysTable.append($(row));
+	
+    if (todaysBookings.length == 0) {
+       var row = document.createElement('tr');
+                        $(row).append($('<td></td>').text("No Kits Coming In"));
+                        todaysTable.append($(row));
+    } else {
+		todaysBookings.forEach(function(booking) {
+    	    var row = document.createElement('tr');
+	     	$(row).attr('id',booking.id);
+			$(row).append($('<td></td>').text(booking.barcode))
+ 				.append($('<td></td>').text(booking.hname))
+               	.append($('<td></td>').text(branchList[booking.destination]));
+	     	
+			todaysTable.append($(row));
 	     
-	  todaysTable.on('click', '#'+booking.id, function() {
-                                $('.selected').each(function() {
-                                   $(this).removeClass('selected');
-                                });
-                                $(this).addClass('selected');
-                                $(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
-				});  
-	});
+	  		todaysTable.on('click', '#'+booking.id, function() {
+				$('.selected').each(function() {
+				   $(this).removeClass('selected');
+				});
+				$(this).addClass('selected');
+				$(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
+			});  
+		});
+	}
     
-    tomorrowsBookings.forEach(function(booking) {
-    	     var row = document.createElement('tr');
-	     $(row).attr('id',booking.id);
-	     $(row).append($('<td></td>').text(booking.barcode))
-		   .append($('<td></td>').text(booking.hname))
-                   .append($('<td></td>').text(branchList[booking.destination]));
-	     tomorrowsTable.append($(row));
-    
-	tomorrowsTable.on('click', '#'+booking.id, function() {
-                                $('.selected').each(function() {
-                                   $(this).removeClass('selected');
-                                });
-                                $(this).addClass('selected');
-                                $(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
-				}); 
-	});
+	if (tomorrowsBookings.length == 0) {
+       var row = document.createElement('tr');
+                        $(row).append($('<td></td>').text("No Kits To Coming In"));
+                        tomorrowsTable.append($(row));
+    } else {
+		tomorrowsBookings.forEach(function(booking) {
+			var row = document.createElement('tr');
+		 	$(row).attr('id',booking.id);
+		 	$(row).append($('<td></td>').text(booking.barcode))
+					.append($('<td></td>').text(booking.hname))
+				   	.append($('<td></td>').text(branchList[booking.destination]));
+			tomorrowsTable.append($(row));
+
+			tomorrowsTable.on('click', '#'+booking.id, function() {
+				$('.selected').each(function() {
+				   $(this).removeClass('selected');
+				});
+				$(this).addClass('selected');
+				$(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
+			}); 
+		});
+	}
 }
 
 function datesEqual(a,b) {

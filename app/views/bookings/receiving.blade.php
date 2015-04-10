@@ -87,11 +87,25 @@ function updateTables() {
 
 function getShipping() {
          var currentBranch = $('#branch').val();
+		var day = 24 * 60 * 60 * 1000;
          todaysBookings = allBookings.filter(function(a) {
-                  return (a.destination == currentBranch); });
+			 	
+				var today = new Date();
+			 	var shipStart = new Date((a.shipping * 1000) - day);
+                return (a.destination == currentBranch &&
+					   	shipStart.getFullYear() == today.getFullYear() &&
+					    shipStart.getMonth() == today.getMonth() &&
+					   	shipStart.getUTCDate() == today.getUTCDate()); 
+		 });
 
         tomorrowsBookings = allBookings.filter(function(a) {
-                  return (a.destination == currentBranch); });
+				var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+			 	var shipStart = new Date((a.shipping * 1000) - day);
+                return (a.destination == currentBranch &&
+					   	shipStart.getFullYear() == tomorrow.getFullYear() &&
+					    shipStart.getMonth() == tomorrow.getMonth() &&
+					   	shipStart.getUTCDate() == tomorrow.getUTCDate()); 
+		});
 }
     
 function populateTables() {
