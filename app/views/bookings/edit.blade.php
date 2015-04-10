@@ -1,6 +1,7 @@
 @extends('layouts.header')
 @section('headerScript')
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
+{{ HTML::style('css/bookingview.css') }}
 @stop
 
 <?php
@@ -10,16 +11,16 @@
 @section('content')
 
 
-	<div class="EditBookingDiv">
+<div class="EditBookingDiv">
 	{{ Form::open(['method' => 'put',
 	               'id' => 'form-edit_booking',
                        'route' => ['bookings.update', $booking->id]
 	])}}
 		<div class="EventNameDiv">
-		{{ Form::label('_eventlbl', 'Edit Event Name: ') }}
+		<b>{{ Form::label('_eventlbl', 'Edit Event Name: ') }}</b>
 		{{ Form::text('eventName', $booking->eventName) }}
 		</div>
-
+		<div class="EventNameDiv">
 		<div class="NotificationLabelDiv">
 		<center>
 		<b>{{ Form::label('NotificationLabelInfo', 'Edit who gets notified when this item arrives:') }}</b>
@@ -29,8 +30,7 @@
 
 		<center>
 		<select id="EmployeeBox" selected="">
-		
-		<option SELECTED value=-1>
+		<option value= -1> Please select a user</option>
 		@foreach(User::all(['email', 'firstName', 'lastName', 'id']) as $user)
 				<option value={{$user->id}}>{{ $user->email.' | '.$user->firstName.' '.$user->lastName }}</option>
 		@endforeach
@@ -38,32 +38,29 @@
 		{{ Form::button('Add', array('id' => 'addemployeebtn')) }}
 		</center>
 		</div>
+		</div>
 		<div id="EmployeeNotifyDiv">
 		@foreach($users as $user)
-			{{ Form::text('user_'.$num, $user->email.' | '.$user->firstName.' '.$user->lastName, ['data-user-id' => $user->id, 'size' => '35', 'id' => 'user_'.$user->id, 'class' => 'userbox']) }}
+			<div id="user_{{$user->id}}"> {{ Form::text('user_'.$num, $user->email.' | '.$user->firstName.' '.$user->lastName, ['data-user-id' => $user->id, 'size' => '35', 'class' => 'userbox']) }} 
+			<img id="deleteimg" src={{$url = asset("images/delete.png")}}>
+			</div>
 		@endforeach
 		</div>
+		<div class="buttons">
 		<div class="SubmitCancelDiv">
-			<center>
 			{{ Form::submit('Confirm') }}
-			</center>
-		</div>
 		</div>
 	{{ Form::close() }}
-	</div>
 	<div class="DeleteBookingDiv">
-	<br/>
-	<br/>
-	<center>
 	{{ Form::open(['method' => 'DELETE',
 	               'route' => ['bookings.destroy', $booking->id],
 	               'id' => 'form-delete_booking'
 			
 	])}}
 	{{ Form:: submit('Delete') }}
-	</center>
 	</div>
-
+	</div>
+</div>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -120,29 +117,33 @@ $(document).ready(function() {
 		}
 		else
 		{
-
+			var parentBox = $(document.createElement("div")).attr("id", useridstr + $("#EmployeeBox option:selected").val());
 			var hiddenselect = document.createElement("input");
 			var emailtext = $("#EmployeeBox option:selected").text();
-
+			
 			hiddenselect.type = "hidden";
 
 			var userbox = $(document.createElement("input"))
 				.attr("type", "text")
 				.attr("data-user-id", $("#EmployeeBox option:selected").val())
 				.val(emailtext)
-				.attr("id", useridstr + $("#EmployeeBox option:selected").val())
-				.attr("size", "35");
+				.attr("size", "35")
+				.appendTo(parentBox);
 
+			var image = $(document.createElement('img'))
+					.attr('src','{{$url = asset('images/delete.png')}}')
+					.attr('id','deleteimg')
+					.appendTo(parentBox);
 
 			hiddenselect.id = hiddenidstr + $("#EmployeeBox option:selected").val();
 			hiddenselect.value = $("#EmployeeBox").val();
 			hiddenselect.name = hiddenidstr + num;
-
+			parentBox.append(hiddenselect);
 			num ++;
 			$("#EmployeeBox option:selected").remove();
 
-			$("#EmployeeNotifyDiv").append(userbox);
-			$("#EmployeeNotifyDiv").append(hiddenselect);
+			$("#EmployeeNotifyDiv").append(parentBox);
+			
 
 		}
 

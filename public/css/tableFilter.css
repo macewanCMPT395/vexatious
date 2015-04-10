@@ -13,8 +13,13 @@
     display: inline;
     padding-left: 6px;
     white-space: nowrap;
+    vertical-align: middle;
 }
 
+form {
+    vertical-align: middle;
+    line-height: 40px;
+}
 
 .TableFilter-Bar input[type="submit"] {
     background-color:#d62f33;
