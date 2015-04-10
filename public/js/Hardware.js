@@ -17,8 +17,8 @@ var HardwareForm = (function() {
 			
 			_postDone: function(){},
 			postDone: function(v) {
-				instance._postDone = function(){
-					v();
+				instance._postDone = function(hw){
+					v(hw);
 				};
 			},
 			
@@ -43,13 +43,19 @@ var HardwareForm = (function() {
 				};
 			},
 			
+			_onDeviceFill: function() {},
+			onDeviceFill: function(v) {
+				instance._onDeviceFill = function(id) {
+					v(id);	
+				};
+			},
+			
 			//fill the hardware form
 			fill: function(hwID) {
 				var url = instance.hwInfoRoute.replace('%7Bhardware%7D', hwID);
 				console.log(url);
 				instance._getStart();
 				$.get(url, {"_method": "get"}, null, 'json').done(function(response) {
-					instance._getDone();
 					//make sure we got a list
 					if(response.status == 1) {
 						$('.hw-none').show();
@@ -99,6 +105,9 @@ var HardwareForm = (function() {
 					//var action = $('#form-booking').attr("action");
 					$('#form-booking').attr("action", 
 											instance.hwUpdateRoute.replace('%23', device.id));
+					
+					instance._onDeviceFill(hwID);
+					instance._getDone();
 				});
 			},
 
@@ -110,14 +119,17 @@ var HardwareForm = (function() {
 				$('#form-booking').on('submit', function(e) {
 					e.preventDefault();
 					instance._postStart();
-					postOverride(this, 'put', { "damaged": $('#damaged').val() },
-						function(resp) {
-							instance._postDone();
+					postOverride(this, 'put',
+						{ 
+							"damaged": $('#damaged').val() 
 						},
 						function(resp) {
-						console.log(resp);
-							instance._postDone();
+							instance._postDone(resp.device.id);
+						},
+						function(resp) {
+							console.log(resp);
 							instance.fill(resp.device.id);
+							instance._postDone(resp.device.id);
 							$('#damaged').val("");
 					});
 
@@ -130,13 +142,12 @@ var HardwareForm = (function() {
 			list: function(error, done) {
 				var url = instance.hwInfoRoute;
 				$.get(url, {"_method": "get"}, null, 'json').done(function(response) {
-					instance._getDone();
-					
 					//make sure we got a list
 					if(response.status == 1) {
 						if(error)error();				
 						return;
 					}
+					instance._getDone();
 					if(done)done(response.devices);
 				});	
 				

@@ -22,7 +22,6 @@ $(document).ready(function() {
 	$('#deleteForm').hide();
 	
 	var kitDevices = {{json_encode($devices);}}
-
 	console.log("{{ route('hardware.show'); }}");
 
 	var HWForm = HardwareForm.init({
@@ -60,6 +59,18 @@ $(document).ready(function() {
 	}
 	
 	HWForm.post();
+	
+	
+	HWForm.onDeviceFill(function(deviceID) {
+		//this device now has damage associated with it, update the table
+		if($('#hw-damage-list > li').length > 0) {
+			console.log("updating bad");
+			$('#' + deviceID).find('.deviceStatus').text("Damaged");
+		} else {
+			console.log("updating good");
+			$('#' + deviceID).find('.deviceStatus').text("Good");
+		}
+	});
 });
 </script>
 
@@ -97,9 +108,9 @@ $(document).ready(function() {
 				<tr class="deviceRow" id={{$device->id}}>
 					<td>{{ $device->name }}</td>
 					@if($device->damaged)
-						<td>Damaged</td>
+						<td class="deviceStatus">Damaged</td>
 					@else
-					  <td>Good</td>
+					  <td class="deviceStatus">Good</td>
 					@endif
 				</tr>
 				@endforeach
