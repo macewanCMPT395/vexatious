@@ -4,10 +4,6 @@
 {{ HTML::style('css/bookingview.css') }}
 @stop
 
-<?php
-	$num = 1;
-?>
-
 @section('content')
 
 
@@ -39,13 +35,8 @@
 		</center>
 		</div>
 		</div>
-		<div id="EmployeeNotifyDiv">
-		@foreach($users as $user)
-			<div id="user_{{$user->id}}"> {{ Form::text('user_'.$num, $user->email.' | '.$user->firstName.' '.$user->lastName, ['data-user-id' => $user->id, 'size' => '35', 'class' => 'userbox']) }} 
-			<img id="deleteimg" src={{$url = asset("images/delete.png")}}>
-			</div>
-		@endforeach
-		</div>
+		<div id="EmployeeNotifyDiv"></div>
+	
 		<div class="buttons">
 		<div class="SubmitCancelDiv">
 			{{ Form::submit('Confirm') }}
@@ -61,94 +52,100 @@
 	</div>
 	</div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
 
+<script type="text/javascript">
+
+var useridstr = "user_";
+var hiddenidstr = "hidden_";
+	
+/*
+When the page loads, populate users who 
+are already associated with this event
+*/	
+//setting up a callback for when a user is removed
+var _onUserClick = null;
+function onUserClick(fn) {
+	_onUserClick = function (user) {
+		fn(user);	
+	}
+}
+	
+function createEmployeeInput(employeeID, num) {			
+	var divID = useridstr + employeeID;
+	
+	var optionBoxSelect = $('#EmployeeBox [value="' + employeeID + '"]');
+	
+	var parentBox = $(document.createElement("div")).attr("id", divID);
+	var hiddenselect = $(document.createElement("input"))
+							.attr("type", "hidden")
+							.attr("id", hiddenidstr + employeeID)
+							.attr("value", employeeID)
+							.attr("name", hiddenidstr + num)
+							.appendTo(parentBox);
+	var emailtext = $(optionBoxSelect).text();
+
+
+	var userbox = $(document.createElement("input"))
+		.attr("type", "text")
+		.attr("data-user-id", employeeID)
+		.val(emailtext)
+		.attr("size", "35")
+		.appendTo(parentBox);
+
+	var image = $(document.createElement('img'))
+			.attr('src','{{$url = asset('images/delete.png')}}')
+			.attr('id','deleteimg')
+			.appendTo(parentBox);
+
+	$("#EmployeeNotifyDiv").append(parentBox);	
+	$('#'+divID).find('img').on('click', function(){
+		var user = {text: emailtext, id: employeeID};
+		_onUserClick(user);	
+	});
+	
+	
+	$(optionBoxSelect).remove();
+	
+}
+	
+	
+function populateBookees(associatedList ) {
+	var curCount = 1;
+	associatedList.forEach(function(user) {
+		createEmployeeInput(user.id, curCount);
+		curCount++;
+	});
+	
+	return curCount;
+}
+	
+	
+	
+$(document).ready(function() {
+	var associated = {{ json_encode($users); }};
 	$("#EmployeeBox").selectedIndex = 0;
 
-	var useridstr = "user_";
-	var hiddenidstr = "hidden_"
-	var num = {{ $num }};
-
-	$("#EmployeeBox option").each(function() {
-
-		if($(this).val() == -1)
-		{
-
-			return;
-
-		}
-		else
-		{
-
-			var val = $(this).val();
-
-			var thisID = useridstr + val;
-			$("#EmployeeNotifyDiv").on("click", "#" + thisID, function()
-			{
-
-				$("<option></option>").attr("value", $(this).attr("data-user-id")).text($(this).val()).appendTo("#EmployeeBox");
-				$(this).remove();
-				console.log(hiddenidstr + val);
-				$("#" + hiddenidstr + val).remove();
-				num --;
-
-			});
-
-		}
-
+	var num = populateBookees(associated);
+	console.log("num " + num);
+	
+	
+	onUserClick(function(user) {
+		$("<option></option>").attr("value", user.id).text(user.text).appendTo("#EmployeeBox");
+		$('#' + useridstr + user.id).remove();
+		num--;
 	});
 
-	$(".userbox").each(function(){
 
-		var id = $(this).attr('data-user-id');
-		$('#EmployeeBox option[value="'+id+'"]').remove();
+	$("#addemployeebtn").on("click", function() {
+		var value = $('#EmployeeBox option:selected').val();
 
-	});
-
-	$("#addemployeebtn").on("click", function()
-	{
-
-		if($("#EmployeeBox").val() == -1)
-		{
-
-			return;
-
+		if(value == -1) return;
+		else {
+			createEmployeeInput($("#EmployeeBox option:selected").val(), num);
+			num++;
 		}
-		else
-		{
-			var parentBox = $(document.createElement("div")).attr("id", useridstr + $("#EmployeeBox option:selected").val());
-			var hiddenselect = document.createElement("input");
-			var emailtext = $("#EmployeeBox option:selected").text();
-			
-			hiddenselect.type = "hidden";
-
-			var userbox = $(document.createElement("input"))
-				.attr("type", "text")
-				.attr("data-user-id", $("#EmployeeBox option:selected").val())
-				.val(emailtext)
-				.attr("size", "35")
-				.appendTo(parentBox);
-
-			var image = $(document.createElement('img'))
-					.attr('src','{{$url = asset('images/delete.png')}}')
-					.attr('id','deleteimg')
-					.appendTo(parentBox);
-
-			hiddenselect.id = hiddenidstr + $("#EmployeeBox option:selected").val();
-			hiddenselect.value = $("#EmployeeBox").val();
-			hiddenselect.name = hiddenidstr + num;
-			parentBox.append(hiddenselect);
-			num ++;
-			$("#EmployeeBox option:selected").remove();
-
-			$("#EmployeeNotifyDiv").append(parentBox);
-			
-
-		}
-
 	});
-
+	
 });
 </script>
 @stop

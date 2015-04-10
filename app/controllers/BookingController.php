@@ -360,28 +360,31 @@ class BookingController extends \BaseController {
 			$num = 1;
 //			return Response::json(Input::get('hidden_1'));
 			
-			
+			$users = DB::table('allBookings')->where('bookingID', '=', $id)
+					->lists('userID');
 			$userSyncList = [];
 			while(Input::get('hidden_'.$num)) {
 				$userID = Input::get('hidden_'.$num);
-				UserBookings::create(array(
-					"userID" => $userID,
-					"bookingID" => $id,
-					"creator"=> "0"
-				));		
+				
+				if(!in_array($userID, $users)) {
+					UserBookings::create(array(
+						"userID" => $userID,
+						"bookingID" => $id,
+						"creator"=> "0"
+					));		
+				}
 				
 				array_push($userSyncList, $userID);
 				$num ++;
 			}
 			
 			//hopefully this will work
-			if (count($userSyncList) > 0) {
-				$users = UserBookings::find($id)->get(['userID']);
-				
+			if (count($userSyncList) > 0) {				
 				foreach($users as $user) {
 					//user isn't in the sync list, delete their booking
 					if(!in_array($user, $userSyncList)) {
-						UserBookings::find($id)->where('userID', '=', $user)->delete();
+						DB::table('allBookings')->where('bookingID', '=', $id)
+									->where('userID', '=', $user)->delete();
 					}
 					
 				}
