@@ -57,7 +57,7 @@ class UsersController extends BaseController {
 		return View::make('users.index', ['user' => $user]);       
     }
 	
-    public function update()
+    public function update($id)
     {
 		//To update a user, all we need to do is
 		//update their role. They can insert or remove
@@ -66,16 +66,15 @@ class UsersController extends BaseController {
 		//once again, make sure the user logged in is the admin
 		//before updating
 		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
+		//if (!$user || !$user->isAdmin()) return Redirect::back();
 		
-		//find user based on id (should be specified by the page form
-		$updateUser = User::find(Input::get("userID"));
-		
-		//then update the role and save
-		$updateUser->role = Input::get("role");
-		$updateuser->save();
-		
-
+		$changeUser = User::find($id);
+		if ($changeUser->role == 1) {
+		   $changeUser->role = 0;
+		} else {
+		   $changeUser->role = 1;
+		}
+		$changeUser->save();
 		return Redirect::back();
     }
 }

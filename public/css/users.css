@@ -12,5 +12,9 @@ button {
     padding:6px 15px;
     text-decoration:none;
     text-shadow:0px 1px 0px #b23e35;
-    width: 50%;
+    width: 75%;
+}
+
+.table-wrapper {
+    height: 500px;
 }

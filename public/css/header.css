@@ -106,10 +106,14 @@ body, html {
     padding-right: 4.5%;
 }
 
+.navMenu.footer ul {
+    padding-right: 70px;
+}
+
 .navMenu.footer li {
-	text-decoration-line: underline;
+    text-decoration-line: underline;
     display: inline-block;
-	float: right;
+    float: right;
 }
 
 .navMenu.footer a:hover {

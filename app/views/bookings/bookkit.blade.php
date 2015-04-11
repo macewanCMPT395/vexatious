@@ -288,13 +288,13 @@ $(document).ready(function() {
     </td>
     </tr>
 </table>
-
-<ul class="navMenu footer">
+<div class="navMenu footer">
+<ul>
   <li>
 	<a href="#" id="createBooking">Create Booking</a>
   </li>
 </ul> 
-
+</div>
 @include('layouts.loadingScreen')
 
 @stop
