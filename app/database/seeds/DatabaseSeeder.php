@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('HardwareTypeTableSeeder');
 		$this->call('HardwareTableSeeder');
 		$this->call('KitTableSeeder');
-		$this->call('NotificationMessageSeeder');
 		$this->call('KitHardwareTableSeeder');
 		$this->call('BookingSeeder');
 		
@@ -415,22 +414,6 @@ class KitHardwareTableSeeder extends Seeder {
 	}
 }
 
-class NotificationMessageSeeder extends Seeder {
-	
-	public function run()
-	{
-		DB::table('notificationMsg')->delete();
-		
-		//messages can be replaced with whatever
-		Messages::create(array(
-			"message" => "Have you receieved kit ### yet?"
-		));
-		
-		Messages::create(array(
-			"message" => "Have you sent kit ### yet?"
-		));
-	}
-}
 
 class BookingSeeder extends Seeder {
     
@@ -457,25 +440,6 @@ class BookingSeeder extends Seeder {
 			"bookingID" => $booking->id,
 			"creator" => true
 		));
-		
-		//create notifications for the user
-		//notifications will need to be joined with the 
-		//bookings table to get the proper dates
-		
-		//first notification for receiving
-		$not1 = UserNotifications::create(array(
-			"userID" => $userID,
-			"bookingID" => $booking->id,
-			"msgID" => 1
-		));
-
-		//second notification for shipping
-		$not2 = UserNotifications::create(array(
-			"userID" => $userID,
-			"bookingID" => $booking->id,
-			"msgID" => 2
-		));	
-		
     }
 	
 	public function daysFromNow($days) {
@@ -488,7 +452,6 @@ class BookingSeeder extends Seeder {
 	{
 		DB::table('booking')->delete();
         DB::table('allBookings')->delete();
-		DB::table('notifications')->delete();
 	$this->createBooking("Ipad Event", 1427760000, 1427846400, 5, 1, 1);
 	$this->createBooking("Macbook Event", 1427846400, 1428364800, 1, 7, 1);
 	$this->createBooking("PS3 Event", 1427846400, 1428364800, 1, 3, 1);

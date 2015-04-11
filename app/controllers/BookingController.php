@@ -237,21 +237,6 @@ class BookingController extends \BaseController {
 			"creator"=> "1"
 		));
 		
-		//create notifications for the user
-		//notifications will need to be joined with the 
-		//bookings table to get the proper dates
-		//first notification for receiving
-		UserNotifications::create(array(
-			"userID" => $userID,
-			"bookingID" => $booking->id,
-			"msgID" => 1
-		));
-		//second notification for shipping
-		UserNotifications::create(array(
-			"userID" => $userID,
-			"bookingID" => $booking->id,
-			"msgID" => 2
-		));	
 		
 		//handle json request types
 		if(Request::wantsJson()) {
@@ -413,8 +398,6 @@ class BookingController extends \BaseController {
 	{
 		//remove booking from all bookings
 		DB::table('allBookings')->where('bookingID', '=', $id)->delete();
-		//remove notifications from bookings
-		DB::table('notifications')->where('bookingID', '=', $id)->delete();
 		//then remove the booking itself
 		Booking::find($id)->delete();
 		

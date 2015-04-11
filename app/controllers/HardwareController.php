@@ -1,14 +1,4 @@
 <?php
-/**
-Controller for view, editing and creating new 
-devices for kits.
-
-When creating a new device, should be able to 
-	1. add multiple pieces of software to the device
-	2. add the hardware type to the hardware
-	
-
-**/
 class HardwareController extends \BaseController {
 	protected $fields = ['type', 'assetTag', 'damaged'];
 	
