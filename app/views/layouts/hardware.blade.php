@@ -27,13 +27,22 @@
 		{{Form::label('damaged', 'Report Damage') }}
 		{{Form::text('damaged') }}
 		{{Form::submit('Add damage report') }}
-
 		{{ Form::close() }}
 
 		
-		{{ Form::open([ 'route' => 'removefromkit', 'method'=>'post', 'id'=>'form-removeFromKit']) }}
-		{{ Form::submit('Take Out Of Kit', ['id'=>'removeFromKitButton']) }}
-		{{ Form::close() }}
+		<div class="hw-controls-container">
+			{{Form::open(['route' => ['hardware.update', '#'], 
+							'id' => 'form-clearDamage', 'method'=>'put'])
+			}}
+			{{Form::submit('Clear Damage', ['id'=>'clearDamageSubmit'])}}
+			{{Form::close() }}
+
+
+
+			{{ Form::open([ 'route' => 'removefromkit', 'method'=>'post', 'id'=>'form-removeFromKit']) }}
+			{{ Form::submit('Take Out Of Kit', ['id'=>'removeFromKitButton']) }}
+			{{ Form::close() }}
+		</div>
 
 	</div>
 

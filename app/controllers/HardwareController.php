@@ -152,7 +152,7 @@ class HardwareController extends \BaseController {
 	}
 	
 	public function addToKit($kitID, $hwID) {
-		if(!Auth::user()->isAdmin()) return Redirect::back();
+		//if(!Auth::user()->isAdmin()) return Redirect::back();
 		
 		
 		KitHardware::create(array(
