@@ -18,6 +18,7 @@ var HardwareForm = (function() {
 			
 			damageUpdate: "#form-reportDamage",
 			removeFromKitForm: "#form-removeFromKit",
+			clearDamageForm: "#form-clearDamage",
 			
 			_postDone: function(){},
 			postDone: function(v) {
@@ -108,6 +109,8 @@ var HardwareForm = (function() {
 					} else {
 						$('#hw-damage .hw-box-text').text("No damage to report");
 					}
+					
+					$('#damaged').val("");
 
 					//finally set kit reference if necessary
 					if(device.kitID) {
@@ -124,12 +127,16 @@ var HardwareForm = (function() {
 					$(instance.damageUpdate).attr("action", 
 											instance.hwUpdateRoute.replace('%23', device.id));
 					
-					
+						
 					$(instance.removeFromKitForm).attr("action", function() {
 							return instance.hwRmFromKit.replace('%7BkitID%7D', device.kitID)
 											 .replace('%7BhwID%7D', device.id);
 					});
-					//hwRmFromKit
+					
+					$(instance.clearDamageForm).attr("action", function() {
+						return instance.hwUpdateRoute.replace('%23', device.id);
+					});
+
 					
 					instance._onDeviceFill(hwID);
 					instance._getDone();
@@ -137,30 +144,41 @@ var HardwareForm = (function() {
 			},
 
 
+			_post: function(button, data) {
+				instance._postStart();
+				postOverride(button, 'put', 
+					data,
+					function(resp) {
+						instance._postDone(resp);
+					},
+					function(resp) {
+						console.log(resp);
+						instance.fill(resp.device.id);
+						instance._postDone(resp.device.id);
+
+					}
+				);	
+					
+			},
+			
 			//override the post for the form, so
 			//we don't have to worry about redirecting
 			//or refreshing the page 
 			post: function() {
+				
 				$(instance.damageUpdate).on('submit', function(e) {
 					e.preventDefault();
-					instance._postStart();
-					postOverride(this, 'put',
-						{ 
-							"damaged": $('#damaged').val() 
-						},
-						function(resp) {
-							instance._postDone(resp.device.id);
-						},
-						function(resp) {
-							console.log(resp);
-							instance.fill(resp.device.id);
-							instance._postDone(resp.device.id);
-							$('#damaged').val("");
-					});
-
-
+					instance._post(this, { "damaged": $('#damaged').val() });
 					return false;
 				});
+				
+				
+				$(instance.clearDamageForm).on('submit', function(e){
+					e.preventDefault();
+					instance._post(this, { "clear": true });
+					return false;					
+				});
+				
 				
 				
 			},

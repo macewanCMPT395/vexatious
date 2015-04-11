@@ -1,0 +1,9 @@
+.hw-controls-container {
+	text-align: center;
+	padding-top: 20px;
+}
+
+#form-clearDamage, #form-removeFromKit {
+	display: inline;
+	
+}

@@ -106,6 +106,8 @@ select#CurrentBranch {
       background: #dddddd;
 }
 
-.addAssetList {
+#addAssetList {
+	padding-top: 5px;
 	height: 300px;
 }
+
