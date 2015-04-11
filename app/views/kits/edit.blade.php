@@ -105,7 +105,8 @@ $(document).ready(function() {
 		devices: kitDevices,
 		hwInfoRoute: "{{ route('hardware.show'); }}",
 		kitInfoRoute: "{{ route('kits.edit'); }}",
-		hwListRoute: "{{ route('hardware.index'); }}"
+		hwListRoute: "{{ route('hardware.index'); }}",
+		hwRmFromKit: "{{ route('removefromkit'); }}"
 	});
 	
 	//set up the loading screen for various actions
