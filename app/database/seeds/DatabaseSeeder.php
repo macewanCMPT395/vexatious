@@ -222,6 +222,30 @@ class HardwareTableSeeder extends Seeder {
 			"damaged" => null
 		));
 
+		//create some hardware that isn't associated with any kits
+		Hardware::create(array(
+			"hardwareTypeID" => 2,
+			"assetTag" => "998372",
+			"damaged" => null
+		));
+		
+		Hardware::create(array(
+			"hardwareTypeID" => 3,
+			"assetTag" => "445532",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 1,
+			"assetTag" => "009875",
+			"damaged" => null
+		));
+
+		Hardware::create(array(
+			"hardwareTypeID" => 4,
+			"assetTag" => "336548",
+			"damaged" => null
+		));
 	}
 }
 

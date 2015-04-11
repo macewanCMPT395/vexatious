@@ -150,6 +150,17 @@ class HardwareController extends \BaseController {
 		}
 		return Redirect::route('hardware.show', ['id'=>$id]);
 	}
+	
+	
+	public function addToKit($kitID, $hwID) {
+		KitHardware::create(array(
+			"kitID" => $kitID,
+			"hardwareID" => $hwID
+		));
+		
+		
+		return Redirect::back();
+	}
 
 	/**
 	 * Remove the specified resource from storage.

@@ -62,11 +62,11 @@ $(document).ready(function() {
 	todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 	tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
 	
-//Set the headers for both tables
-  $('.table-static-header-row')
-	.append($('<td></td>').text('BarCode'))
-	.append($('<td></td>').text('Type'))
-	.append($('<td></td>').text('Destination'));
+	//Set the headers for both tables
+  	$('.table-static-header-row')
+		.append($('<td></td>').text('BarCode'))
+		.append($('<td></td>').text('Type'))
+		.append($('<td></td>').text('Destination'));
 
 	//Add Rows to table  
 	var typeList = {{ json_encode(HardwareType::lists('name', 'id')) }};

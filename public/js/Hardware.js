@@ -43,6 +43,20 @@ var HardwareForm = (function() {
 				};
 			},
 			
+			_onListStart: function(){},
+			onListStart: function(v) {
+				instance._onListStart = function(listing) {
+					v(listing);
+				};
+			},
+			
+			_onListDone: function(){},
+			onListDone: function(v) {
+				instance._onListDone = function(listing) {
+					v(listing);
+				};
+			},
+			
 			_onDeviceFill: function() {},
 			onDeviceFill: function(v) {
 				instance._onDeviceFill = function(id) {
@@ -140,14 +154,13 @@ var HardwareForm = (function() {
 			
 			//get a listing of all the hardware in the system
 			list: function(error, done) {
-				var url = instance.hwInfoRoute;
+				var url = instance.hwListRoute;
 				$.get(url, {"_method": "get"}, null, 'json').done(function(response) {
 					//make sure we got a list
 					if(response.status == 1) {
 						if(error)error();				
 						return;
 					}
-					instance._getDone();
 					if(done)done(response.devices);
 				});	
 				

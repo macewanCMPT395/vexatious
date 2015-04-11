@@ -82,7 +82,7 @@ class KitController extends \BaseController {
 						->leftJoin('kithardware', 'kithardware.kitID', '=', $id)
 						->leftJoin('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
 						->leftJoin('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
-						->first(['kit.barcode', 'kit.currentBranchID', 'kit.description', 'kit.type']);
+						->first(['kit.id', 'kit.barcode', 'kit.currentBranchID', 'kit.description', 'kit.type']);
         
 		$devices = DB::table('kithardware')->join('hardware', 'kithardware.hardwareID', '=', 'hardware.id')
 			   	->join('hardwareType', 'hardware.hardwareTypeID', '=', 'hardwareType.id')
