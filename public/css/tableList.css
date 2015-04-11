@@ -15,7 +15,7 @@
     width:100%; 
     border-collapse:collapse; 
 }
-.table-static-header-row td{ 
+.table-static-header-row th, .table-static-header-row td{ 
     padding:7px; 
     text-align: left;
     background: #666666;
@@ -30,7 +30,7 @@
     background: #eeeeee;
 }
 /* Define the hover highlight color for the table row */ 
-.table-rows-table tbody tr:hover {
+.table-rows-table tr:hover {
       background: #dddddd;
 }
 

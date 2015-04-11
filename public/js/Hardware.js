@@ -14,6 +14,10 @@ var HardwareForm = (function() {
 			hwInfoRoute: "",
 			kitInfoRoute: "",
 			hwUpdateRoute: "",
+			hwRmFromKit: "",
+			
+			damageUpdate: "#form-reportDamage",
+			removeFromKitForm: "#form-removeFromKit",
 			
 			_postDone: function(){},
 			postDone: function(v) {
@@ -40,6 +44,20 @@ var HardwareForm = (function() {
 			getDone: function(v) {
 				instance._getDone = function() {
 					v();
+				};
+			},
+			
+			_onListStart: function(){},
+			onListStart: function(v) {
+				instance._onListStart = function(listing) {
+					v(listing);
+				};
+			},
+			
+			_onListDone: function(){},
+			onListDone: function(v) {
+				instance._onListDone = function(listing) {
+					v(listing);
 				};
 			},
 			
@@ -103,8 +121,15 @@ var HardwareForm = (function() {
 
 					//update post URLS
 					//var action = $('#form-booking').attr("action");
-					$('#form-booking').attr("action", 
+					$(instance.damageUpdate).attr("action", 
 											instance.hwUpdateRoute.replace('%23', device.id));
+					
+					
+					$(instance.removeFromKitForm).attr("action", function() {
+							return instance.hwRmFromKit.replace('%7BkitID%7D', device.kitID)
+											 .replace('%7BhwID%7D', device.id);
+					});
+					//hwRmFromKit
 					
 					instance._onDeviceFill(hwID);
 					instance._getDone();
@@ -116,7 +141,7 @@ var HardwareForm = (function() {
 			//we don't have to worry about redirecting
 			//or refreshing the page 
 			post: function() {
-				$('#form-booking').on('submit', function(e) {
+				$(instance.damageUpdate).on('submit', function(e) {
 					e.preventDefault();
 					instance._postStart();
 					postOverride(this, 'put',
@@ -136,18 +161,19 @@ var HardwareForm = (function() {
 
 					return false;
 				});
+				
+				
 			},
 			
 			//get a listing of all the hardware in the system
 			list: function(error, done) {
-				var url = instance.hwInfoRoute;
+				var url = instance.hwListRoute;
 				$.get(url, {"_method": "get"}, null, 'json').done(function(response) {
 					//make sure we got a list
 					if(response.status == 1) {
 						if(error)error();				
 						return;
 					}
-					instance._getDone();
 					if(done)done(response.devices);
 				});	
 				
@@ -168,7 +194,7 @@ var HardwareForm = (function() {
                 }
 
 				
-				instance.hwUpdateRoute = $('#form-booking').attr("action");
+				instance.hwUpdateRoute = $(instance.damageUpdate).attr("action");
             }
             return instance;
         }

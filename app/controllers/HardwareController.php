@@ -150,6 +150,29 @@ class HardwareController extends \BaseController {
 		}
 		return Redirect::route('hardware.show', ['id'=>$id]);
 	}
+	
+	public function addToKit($kitID, $hwID) {
+		if(!Auth::user()->isAdmin()) return Redirect::back();
+		
+		
+		KitHardware::create(array(
+			"kitID" => $kitID,
+			"hardwareID" => $hwID
+		));
+		
+		
+		return Redirect::back();
+	}
+	
+	public function removeFromKit($kitID, $hwID) {
+		//if(!Auth::user()->isAdmin()) return Redirect::back();
+		
+		DB::table('kithardware')->where('kitID', '=', $kitID)
+			->where('hardwareID', '=', $hwID)->delete();
+	
+		
+		return Redirect::back();
+	}
 
 	/**
 	 * Remove the specified resource from storage.

@@ -12,4 +12,9 @@ Route::get('/', ['uses' => 'SessionsController@create', 'as'=>'signIn']);
 Route::get('logout', ['uses'=>'SessionsController@destroy', 'as'=> 'logout']);
 Route::get('checkForKit/{type}/{start}/{end}', 
 		   ['uses' => 'BookingController@getKitForDate', 'as' => 'check']);
-Route::get('reportDamage',['uses'=>'PagesController@showReportDamage','as'=>'reportdamage']);
+
+Route::post('hardware/addtokit/{kitID}/{hwID}', 
+		   ['uses' => 'HardwareController@addToKit', 'as' => 'addtokit']);
+
+Route::post('hardware/removefromkit/{kitID}/{hwID}',
+			['uses' => 'HardwareController@removeFromKit', 'as' => 'removefromkit']);

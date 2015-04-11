@@ -21,7 +21,7 @@
 
 		<!--create form to report damage-->
 	   {{ Form::open([ 'route' => ['hardware.update', '#'],
-						'id' => 'form-booking', 'method' => 'put']
+						'id' => 'form-reportDamage', 'method' => 'put']
 		)}}
 
 		{{Form::label('damaged', 'Report Damage') }}
@@ -30,6 +30,10 @@
 
 		{{ Form::close() }}
 
+		
+		{{ Form::open([ 'route' => 'removefromkit', 'method'=>'post', 'id'=>'form-removeFromKit']) }}
+		{{ Form::submit('Take Out Of Kit', ['id'=>'removeFromKitButton']) }}
+		{{ Form::close() }}
 
 	</div>
 
