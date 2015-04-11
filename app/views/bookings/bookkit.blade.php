@@ -268,14 +268,7 @@ $(document).ready(function() {
 			<li>
 			<!-- add the notification table and adder function here -->
 			</li>
-			<li>
-			<div class="bookingButtons"> {{ Form::submit('Create Booking') }}</div>
-			<div id="bookingErrorMsg">
-				{{ $errors->first('holidayError'); }}
-				{{ $errors->first('eventNameError'); }}
-			</div>
-			</li>
-				</ul>
+			</ul>
 
 		   {{ Form::close() }}
 		</div>
@@ -288,13 +281,13 @@ $(document).ready(function() {
     </td>
     </tr>
 </table>
-
-<ul class="navMenu footer">
+<div class="navMenu footer">
+<ul>
   <li>
 	<a href="#" id="createBooking">Create Booking</a>
   </li>
 </ul> 
-
+</div>
 @include('layouts.loadingScreen')
 
 @stop

@@ -12,9 +12,9 @@ class UsersController extends BaseController {
 	}
 	
     public function index() 
-    {
-        $users = User::all();
-        return $layout->nest('content','users.index');
+    {		
+	//if (!Auth::check() || !Auth::user()->isAdmin()) return Redirect::back();
+	return View::make('users.index');
     }
     
 	public function create() 
@@ -53,11 +53,11 @@ class UsersController extends BaseController {
 		//Need to check if user is an admin first before they can
 		//edit other users
 		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
-		return View::make('users.edit', ['user' => $user]);       
+		//if (!$user || !$user->isAdmin()) return Redirect::back();
+		return View::make('users.index', ['user' => $user]);       
     }
 	
-    public function update()
+    public function update($id)
     {
 		//To update a user, all we need to do is
 		//update their role. They can insert or remove
@@ -66,16 +66,15 @@ class UsersController extends BaseController {
 		//once again, make sure the user logged in is the admin
 		//before updating
 		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
+		//if (!$user || !$user->isAdmin()) return Redirect::back();
 		
-		//find user based on id (should be specified by the page form
-		$updateUser = User::find(Input::get("userID"));
-		
-		//then update the role and save
-		$updateUser->role = Input::get("role");
-		$updateuser->save();
-		
-
+		$changeUser = User::find($id);
+		if ($changeUser->role == 1) {
+		   $changeUser->role = 0;
+		} else {
+		   $changeUser->role = 1;
+		}
+		$changeUser->save();
 		return Redirect::back();
     }
 }

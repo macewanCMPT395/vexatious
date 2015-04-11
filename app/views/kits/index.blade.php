@@ -143,11 +143,15 @@ $(document).ready(function() {
 <ul>
 
     @if(Auth::user()->role == 1)
+      
       <li>
        	<a href="#" class="editRoute">View/Edit Kit</a>
       </li>
+      <li>
+	{{ html::linkRoute('kits.create','New Kits') }}	
+      </li>
     @else
-	   <li>
+      <li>
        	<a href="#" class="editRoute">View Kit</a>
       </li>
 	@endif

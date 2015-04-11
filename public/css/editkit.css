@@ -11,7 +11,7 @@
     padding-top: 15px;
     background-color: #eeeeee;
     display: inline-block;
-    height: 100%;
+    height: 50%;
     width: 50%;
 }
 
@@ -44,7 +44,7 @@ input[type="submit"] {
     padding:6px 15px;
     text-decoration:none;
     text-shadow:0px 1px 0px #b23e35;
-    width: 30%;
+    width: 160px;
 }
 
 #addToKitSubmit {
@@ -86,7 +86,7 @@ tr.deviceRow {
     background-color: #f9f9f9;
 }
 
-select#CurrentBranch {
+select {
     font-size: 16px;
     color: white;
     -webkit-appearance: initial;
@@ -111,3 +111,42 @@ select#CurrentBranch {
 	height: 300px;
 }
 
+label[for="title"] {
+    color: #039CE0;
+    margin-top: 10px;
+    text-align: center;
+    display: inline-block;
+    width: 50%;
+}
+
+.formatting {
+    display: inline-block;
+    width: 49%;
+}
+
+.formatting label[for="title"] {
+    width: 100%;
+}
+
+.formatting input {
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.formatting input[type="submit"] {
+    width: 180px;
+    margin: auto;
+}
+
+.hardwareType {
+    padding-top: 10px;
+    margin-top: 5px;
+    background: #eeeeee;
+}
+
+.hardwareType ul {
+    list-style: none;
+}
+.hardwareType li {
+    padding-bottom: 10px;
+}

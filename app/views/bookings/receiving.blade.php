@@ -38,12 +38,13 @@
         </div>
      </div>
 </div>
-
-<ul class="navMenu footer">
+<div class="navMenu footer">
+<ul>
   <li>
 	<a href="#" id="createBooking">Received Kit</a>
   </li>
 </ul> 
+</div>
 
 <script>
 	

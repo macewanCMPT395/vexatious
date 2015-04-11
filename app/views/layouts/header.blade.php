@@ -22,10 +22,8 @@
 <li @yield('browsehardwareli')> 
     {{ HTML::linkRoute('hardware.index', 'Browse Assets') }} </li>
 @if(Auth::user()->role == 1)
-<!--li @yield('editkitsli')> 
-    {{ HTML::linkRoute('kits.edit', 'Edit Kits') }}</li-->
 <li @yield('editusersli')> 
-    {{ HTML::linkRoute('users.edit', 'Edit Users') }} </li>
+    {{ HTML::linkRoute('users.index', 'Edit Users') }} </li>
 @endif
 <li id="logout"> {{ HTML::linkRoute('logout', 'Logout') }} </li>
 	

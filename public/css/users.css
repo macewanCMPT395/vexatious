@@ -1,0 +1,20 @@
+button {
+    background-color:#d62f33;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    border:1px solid #ffffff;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:arial;
+    font-size:16px;
+    padding:6px 15px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #b23e35;
+    width: 75%;
+}
+
+.table-wrapper {
+    height: 500px;
+}
