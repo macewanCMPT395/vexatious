@@ -48,7 +48,7 @@ class HardwareController extends \BaseController {
 	 */
 	public function create()
 	{
-
+		return View::make('hardware/create');
 	}
 
 
@@ -59,12 +59,11 @@ class HardwareController extends \BaseController {
 	 */
 	public function store()
 	{
-		if (!Auth::user()->isAdmin()) return Redirect::back();
+//		if (!Auth::user()->isAdmin()) return Redirect::back();
 		
-		//add a new device
         $device = new Hardware;
-		$input = array_filter(Input::only($this->fields));
-		$device->fill($input);	
+		$device->hardwareTypeID = Input::get('type');
+		$device->assetTag = Input::get('assetTag');
         $device->save();
 
 		if(Request::wantsJson()) {
