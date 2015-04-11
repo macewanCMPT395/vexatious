@@ -41,7 +41,8 @@ class BookingController extends \BaseController {
 						->join('branch', 'branch.id', '=', 'booking.destination')
 						->get(['booking.id as bookingID', 'eventName','branch.name', 'start', 'end', 
 							   'hardwareType.name as hname','kit.type', 'branch.id',
-							  'destination', 'kit.barcode','kit.currentBranchID']);
+							  'destination', 'kit.barcode','kit.currentBranchID', 'shipping', 
+							   'shipped', 'received']);
 		
 		$bookingCreators = DB::table('allBookings')
 							->join('users', 'allBookings.userID', '=', 'users.id')
@@ -56,7 +57,6 @@ class BookingController extends \BaseController {
 			$bookings = ["status" => "0", "bookings" => $allBookings, "creators" => $bookingCreators];
 			
 		}
-        
         return $bookings;
     }
         
@@ -339,35 +339,58 @@ class BookingController extends \BaseController {
 		$booking = Booking::find($id);
 		if($booking) {
 			$shipped = Input::get('shipped');
-			if($shipped) $booking->shipped = $shipped;
-
-			$recieved = Input::get('recieved');
-			if($recieved) $booking->received = $recieved;
-
-			$booking->eventName = Input::get('eventName');
-			$booking->save();
-
-			$dest = Input::get('destination');
-			if($dest) {
-				$kit = Kit::find(Input::get('kitID'));
-				if($kit){
-					$kit->currentBranchID = $dest;
+			if($shipped != null) $booking->shipped = $shipped;
+			
+			$received = Input::get('received');
+			if($received == 1) {
+				$booking->received = $received;
+				
+				$kit = Kit::find($booking->kitID);
+				if($kit) {
+					$kit->currentBranchID = $booking->destination;	
 					$kit->save();
 				}
 			}
+		
+			$event = Input::get('eventName');
+			if($event != null) $booking->eventName = $event;
+			
+			$booking->save();
 			
 			//check for user updates
 			$num = 1;
 //			return Response::json(Input::get('hidden_1'));
+			
+			$users = DB::table('allBookings')->where('bookingID', '=', $id)
+					->lists('userID');
+			$userSyncList = [];
 			while(Input::get('hidden_'.$num)) {
 				$userID = Input::get('hidden_'.$num);
-				UserBookings::create(array(
-					"userID" => $userID,
-					"bookingID" => $id,
-					"creator"=> "0"
-				));		
+				
+				if(!in_array($userID, $users)) {
+					UserBookings::create(array(
+						"userID" => $userID,
+						"bookingID" => $id,
+						"creator"=> "0"
+					));		
+				}
+				
+				array_push($userSyncList, $userID);
 				$num ++;
 			}
+			
+			//hopefully this will work
+			if (count($userSyncList) > 0) {				
+				foreach($users as $user) {
+					//user isn't in the sync list, delete their booking
+					if(!in_array($user, $userSyncList)) {
+						DB::table('allBookings')->where('bookingID', '=', $id)
+									->where('userID', '=', $user)->delete();
+					}
+					
+				}
+			}
+			
 		}
 		
 		//handle json request types

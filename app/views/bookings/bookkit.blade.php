@@ -100,7 +100,7 @@ $(document).ready(function() {
 		});
 		var day = data.valueAsDate.getUTCDay();
 	
-		return (isHoliday.length > 0 || day == 6 || day == 0)
+		return (isHoliday.length > 0)
 		return false;
 	});	
 	initTable();

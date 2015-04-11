@@ -418,7 +418,7 @@ class BookingSeeder extends Seeder {
 			"eventName" => $eventName,
 			"start" => $start + (24*60^60),//start time today
 			"end"=> $end,//end date 2 days from now
-			"shipping" => $end + (24*60*60),
+			"shipping" => $start - (24*60*60),
 #			"receiving" => $start,
 			"destination" => $destination,
 			"received" => false,
@@ -470,6 +470,8 @@ class BookingSeeder extends Seeder {
 	$this->createBooking("PS3 Event", 1427846400, 1428364800, 1, 3, 1);
 	$this->createBooking("XBOX360 Event", 1428710400, 1428883200, 1, 2, 1);
 	$this->createBooking("Arduino Event", 1430956800, 1431129600, 1, 4, 1);
+		
+		$this->createBooking("Ship out Event", $this->daysFromNow(2), $this->daysFromNow(4), 5, 1, 1);
 	/*$this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 
 							 	$this->daysFromNow(4), 1, 1, 1);
         $this->createBooking("Flappy Bird LAN Party", $this->daysFromNow(2), 

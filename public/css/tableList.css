@@ -39,7 +39,7 @@
 }
 
 .table-rows-table td, .table-static-header td{
-    width: 200px;
+    width: auto;
 }
 
 .highlight {
