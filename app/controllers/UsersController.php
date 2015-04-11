@@ -12,9 +12,9 @@ class UsersController extends BaseController {
 	}
 	
     public function index() 
-    {
-        $users = User::all();
-        return $layout->nest('content','users.index');
+    {		
+	//if (!Auth::check() || !Auth::user()->isAdmin()) return Redirect::back();
+	return View::make('users.index');
     }
     
 	public function create() 
@@ -53,8 +53,8 @@ class UsersController extends BaseController {
 		//Need to check if user is an admin first before they can
 		//edit other users
 		$user = Auth::user();
-		if (!$user || !$user->isAdmin()) return Redirect::back();
-		return View::make('users.edit', ['user' => $user]);       
+		//if (!$user || !$user->isAdmin()) return Redirect::back();
+		return View::make('users.index', ['user' => $user]);       
     }
 	
     public function update()

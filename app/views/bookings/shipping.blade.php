@@ -46,10 +46,13 @@
 
 
 <script>
-//hide ship kit button
 $(document).ready(function() {
+
 	var submitRoute = $('#form-shipping').attr("action");
 	$(".navMenu.footer").css('bottom','-10%');
+			     
+			     //hide ship kit button
+			     $(".navMenu.footer").css('bottom','-10%');
 			     
 
 	//Set Table Dates
