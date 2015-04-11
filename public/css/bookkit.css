@@ -41,6 +41,10 @@ select#destination {
     background-color: purple;
 }
 
+div.table-wrapper {
+    margin: 5px 0 0 30px;
+    height: 327px;
+} 
 .formFields {
     list-style-type: none;
     margin: 0;

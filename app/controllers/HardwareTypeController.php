@@ -42,14 +42,14 @@ class HardwareTypeController extends \BaseController {
 	 */
 	public function store()
 	{
-		if (!Auth::user()->isAdmin()) return Redirect::back();
+		//if (!Auth::user()->isAdmin()) return Redirect::back();
 		
-		$input = array_filter(Input::only(fields));
+		$input = Input::all();
 		$type = new HardwareType;
 		$type->fill($input);
-		$this->type->save();
+		$type->save();
 		
-		return Response::json($this->type);
+		return Redirect::back();
 	}
 
 

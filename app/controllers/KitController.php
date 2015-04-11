@@ -45,7 +45,7 @@ class KitController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('kits/create');
 	}
 
 

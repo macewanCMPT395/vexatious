@@ -173,8 +173,4 @@ function parseDate(date) {
 </div>
 </div>
 
-<script>
-
-
-</script>
 @stop
