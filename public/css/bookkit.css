@@ -41,10 +41,6 @@ select#destination {
     background-color: purple;
 }
 
-div.table-wrapper {
-    margin: 5px 0 0 30px;
-    height: 327px;
-} 
 .formFields {
     list-style-type: none;
     margin: 0;
@@ -59,21 +55,9 @@ div.table-wrapper {
 }
 
 .bookkit {
-    list-style-type: none;
-    margin-top: 5px;
-    width: 98%;
-    background-color: #eeeeee;
-    padding: 15px 0 5px 2%;
+	height: inherit;
 }
 
-.bookkit li {
-    text-align: left;
-    font-size: 20px;
-    padding-left: 2px;
-    padding-bottom: 15px;
-    white-space: nowrap;
-
-}
  
 #selectKitBtn {
     background-color:#d62f33;
@@ -139,18 +123,40 @@ input {
     font-size: 18px;
 }
 
-.booking {
- width: 100%;
- overflow: hidden;
+.booking, .listing {
+ 	width: 49%;
+ 	overflow: hidden;
+	display: inline-block;
+	vertical-align: top;
+	height: 327px;
 }
 
-.booking tr {
-    vertical-align: top;
-    height: 30px;
+.booking .bookingBox, #kitListing {
+	background-color: #eeeeee;
+	height: 100%;
+}
+.bookkit .bookitFormElement  {
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
 }
 
-#selectors {
-    width: 37%;
+.bookkit .bookitFormElement:first-child {
+	padding-top: 10px;
+}
+
+div#bookKitButtonsBox {
+	text-align: center;
+}
+
+
+label {
+	display: inline-block;
+	width: 100px;
 }
 
 

@@ -1,7 +1,5 @@
 .table-wrapper {
-    margin: 20px auto 40px auto;
-    width: 90%;
-    height: 350px;
+    height: inherit;
 }
 
 .table-rows-table-wrapper {
@@ -45,5 +43,14 @@
 .highlight {
     background: #ffffff;
     
+}
+
+.table-title-header {
+    margin-top: 10px;
+    color: #039CE0;
+    font-size: 20px;
+    display:inline-block;
+	text-align: center;
+	width: inherit;
 }
 

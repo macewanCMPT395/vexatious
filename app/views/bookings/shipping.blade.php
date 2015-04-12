@@ -21,22 +21,24 @@
 	</li>
 	{{Form::close() }}
 </ul>
-<div>	
-     <div id="todayTable">
+
+
+<div id="todayTable">
 	<div class="tableTitle">Today </div>
-     	<div id="todayDate"> [Today's Date] </div>
-     	<div>
-     	     @include('layouts.tableList')
-     	     </div>
-     </div>
-     <div id="tomorrowTable">
-	<div class="tableTitle">Tomorrow </div>
-	<div id="tomorrowDate"> [Tomorrow's Date] </div>
-	<div>
-	     @include('layouts.tableList')
-	</div>
+	<div id="todayDate"> [Today's Date] </div>
+	<div class="tableWrapper">
+		@include('layouts.tableList')
 	</div>
 </div>
+
+<div id="tomorrowTable">
+	<div class="tableTitle">Tomorrow </div>
+	<div id="tomorrowDate"> [Tomorrow's Date] </div>
+	<div class="tableWrapper">
+		@include('layouts.tableList')
+	</div>
+</div>
+
 <div class="navMenu footer">
 <ul>
   <li>

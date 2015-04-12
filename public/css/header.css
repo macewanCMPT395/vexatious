@@ -53,6 +53,7 @@ body, html {
     color: white;
     font-weight: 400;
     background-color: #FBBC2E;
+	display: inline-block;
 }
 
 .navMenu ul, .navMenu.footer ul {
