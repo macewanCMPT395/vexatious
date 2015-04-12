@@ -4,7 +4,7 @@
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
 {{ HTML::script('js/Hardware.js') }}
 {{ HTML::script('js/post.js') }}
-{{ HTML::style('css/hardware.css') }}
+{{ HTML::style('css/showHardware.css') }}
 {{ HTML::style('css/loadingScreen.css') }}
 <script>
 	

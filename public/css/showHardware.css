@@ -1,0 +1,49 @@
+.hw-exists {
+	width: 50%;
+	height: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #eeeeee;
+}
+
+.hw-Title {
+	padding-top: 5px;
+	text-align: center;
+	background-color: white;
+	height: 60px;
+	vertical-align: middle;
+}
+
+.hw-Title #hw-title-text {
+	margin: 0;
+	padding: 0;
+	color: #039CE0;
+	display: inline;
+	line-height: 60px;
+}
+
+.hw-Title #deleteForm {
+	display: inline;
+	height: 60px;
+}
+
+.hw-Title #removeBtn {
+}
+
+#hw-description, #hw-damage, #hw-kitinfo {
+	padding-left: 10px;
+}
+
+.hw-box-title {
+	padding-top: 10px;
+	margin: 0px;
+}
+
+.hw-box-text {
+	margin: 0px;
+	text-indent: 15px;
+}
+
+#hw-damage-list {
+	margin: 0px;
+}

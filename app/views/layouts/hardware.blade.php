@@ -1,10 +1,6 @@
 <div class="hw-exists">
 	<div class="hw-Title">
 		<h1 id="hw-title-text"></h1>
-		{{Form::open(['route' => ['hardware.destroy', '#'],
-						'method'=>'delete', 'id'=>'deleteForm']) }}
-		{{Form::submit('Remove Device From System',['id'=>'removeBtn']) }}
-		{{Form::close() }}
 	</div>
 
 	<div class="hw-box" id="hw-description">
@@ -36,20 +32,26 @@
 			}}
 			{{Form::submit('Clear Damage', ['id'=>'clearDamageSubmit'])}}
 			{{Form::close() }}
-
-
-
-			{{ Form::open([ 'route' => 'removefromkit', 'method'=>'post', 'id'=>'form-removeFromKit']) }}
-			{{ Form::submit('Take Out Of Kit', ['id'=>'removeFromKitButton']) }}
-			{{ Form::close() }}
-		</div>
-
+		</div>		
 	</div>
 
 	<div class="hw-box" id="hw-kitinfo">
 		<h2 class="hw-box-title">Kit Information</h2>
 		<div class="hw-box-text">
 		</div>
+	</div>
+	
+	<div class="hw-admin-controls-container">
+		{{Form::open(['route' => ['hardware.destroy', '#'],
+						'method'=>'delete', 'id'=>'deleteForm']) }}
+		{{Form::submit('Remove Device From System',['id'=>'removeBtn']) }}
+		{{Form::close() }}
+
+		{{ Form::open([ 'route' => 'removefromkit', 'method'=>'post', 'id'=>'form-removeFromKit']) }}
+		{{ Form::submit('Take Out Of Kit', ['id'=>'removeFromKitButton']) }}
+		{{ Form::close() }}
+
+
 	</div>
 </div>
 <div class="hw-none"></div>

@@ -20,6 +20,8 @@ function initTable() {
 	
 	
 $(document).ready(function() {
+	$(".navMenu.footer").css('bottom','-10%');
+	
 	initTable();
 	
 	//Add Rows to table    
@@ -93,12 +95,12 @@ $(document).ready(function() {
 				$('.selected').each(function() {
 					$(this).toggleClass('selected');
 				});
+				
 				$(this).toggleClass('selected');
 				$('.editRoute').attr('href', ViewEditKit.replace('%7Bkits%7D', $(this).attr('id')));
+				$(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
 			});
 		});	
-		$('#kitListing .table-rows-table tr').first().toggleClass('selected');
-		$('.editRoute').attr('href', ViewEditKit.replace('%7Bkits%7D', $('.selected').attr('id')));
 	}				  
 				  
 				  
@@ -133,6 +135,13 @@ $(document).ready(function() {
 	{{ Form::label('damage', 'Damage') }}
 	{{ Form::select('damage', array('a' => 'All', 'd' => 'Damaged', 'n' => 'None')) }}
 	</li>
+	@if(Auth::user()->role == 1)
+		<li>
+			{{ Form::open(['method' => 'get', 'route' => 'kits.create']) }}
+			{{Form::submit( "Create New Kit") }}
+			{{Form::close()}}
+		</li>
+	@endif
 </ul>
 
 <div id="kitListing">
@@ -146,9 +155,6 @@ $(document).ready(function() {
       
       <li>
        	<a href="#" class="editRoute">View/Edit Kit</a>
-      </li>
-      <li>
-	{{ html::linkRoute('kits.create','New Kits') }}	
       </li>
     @else
       <li>
