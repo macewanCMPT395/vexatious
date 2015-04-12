@@ -172,38 +172,39 @@ $(document).ready(function() {
 @section('browsekitsli') class="" @stop
 @section('content')
 <div class="sideBySide">
+
 <div style="width: 50%; display: inline-block">
      <div class="table-title-header">
-     <div class="title">Kit Information</div>
-</div>
-<div id='kitInfo'>
-     {{ Form::open(['method' => 'post', 'route' => 'kits.edit']) }}
-	<ul>
-	<li>
-		{{ Form::label('kitNumber', 'Bar Code:') }}
-    		{{ Form::text('KitNumber', $kits->barcode) }}
-	</li>
-	<li>
-		{{ Form::label('currentBranch', 'Current Branch:') }}
-		{{ Form::select('CurrentBranch',Branch::lists("name","id"), $kits->currentBranchID, ['id'=>'CurrentBranch'] ) }}
-	</li>
-	<li>
-		{{ Form::label('description', 'Description:') }}
-		{{ Form::Input('string', 'description', $kits->description) }}
-	</li>
-	<li>
-	{{ Form::Submit('Apply Changes') }}
-	</li>
-	</ul>
-<div class="table-title-header">
-     <div class="title" style="font-size: 20px">Click To Select Asset Within Kit</div>
-</div>
-	<div class="assetTable">
-		@include('layouts.tableList')
+		 <div class="title">Kit Information</div>
 	</div>
-		       
-{{ Form::close() }}
-</div>
+	<div id="kitInfo">
+		 {{ Form::open(['method' => 'put', 'route' => ['kits.update', $kits->id]]) }}
+		<ul>
+		<li>
+			{{ Form::label('kitNumber', 'Bar Code:') }}
+				{{ Form::text('KitNumber', $kits->barcode) }}
+		</li>
+		<li>
+			{{ Form::label('currentBranch', 'Current Branch:') }}
+			{{ Form::select('CurrentBranch',Branch::lists("name","id"), $kits->currentBranchID, ['id'=>'CurrentBranch'] ) }}
+		</li>
+		<li>
+			{{ Form::label('description', 'Description:') }}
+			{{ Form::Input('string', 'description', $kits->description) }}
+		</li>
+		<li>
+		{{ Form::Submit('Apply Changes') }}
+		</li>
+		</ul>
+		<div class="table-title-header">
+			<div class="title" style="font-size: 20px">Click To Select Asset Within Kit</div>
+		</div>
+		<div class="assetTable">
+			@include('layouts.tableList')
+		</div>
+
+	{{ Form::close() }}
+	</div>
 </div>
 @if(count($devices) > 0)
 	
