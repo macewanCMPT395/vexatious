@@ -145,6 +145,9 @@ $(document).ready(function() {
    <li>
 	<a href="#" class="editRoute">View Asset</a>
   </li>
+  <li> 
+       {{ html::linkRoute('hardware.create','New Asset') }}
+  </li>
 </ul>
 </div>
 @stop
