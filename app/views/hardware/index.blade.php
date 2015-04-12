@@ -138,6 +138,13 @@ $(document).ready(function() {
 	{{ Form::label('inKit', 'In Kit') }}
 	{{ Form::select('inKit', ['1'=>'Yes', '2'=>'No'], 1); }}
 	</li>
+	@if(Auth::user()->role == 1)
+		<li> 
+			{{ Form::open(['method' => 'get', 'route' => 'hardware.create']) }}
+			{{Form::submit( "Create New Asset") }}
+			{{Form::close()}}
+		</li>
+	@endif
 </ul>
 <div id="hardwareListing">
 	@include('layouts.tableList')
@@ -146,9 +153,6 @@ $(document).ready(function() {
 <ul>
    <li>
 	<a href="#" class="editRoute">View Asset</a>
-  </li>
-  <li> 
-       {{ html::linkRoute('hardware.create','New Asset') }}
   </li>
 </ul>
 </div>
