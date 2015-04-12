@@ -26,6 +26,7 @@ function initTable() {
 }
 	
 $(document).ready(function() {
+	$(".navMenu.footer").css('bottom','-10%');
 	initTable();
 	
 	//add "All" to type filter
@@ -97,10 +98,11 @@ $(document).ready(function() {
 				});
 				$(this).toggleClass('selected');
 				$('.editRoute').attr('href', ViewEditDevice.replace('%7Bhardware%7D', $(this).attr('id')));
+				$(".navMenu.footer").animate({bottom:"2%"}, 400, function(){});
 			});
 		});	
-		$('#hardwareListing .table-rows-table tr').first().toggleClass('selected');
-		$('.editRoute').attr('href', ViewEditDevice.replace('%7Bhardware%7D', $('.selected').attr('id')));
+		//$('#hardwareListing .table-rows-table tr').first().toggleClass('selected');
+		//$('.editRoute').attr('href', ViewEditDevice.replace('%7Bhardware%7D', $('.selected').attr('id')));
 	}				  
 				  
 				  
