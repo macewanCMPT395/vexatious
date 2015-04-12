@@ -2,33 +2,30 @@
 	display: inline-block;
 	white-space: nowrap;
 	width: 100%;
-	height: 400px;
+	height: 59%;
 }
+
 #hardware, #kitInfo {
     text-align: left;
     vertical-align: top;
-    margin-top: 5px;
-    padding-top: 15px;
+    padding-bottom: 10px;
     background-color: #eeeeee;
     display: inline-block;
-    height: 50%;
-    width: 50%;
+    height: 100%;
+    width: 100%;
 }
 
+#hardware {
+    padding-left: 10px;
+}
 #kitInfo ul {
     list-style-type: none;
+    margin: 10px 0 16px 0;
 }
 
 #kitInfo li {
     padding-top: 10px;
 }
-
-#hardware { 
-    background-color: #eeeeee;
-    padding-left: 10px;
-}
-
-
 
 input[type="submit"] {
     background-color:#d62f33;
@@ -44,7 +41,7 @@ input[type="submit"] {
     padding:6px 15px;
     text-decoration:none;
     text-shadow:0px 1px 0px #b23e35;
-    width: 160px;
+    width: 170px;
 }
 
 #addToKitSubmit {
@@ -80,6 +77,7 @@ label {
 
 .assetTable .table-wrapper {
 	height: 100px;
+	margin: 0 10px 0 10px;
 }
 
 tr.deviceRow {
@@ -109,6 +107,7 @@ select {
 #addAssetList {
 	padding-top: 5px;
 	height: 300px;
+	margin: 0 20px 0 20px;
 }
 
 label[for="title"] {
@@ -149,4 +148,14 @@ label[for="title"] {
 }
 .hardwareType li {
     padding-bottom: 10px;
+}
+
+.title {
+    font-size: 30px;
+    position: relative;
+}
+
+.table-title-header {
+    display: block;
+    width: 100%;
 }
