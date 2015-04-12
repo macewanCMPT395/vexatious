@@ -227,66 +227,61 @@ $(document).ready(function() {
 	
 });
 </script> 
-<table class="booking">
-    <tr>
-	
-    <td id="selectors">
+	<div class="booking">
 		<div id="headerLabel">Create an Event</div>
 		<div class="bookingBox">
 		   {{ Form::open([ 'route' => 'bookings.store',
 							'id' => 'form-booking']
 			)}}
-		<ul class="bookkit">
-			<li>
-			{{ Form::label('eventName', 'Event Name: ', ['id' => 'eventLabel']) }}
-			{{ Form::text('eventName') }}
-			</li>
-			<li>
-			{{ Form::label('type', 'Type:') }}
-			{{ Form::select('type', HardwareType::lists('name', 'id')) }}
-			</li>
-			<li>
-			{{ Form::label('destination', "Deliver To: ", ['id' => "destLabel"]) }}
-				   {{ Form::select('destination', Branch::lists('name', 'id')) }}
-			</li>
-			<li>
-			{{ Form::label('start', 'Start Date: ', ['id' => 'startDateLabel']) }}
-					{{ Form::input('date', 'start', '',
-						['class'=>'disable-weekends min-today', 'placeholder'=>'yyyy-mm-dd', 'required'=> ""])
+			<div class="bookkit">
+
+				<div class="bookitFormElement" id="eventNameBox">
+					{{ Form::label('eventName', 'Event Name: ', ['id' => 'eventLabel']) }}
+					{{ Form::text('eventName') }}
+				</div>
+				<div class="bookitFormElement" id="hardwareTypeBox">
+					{{ Form::label('type', 'Type:') }}
+					{{ Form::select('type', HardwareType::lists('name', 'id')) }}
+				</div>
+				<div class="bookitFormElement" id="destinationBox">
+					{{ Form::label('destination', "Deliver To: ", ['id' => "destLabel"]) }}
+						   {{ Form::select('destination', Branch::lists('name', 'id')) }}
+				</div>
+				<div class="bookitFormElement" id="startDateBox">
+					{{ Form::label('start', 'Start Date: ', ['id' => 'startDateLabel']) }}
+							{{ Form::input('date', 'start', '',
+								['class'=>'disable-weekends min-today', 'placeholder'=>'yyyy-mm-dd', 'required'=> ""])
+							}}
+				</div>
+				<div class="bookitFormElement" id="endDateBox">
+					{{ Form::label('end', 'End Date: ', ['id' => 'endDateLabel']) }}
+					{{ Form::input('date', 'end', '', 
+						['class'=>'min-today', 'placeholder'=>'yyyy-mm-dd', 'required' => ""]) 
 					}}
-			</li>
-			<li>
-			{{ Form::label('end', 'End Date: ', ['id' => 'endDateLabel']) }}
-			{{ Form::input('date', 'end', '', 
-				['class'=>'min-today', 'placeholder'=>'yyyy-mm-dd', 'required' => ""]) 
-			}}
-			</li>
-			<li>
-			{{ Form::button('Check Kit Availability', ['id'=>'selectKitBtn']); }}
-			{{ Form::hidden('kitCode', 'No Kit Selected', ['id'=>'kitCodeLabel']); }}
-			</li>
-			<li>
-			<!-- add the notification table and adder function here -->
-			</li>
-			</ul>
+				</div>
+				<div class="bookitFormElement" id="bookKitButtonsBox">
+					{{ Form::button('Check Kit Availability', ['id'=>'selectKitBtn']); }}
+					{{ Form::hidden('kitCode', 'No Kit Selected', ['id'=>'kitCodeLabel']); }}
+				</div>
+			</div>
 
 		   {{ Form::close() }}
 		</div>
-    </td>
-    <td>
+	</div>
+	<div class="listing">
 		<div id="headerLabel">Please select which kit you would like to book</div>
 		<div id="kitListing">
 			@include('layouts.tableList')
 		</div>
-    </td>
-    </tr>
-</table>
+	</div>
+
+
 <div class="navMenu footer">
-<ul>
-  <li>
-	<a href="#" id="createBooking">Create Booking</a>
-  </li>
-</ul> 
+	<ul>
+	  <li>
+		<a href="#" id="createBooking">Create Booking</a>
+	  </li>
+	</ul> 
 </div>
 @include('layouts.loadingScreen')
 

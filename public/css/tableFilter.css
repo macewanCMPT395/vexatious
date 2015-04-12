@@ -1,12 +1,13 @@
 .TableFilter-Bar {
     height: 40px;
-    line-height: 34px;
+    line-height: 40px;
     font-size: 20px;
     text-align: left;
     padding: 5px 0px 5px 60px;
     background: #eeeeee;
     list-style-type: none;
     margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .TableFilter-Bar li{

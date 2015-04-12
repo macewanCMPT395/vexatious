@@ -12,38 +12,39 @@
 <ul class="TableFilter-Bar">
 	{{ Form::open(['method' => 'put', 'route' => 'bookings.update', 'id' => 'form-receiving']) }}
 	<li>
-	{{ Form::label('branch', 'Receiving at') }}
-	{{ Form::select('branch', Branch::lists('name', 'id')); }}
+		{{ Form::label('branch', 'Receiving at') }}
+		{{ Form::select('branch', Branch::lists('name', 'id')); }}
 	</li>
 	<li>
-	{{ Form::hidden('form', 'received') }}
-	{{ Form::hidden('received', '1') }}
-	{{ Form::submit('Received') }}
+		{{ Form::hidden('form', 'received') }}
+		{{ Form::hidden('received', '1') }}
+		{{ Form::submit('Received') }}
 	</li>
 	{{Form::close() }}
 </ul>
-<div>
-     <div id="todayTable">
-        <div class="tableTitle">Today </div>
-        <div id="todayDate"> [Today's Date] </div>
-        <div>
-             @include('layouts.tableList')
-        </div>
-     </div>
-     <div id="tomorrowTable">
-        <div class="tableTitle">Tomorrow </div>
-        <div id="tomorrowDate"> [Tomorrow's Date] </div>
-        <div>
-             @include('layouts.tableList')
-        </div>
-     </div>
-</div>
+
+ <div id="todayTable">
+	<div class="tableTitle">Today </div>
+	<div id="todayDate"> [Today's Date] </div>
+	<div class="tableWrapper">
+		 @include('layouts.tableList')
+	</div>
+ </div>
+
+ <div id="tomorrowTable">
+	<div class="tableTitle">Tomorrow </div>
+	<div id="tomorrowDate"> [Tomorrow's Date] </div>
+	<div class="tableWrapper">
+		 @include('layouts.tableList')
+	</div>
+ </div>
+
 <div class="navMenu footer">
-<ul>
-  <li>
-	<a href="#" id="createBooking">Received Kit</a>
-  </li>
-</ul> 
+	<ul>
+	  <li>
+		<a href="#" id="createBooking">Received Kit</a>
+	  </li>
+	</ul> 
 </div>
 
 <script>

@@ -15,6 +15,9 @@ button {
     width: 75%;
 }
 
-.table-wrapper {
-    height: 500px;
+#usersTable {
+	text-align: left;
+	height: 500px;
+	margin: 0px;
+	padding: 0px;
 }

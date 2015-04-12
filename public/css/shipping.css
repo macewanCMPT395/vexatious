@@ -18,13 +18,9 @@ body {
     display: inline-block;
     width: 48%;
     margin-left: 1%;
+	height: 50%;
 }
 
-.table-wrapper {
-    margin: 0;
-    width: 100%;
-}
-
-.table-static-header td {
-    width: 33%;
+.tableWrapper {
+	height: 350px;
 }
