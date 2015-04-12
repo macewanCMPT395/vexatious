@@ -151,17 +151,23 @@ $(document).ready(function() {
 		}
 	});
 	
-	HWForm.list(function(devices){
-			console.log("error getting hardware info");
-		}, 
-		function(devices) {
-			console.log(devices);
-			var freeDevices = devices.filter(function(asset) {
-				return asset.kitID == null;
-			});
-			populateAddAssetTable(freeDevices); 
-		}
-	);
+	
+	@if(Auth::user()->role == 1)
+		HWForm.list(function(devices){
+				console.log("error getting hardware info");
+			}, 
+			function(devices) {
+				console.log(devices);
+				var freeDevices = devices.filter(function(asset) {
+					return asset.kitID == null;
+				});
+				populateAddAssetTable(freeDevices); 
+			}
+		);
+	@else
+		//hide remove from kit button if not admin
+		$('#form-removeFromKit').hide();
+	@endif
 
 });
 </script>
@@ -178,24 +184,24 @@ $(document).ready(function() {
 		 <div class="title">Kit Information</div>
 	</div>
 	<div id="kitInfo">
-		 {{ Form::open(['method' => 'put', 'route' => ['kits.update', $kits->id]]) }}
-		<ul>
-		<li>
+		 {{ Form::open(['method' => 'put', 'route' => ['kits.update', $kits->id], 'id'=>'kitEditForm']) }}
+		<div class="kitInfoInput">
 			{{ Form::label('kitNumber', 'Bar Code:') }}
 				{{ Form::text('KitNumber', $kits->barcode) }}
-		</li>
-		<li>
+		</div>
+		<div class="kitInfoInput">
 			{{ Form::label('currentBranch', 'Current Branch:') }}
 			{{ Form::select('CurrentBranch',Branch::lists("name","id"), $kits->currentBranchID, ['id'=>'CurrentBranch'] ) }}
-		</li>
-		<li>
+		</div>
+		<div class="kitInfoInput">
 			{{ Form::label('description', 'Description:') }}
 			{{ Form::Input('string', 'description', $kits->description) }}
-		</li>
-		<li>
+		</div>
+		<div class="kitInfoInput" id="kitInfoSubmitButton">
 		{{ Form::Submit('Apply Changes') }}
-		</li>
-		</ul>
+		</div>
+		{{ Form::close() }}
+		
 		<div class="table-title-header">
 			<div class="title" style="font-size: 20px">Click To Select Asset Within Kit</div>
 		</div>
@@ -203,7 +209,7 @@ $(document).ready(function() {
 			@include('layouts.tableList')
 		</div>
 
-	{{ Form::close() }}
+		
 	</div>
 </div>
 @if(count($devices) > 0)
@@ -223,9 +229,12 @@ $(document).ready(function() {
 <div class="table-title-header">
      <div class="title">Assets To Add To Kit</div>
 </div>
+
+@if(Auth::user()->role == 1)
 <div id="addAssetList">
 	@include('layouts.tableList')
 </div>
+@endif
 
 
 @stop
