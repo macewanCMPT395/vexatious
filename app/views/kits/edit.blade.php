@@ -172,7 +172,11 @@ $(document).ready(function() {
 @section('browsekitsli') class="" @stop
 @section('content')
 <div class="sideBySide">
-<div id="kitInfo">
+<div style="width: 50%; display: inline-block">
+     <div class="table-title-header">
+     <div class="title">Kit Information</div>
+</div>
+<div id='kitInfo'>
      {{ Form::open(['method' => 'post', 'route' => 'kits.edit']) }}
 	<ul>
 	<li>
@@ -188,26 +192,36 @@ $(document).ready(function() {
 		{{ Form::Input('string', 'description', $kits->description) }}
 	</li>
 	<li>
-	{{ Form::label('assetTable','Items within this kit') }}
+	{{ Form::Submit('Apply Changes') }}
+	</li>
+	</ul>
+<div class="table-title-header">
+     <div class="title" style="font-size: 20px">Click To Select Asset Within Kit</div>
+</div>
 	<div class="assetTable">
 		@include('layouts.tableList')
 	</div>
-	</li>
-	<li>
-	{{ Form::Submit('Apply Changes') }}
-	</li>
-	</ul>		       
+		       
 {{ Form::close() }}
 </div>
+</div>
 @if(count($devices) > 0)
-	<div id="hardware">
+	
+	<div style="width: 50%; display: inline-block">
+	<div class="table-title-header">
+     	     <div class="title">Asset Information</div>
+	</div>
+		<div id="hardware">
 		@include('layouts.hardware')
+		</div>
 	</div>
 	@include('layouts.loadingScreen')
 
 @endif
 </div>
-
+<div class="table-title-header">
+     <div class="title">Assets To Add To Kit</div>
+</div>
 <div id="addAssetList">
 	@include('layouts.tableList')
 </div>
