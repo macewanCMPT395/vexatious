@@ -32,19 +32,9 @@
 			}}
 			{{Form::submit('Clear Damage', ['id'=>'clearDamageSubmit'])}}
 			{{Form::close() }}
-		</div>		
-	</div>
-
-	<div class="hw-box" id="hw-kitinfo">
-		<h2 class="hw-box-title">Kit Information</h2>
-		<div class="hw-box-text">
-		</div>
-	</div>
-	
-	<div class="hw-admin-controls-container">
 		{{Form::open(['route' => ['hardware.destroy', '#'],
 						'method'=>'delete', 'id'=>'deleteForm']) }}
-		{{Form::submit('Remove Device From System',['id'=>'removeBtn']) }}
+		{{Form::submit('Delete Device',['id'=>'removeBtn']) }}
 		{{Form::close() }}
 
 		{{ Form::open([ 'route' => 'removefromkit', 'method'=>'post', 'id'=>'form-removeFromKit']) }}
@@ -52,6 +42,12 @@
 		{{ Form::close() }}
 
 
+		</div>		
+	</div>
+
+	<div class="hw-box" id="hw-kitinfo">
+		<div class="hw-box-text">
+		</div>
 	</div>
 </div>
 <div class="hw-none"></div>

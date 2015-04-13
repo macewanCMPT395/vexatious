@@ -226,11 +226,11 @@ $(document).ready(function() {
 
 @endif
 </div>
+
+@if(Auth::user()->role == 1)
 <div class="table-title-header">
      <div class="title">Assets To Add To Kit</div>
 </div>
-
-@if(Auth::user()->role == 1)
 <div id="addAssetList">
 	@include('layouts.tableList')
 </div>

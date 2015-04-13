@@ -186,3 +186,7 @@ label[for="title"] {
     display: block;
     width: 100%;
 }
+
+.hw-admin-controls-container {
+    display: inline;
+}
