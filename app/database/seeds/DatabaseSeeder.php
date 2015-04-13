@@ -102,7 +102,7 @@ class HardwareTypeTableSeeder extends Seeder {
 		));
 		
 		HardwareType::create(array(
-			"name" => "Rasperry Pi",
+			"name" => "Raspberry Pi",
 			"description" => "3.14159Something"
 		));
 		

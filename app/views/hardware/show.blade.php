@@ -27,7 +27,7 @@ $(document).ready(function() {
 	});
 
 	HWForm.fill(kitID);
-	//HWForm.post();
+	HWForm.post();
 });
 </script>
 
