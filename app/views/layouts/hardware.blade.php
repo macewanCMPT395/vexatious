@@ -32,8 +32,10 @@
 			}}
 			{{Form::submit('Clear Damage', ['id'=>'clearDamageSubmit'])}}
 			{{Form::close() }}
+			
 		{{Form::open(['route' => ['hardware.destroy', '#'],
 						'method'=>'delete', 'id'=>'deleteForm']) }}
+			
 		{{Form::submit('Delete Device',['id'=>'removeBtn']) }}
 		{{Form::close() }}
 
