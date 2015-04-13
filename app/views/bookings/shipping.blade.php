@@ -62,6 +62,7 @@ $(document).ready(function() {
 	var today = new Date(moment());
 	var tomorrow = new Date(moment(today).add(1,'days'));
 
+	
 	todayTitle.innerHTML = moment().format("dddd, MMMM Do YYYY");
 	tomorrowTitle.innerHTML = moment(today).add(1,'days').format("dddd, MMMM Do YYYY");
 	
@@ -84,21 +85,21 @@ $(document).ready(function() {
 		var day = 24*60*60*1000;
 		 todaysBookings = allBookings.filter(function(a) {
 
-			var today = new Date();
-			var shipStart = new Date((a.shipping * 1000) - day);
+			var today = moment();
+			var shipStart = moment(a.shipping * 1000);
 			return (a.currentBranchID == currentBranch &&
-					shipStart.getFullYear() == today.getFullYear() &&
-					shipStart.getMonth() == today.getMonth() &&
-					shipStart.getUTCDate() == today.getUTCDate() && parseInt(a.shipped) == 0); 
+					shipStart.format("YYYY") == today.format("YYYY") &&
+					shipStart.format("MM") == today.format("MM") &&
+					shipStart.format("DD") == today.format("DD") && parseInt(a.shipped) == 0); 
 		 });
 
 		tomorrowsBookings = allBookings.filter(function(a) {
-			var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-			var shipStart = new Date((a.shipping * 1000) - day);
+			var tomorrow = moment(new Date().getTime() + 24 * 60 * 60 * 1000);
+			var shipStart = moment(a.shipping * 1000);
 			return (a.currentBranchID == currentBranch &&
-					shipStart.getFullYear() == tomorrow.getFullYear() &&
-					shipStart.getMonth() == tomorrow.getMonth() &&
-					shipStart.getUTCDate() == tomorrow.getUTCDate() && parseInt(a.shipped) == 0); 
+					shipStart.format("YYYY") == tomorrow.format("YYYY") &&
+					shipStart.format("MM") == tomorrow.format("MM") &&
+					shipStart.format("DD") == tomorrow.format("DD") && parseInt(a.shipped) == 0); 
 		});	
 	}
 

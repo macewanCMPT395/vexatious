@@ -1,6 +1,7 @@
 @extends('layouts.header')
 @section('headerScript')
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
+{{ HTML::script('fullcalendar/lib/moment.min.js') }}
 {{ HTML::script('lightbox.js') }}
 {{ HTML::script('polyfiller.js') }}
 
@@ -70,30 +71,21 @@ $(document).ready(function() {
 	var holidays = {{ json_encode(Holiday::lists('date')); }};
 	
 	$('input.min-today').prop('min', function(){
-		var curDate = new Date();
-		//since bookings need to be made 2 days in advanced...
-		var day = curDate.getUTCDate();
-		//curDate.setDate(day);
-		console.log(day);
-		//if current day is friday, can't make a booking
-		//for monday
-	
-		console.log(curDate.getUTCDay());
-		if (curDate.getUTCDay() == 5) {
-			day += 4;	
-			curDate.setDate(day);
+		var curDate = moment();
+
+		if (parseInt(curDate.format('d')) == 5) {
+			curDate.add(4, 'days');
 		} else {
-			//otherwise
-			day += 1;//can only make a booking
-			curDate.setDate(day);
+			curDate.add(1, 'days');
 		}
 		//if this falls on a saturday or sunday, black those out too
-		while(curDate.getUTCDay() == 6 || curDate.getUTCDay() == 0 || curDate.getUTCDay() == 1) {
-			curDate.setDate(++day);	
-			day = curDate.getUTCDate();
+		while(parseInt(curDate.format('d')) == 6 || parseInt(curDate.format('d')) == 0 || 
+			  parseInt(curDate.format('d')) == 1) {
+			curDate.add(1, 'days');
 		}
-		
-        return curDate.toJSON().split('T')[0];
+		console.log(curDate.format('DD-MM-YYYY'));
+        //return curDate.toJSON().split('T')[0];
+		return curDate.format('YYYY-MM-DD');
     }).on('validatevalue', function (e, data) {
 		var date = data.valueAsDate.toISOString().split('T')[0];
 

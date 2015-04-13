@@ -89,22 +89,22 @@ $(document).ready(function() {
 			var day = 24 * 60 * 60 * 1000;
 			 todaysBookings = allBookings.filter(function(a) {
 
-					var today = new Date();
-					var shipStart = new Date((a.shipping * 1000) - day);
+					var today = moment();
+					var shipStart = moment(a.shipping * 1000);
 					return (a.destination == currentBranch &&
-							shipStart.getFullYear() == today.getFullYear() &&
-							shipStart.getMonth() == today.getMonth() &&
-							shipStart.getUTCDate() == today.getUTCDate() &&
+							shipStart.format("YYYY") == today.format("YYYY") &&
+							shipStart.format("MM") == today.format("MM") &&
+							shipStart.format("DD") == today.format("DD") &&
 							parseInt(a.received) == 0); 
 			 });
 
 			tomorrowsBookings = allBookings.filter(function(a) {
-					var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-					var shipStart = new Date((a.shipping * 1000) - day);
+					var tomorrow = moment(new Date().getTime() + 24 * 60 * 60 * 1000);
+					var shipStart = moment(a.shipping * 1000);
 					return (a.destination == currentBranch &&
-							shipStart.getFullYear() == tomorrow.getFullYear() &&
-							shipStart.getMonth() == tomorrow.getMonth() &&
-							shipStart.getUTCDate() == tomorrow.getUTCDate() &&
+							shipStart.format("YYYY") == tomorrow.format("YYYY") &&
+							shipStart.format("MM") == tomorrow.format("MM") &&
+							shipStart.format("DD") == tomorrow.format("DD") &&
 							parseInt(a.received) == 0); 
 			});
 	}
