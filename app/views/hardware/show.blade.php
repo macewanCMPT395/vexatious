@@ -14,7 +14,9 @@ $(document).ready(function() {
 
 	var HWForm = HardwareForm.init({
 		hwInfoRoute: "{{ route('hardware.show'); }}",
-		kitInfoRoute: "{{ route('kits.edit'); }}"
+		kitInfoRoute: "{{ route('kits.edit'); }}",
+		hwListRoute: "{{ route('hardware.index'); }}",
+		hwRmFromKit: "{{ route('removefromkit'); }}"
 	});
 	
 	HWForm.getStart(function(){

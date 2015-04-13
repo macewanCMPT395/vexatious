@@ -43,7 +43,10 @@ $(document).ready(function() {
 	function filterDevices() {
 		//first, only grab the bookings for the current branch
 		var filterKits = allDevices.filter(function(a) {
-			var branchAdd = ($('#inKit').val() == 0 || ($('#inKit').val() <2 && a.kitID != null));
+			var branchAdd = ($('#inKit').val() == 0 || 
+							 	($('#inKit').val() == 1 && a.kitID != null) ||
+								($('#inKit').val() == 2 && a.kitID == null)
+							);
 			var damaged = $('#damage').val();
 			//if we are sorting for damage, auto remove kits that have no damage
 			//var isDamaged = $.grep(allDamagedKits, function(e){ return e.id == a.id; });
