@@ -74,15 +74,17 @@ $(document).ready(function() {
 		//since bookings need to be made 2 days in advanced...
 		var day = curDate.getUTCDate();
 		//curDate.setDate(day);
-	
+		console.log(day);
 		//if current day is friday, can't make a booking
 		//for monday
+	
+		console.log(curDate.getUTCDay());
 		if (curDate.getUTCDay() == 5) {
 			day += 4;	
 			curDate.setDate(day);
 		} else {
 			//otherwise
-			day += 2;//can only make a booking
+			day += 1;//can only make a booking
 			curDate.setDate(day);
 		}
 		//if this falls on a saturday or sunday, black those out too
