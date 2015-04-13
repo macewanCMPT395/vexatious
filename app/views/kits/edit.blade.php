@@ -9,7 +9,6 @@
 {{ HTML::style('css/hardware.css') }}
 {{ HTML::style('css/editkit.css') }}
 {{ HTML::style('css/loadingScreen.css') }}
-{{ HTML::style('css/tableFilter.css') }}
 
 
 <script>
@@ -178,15 +177,6 @@ $(document).ready(function() {
 @stop
 @section('browsekitsli') class="" @stop
 @section('content')
-
-<ul class="TableFilter-Bar">
-	{{ Form::open(['method' => 'put', 'route' => 'kits.index', 'id' => 'form-shipping']) }}
-	<li>
-	{{ Form::submit('Back')}}
-	</li>
-	{{ Form::close() }}
-</ul>
-
 <div class="sideBySide">
 
 <div style="width: 50%; display: inline-block">
