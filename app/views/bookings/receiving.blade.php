@@ -18,7 +18,6 @@
 	<li>
 		{{ Form::hidden('form', 'received') }}
 		{{ Form::hidden('received', '1') }}
-		{{ Form::submit('Received') }}
 	</li>
 	{{Form::close() }}
 </ul>
