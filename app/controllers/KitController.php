@@ -126,21 +126,23 @@ class KitController extends \BaseController {
 	 * @return Response
 	 */
 	public function update($id)
-	{
+	{	
 		$kit = Kit::find($id);
 		$response = ["status" => "1"];
 		if ($kit != null) {
-			$response = ["status" => "0", "kit"=> $kit];
-			$input = array_filter(Input::only($this->fields));
-			$kit->fill($input);
+			$branch = Input::get('CurrentBranch');
+			if($branch) $kit->currentBranchID = $branch;
 			
-			echo($kit);
+			$barcode = Input::get('KitNumber');
+			if($barcode) $kit->barcode = $barcode;
 			
-			$kit->save();
+			$desc = Input::get('description');
+			if($desc) $kit->description = $desc;
 
+			$kit->save();
 		}
 		
-		return Response::json($response);
+		return Redirect::back();
 	}
 
 

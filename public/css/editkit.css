@@ -18,14 +18,41 @@
 #hardware {
     padding-left: 10px;
 }
-#kitInfo ul {
+/*#kitInfo ul {
     list-style-type: none;
     margin: 10px 0 16px 0;
 }
 
 #kitInfo li {
     padding-top: 10px;
+}*/
+
+#kitInfo #kitEditForm {
+    width: 100%;
 }
+
+.kitInfoInput {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    padding-top: 5px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.kitInfoInput label {
+    display: inline-block;
+    width: 200px;
+}
+
+.kitInfoInput input {
+    width: 315px;
+}
+
+#kitInfoSubmitButton.kitInfoInput {
+    text-align: center;
+}
+
 
 input[type="submit"] {
     background-color:#d62f33;
