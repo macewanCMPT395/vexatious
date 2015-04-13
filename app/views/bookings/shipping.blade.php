@@ -16,8 +16,7 @@
 	</li>
 	<li>
 	{{ Form::hidden('form', 'ship') }} 
-	{{ Form::hidden('shipped', '1', ['id'=>'shippedcode']) }} 
-	{{ Form::submit('Ship') }}
+	{{ Form::hidden('shipped', '1', ['id'=>'shippedcode']) }}
 	</li>
 	{{Form::close() }}
 </ul>
