@@ -93,7 +93,7 @@ input {
     padding: 5px;
     background: rgba(255,255,255,0.5);
     margin: 0 0 5px 0;
-    width: 40%;
+    width: 332px;
     font-size: 18px;
 }
 
@@ -145,11 +145,7 @@ label[for="title"] {
     width: 50%;
 }
 
-.formatting {
-    display: inline-block;
-    width: 49%;
-}
-
+/*
 .formatting label[for="title"] {
     width: 100%;
 }
@@ -164,9 +160,8 @@ label[for="title"] {
     margin: auto;
 }
 
+
 .hardwareType {
-    padding-top: 10px;
-    margin-top: 5px;
     background: #eeeeee;
 }
 
@@ -175,7 +170,55 @@ label[for="title"] {
 }
 .hardwareType li {
     padding-bottom: 10px;
+}*/
+
+.hardware-create-type {
+	height: inherit;
+	text-align: center;
 }
+.hardware-create-type-form {
+	height: inherit;
+	background: #eeeeee;
+}
+
+.hardware-create-type-input {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+	text-align: left;
+}
+
+
+#hardware-create-type-submit {
+	text-align: center;
+}	
+
+.hardware-create-type-input label {
+	display: inline-block;
+	width: 200px;
+	vertical-align:top;
+}
+
+textarea {
+     border: 2px solid purple;
+    -webkit-box-shadow:
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1);
+    -moz-box-shadow:
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1);
+    box-shadow:
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1);
+    padding: 5px;
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 5px 0;
+    width: 332px;
+    font-size: 18px;
+	resize: none;
+}
+
 
 .title {
     font-size: 30px;
