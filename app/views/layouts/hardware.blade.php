@@ -25,7 +25,7 @@
 		{{Form::submit('Add damage report') }}
 		{{ Form::close() }}
 
-		
+		@if(Auth::user()->role == 1)
 		<div class="hw-controls-container">
 			{{Form::open(['route' => ['hardware.update', '#'], 
 							'id' => 'form-clearDamage', 'method'=>'put'])
@@ -45,6 +45,7 @@
 
 
 		</div>		
+		@endif
 	</div>
 
 	<div class="hw-box" id="hw-kitinfo">
