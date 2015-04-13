@@ -143,7 +143,7 @@ $(document).ready(function() {
 
 		if (tomorrowsBookings.length == 0) {
 			var row = document.createElement('tr');
-			$(row).append($('<td></td>').text("No Kits To Coming In"));
+			$(row).append($('<td></td>').text("No Kits Coming In"));
 			tomorrowsTable.append($(row));
 		} else {
 			tomorrowsBookings.forEach(function(booking) {

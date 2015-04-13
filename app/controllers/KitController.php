@@ -60,7 +60,7 @@ class KitController extends \BaseController {
 		$kit = new Kit;
 		$kit->fill($input);
 		$kit->save();
-		return Redirect::route('kits.index', $kit->id);
+		return Redirect::route('kits.show', $kit->id);
 	}
 
 

@@ -197,9 +197,11 @@ $(document).ready(function() {
 			{{ Form::label('description', 'Description:') }}
 			{{ Form::Input('string', 'description', $kits->description) }}
 		</div>
+		@if(Auth::user()->role == 1)
 		<div class="kitInfoInput" id="kitInfoSubmitButton">
 		{{ Form::Submit('Apply Changes') }}
 		</div>
+		@endif
 		{{ Form::close() }}
 		
 		<div class="table-title-header">
