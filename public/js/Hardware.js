@@ -90,7 +90,7 @@ var HardwareForm = (function() {
 					var device = response.device;
 
 					//set title
-					$('#hw-title-text').text(device.name + ' [asset: ' + device.assetTag + ']');
+					$('#hw-title-text').text(device.name + ' asset #' + device.assetTag );
 
 					//set description
 					$('#hw-description .hw-box-text')
@@ -116,7 +116,7 @@ var HardwareForm = (function() {
 					if(device.kitID) {
 						var refURL = instance.kitInfoRoute.replace('%7Bkits%7D', device.kitID);
 						var urlObj = $('<a></a>').attr("href", refURL)
-							.text('This device is associated with kit: ' + device.barcode);
+							.text('Go To Kit Asset Is Located In');
 
 						$('#hw-kitinfo .hw-box-text').empty().append(urlObj);
 					}	
