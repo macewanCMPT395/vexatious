@@ -1,52 +1,35 @@
 @extends('layouts.header')
 @section('headerScript')
 {{ HTML::script('fullcalendar/lib/jquery.min.js') }}
-{{ HTML::style('css/bookingview.css') }}
+{{ HTML::Style('css/createkit.css') }}
+{{ HTML::Style('css/editkit.css') }}
 @stop
 
 @section('content')
 <div class="AddHardwareDiv">
 
-	@include('layouts.hardwareType')
-
-	{{ Form::open(['method' => 'post',
-	               'id' => 'form-add_new_hardware',
-	               'route' => ['hardware.store']
-	])}}
-
-	<div class="AddNewHardwareDiv">
-		<div class="HardwareTypeSelectLabelDiv">
-		<center>
-		{{ Form::Label('_Addhardwarelbl', 'Add New Hardware') }}
-		</center>
-		</div>
-
-		<div class="HardwareTypeSelectBox">
-		<center>
-
-		{{ Form::select('type', HardwareType::lists('name', 'id')) }}
-		</center>
-		</div>
-		<div class="HardwareAssetTagDiv">
-		<center>
-		{{ Form::label('_AssetTagBoxlbl', 'Asset Tag:') }}
-			<div>
-			{{ Form::text('assetTag') }}
-			</div>
-		</center>
-		</div>
-
-		<div class="SubmitNewHardwareDiv">
-		<center>
-		{{ Form::submit('submit') }}
-		</center>
-		</div>
-
-	</center>
+	<div id="createKitType">
+		@include('layouts.hardwareType')
 	</div>
-
-	{{ Form::close() }}
-
+	
+	<div id="createKitLayout">
+	   {{ Form::label('title','Create A New Asset') }}
+		<div id="createKitForm">
+		{{ Form::open(['method' => 'post', 'route' => 'hardware.store']) }}
+		   <div class="create-new-kit-form">
+		   {{ Form::label('type', 'Type:') }}
+		   {{ Form::select('type', HardwareType::lists('name','id')) }}
+		   </div>
+		   <div class="create-new-kit-form">
+		   {{ Form::label('assetTag', 'Asset Tag:') }}
+		   {{ Form::input('string','assetTag') }}
+		   </div>
+		   <div class="create-new-kit-form" id="create-new-kit-submit">
+		   {{ Form::Submit('Create Asset') }}
+		   </div>
+		{{ Form::close() }}
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">

@@ -59,7 +59,8 @@ class HardwareController extends \BaseController {
 		if(Request::wantsJson()) {
 			return Response::json(["status"=>"0", "device"=>$device]);
 		}
-		return Redirect::back();     
+		return Redirect::route('hardware.show', $device->id);
+			//Redirect::back();     
 	}
 
 	/**
