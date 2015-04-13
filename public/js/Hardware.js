@@ -119,7 +119,11 @@ var HardwareForm = (function() {
 							.text('Go To Kit Asset Is Located In');
 
 						$('#hw-kitinfo .hw-box-text').empty().append(urlObj);
-					}	
+					} else {
+						$('#form-removeFromKit').hide();
+						$('#hw-kitinfo .hw-box-text').empty()
+							.append('<a>').text("This asset is not associated with any kit.")
+					}
 
 
 					//update post URLS
